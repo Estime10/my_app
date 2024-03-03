@@ -5,11 +5,26 @@
 @tailwind utilities;
 
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
 body {
-  font-family: 'Lora', serif;
+	font-family: 'Lora', serif;
+}
+html {
+	scroll-behavior: smooth;
+}
+
+@layer components {
+	.navBtn {
+		@apply hidden h-6 w-6 md:inline-flex
+cursor-pointer hover:scale-125
+transition-all duration-150 ease-out;
+	}
+	.navBtnClose {
+		@apply lg:hidden h-6 w-6 hover:scale-125
+transition-all duration-150 ease-out;
+	}
 }
