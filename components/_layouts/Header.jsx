@@ -1,4 +1,6 @@
 import Image from 'next/image'
+import { UserButton } from '@clerk/nextjs'
+import { SignedOut, SignInButton } from '@clerk/nextjs'
 
 function Header() {
 	return (
@@ -71,7 +73,7 @@ function Header() {
 							alt="home"
 							width={10}
 							height={10}
-							className="navBtn -rotate-45"
+							className="navBtn"
 						/>
 						<div className="absolute -top-2 -right-2 text-base w-5 h-5 bg-red-500 rounded-full flex items-center justify-center animate-pulse text-white">
 							3
@@ -99,13 +101,13 @@ function Header() {
 						height={10}
 						className="navBtn"
 					/>
-					<Image
-						src="/image/avatar.png"
-						alt="home"
-						width={30}
-						height={30}
+					<UserButton
+						afterSignOutUrl="/"
 						className="h-8 w-8 rounded-full cursor-pointer navBtn"
 					/>
+					<SignedOut>
+						<SignInButton afterSignInUrl="/" mode="modal" />
+					</SignedOut>
 				</div>
 			</div>
 		</div>
