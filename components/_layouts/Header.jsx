@@ -8,13 +8,13 @@ function Header() {
 			lg:mx-auto"
 			>
 				{/* // left  */}
-				<div className="relative hidden lg:inline-grid  w-44 cursor-pointer">
+				<div className="relative hidden lg:inline-grid  w-44 h-0 top-[-52px] -left-[27.2px] cursor-pointer">
 					{/* logo large */}
 					<Image
 						src="/image/logo.png"
 						alt="Picture of the author"
-						objectFit="cover"
-						layout="fill"
+						width={300}
+						height={40}
 					/>
 				</div>
 				<div className="relative w-20 top-1 flex-shrink-0 lg:hidden cursor-pointer">
@@ -22,9 +22,9 @@ function Header() {
 					<Image
 						src="/image/logo_small.png"
 						alt="Picture of the author"
-						objectFit="cover"
-						layout="fill"
-						className="h-10 w-10"
+						width={40}
+						height={40}
+						className="h-20 w-20"
 					/>
 				</div>
 				{/* // middle */}
@@ -104,7 +104,6 @@ function Header() {
 						alt="home"
 						width={30}
 						height={30}
-						objectFit="cover"
 						className="h-8 w-8 rounded-full cursor-pointer navBtn"
 					/>
 				</div>

@@ -27,4 +27,7 @@ transition-all duration-150 ease-out;
 		@apply lg:hidden h-6 w-6 hover:scale-125
 transition-all duration-150 ease-out;
 	}
+	.btn {
+		@apply h-6 hover:scale-125 cursor-pointer transition-all duration-150 ease-out;
+	}
 }

@@ -11,9 +11,11 @@ export default function RootLayout({ children }) {
 	return (
 		<html lang="en">
 			<body>
-				<Header />
-				{children}
-				{/* <Footer /> */}
+				<div className="bg-gray-50 h-screen overflow-y-scroll">
+					<Header />
+					{children}
+					{/* <Footer /> */}
+				</div>
 			</body>
 		</html>
 	)
