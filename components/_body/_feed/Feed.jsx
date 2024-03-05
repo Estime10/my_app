@@ -6,7 +6,7 @@ import MiniProfile from './miniprofile/MiniProfile'
 import Suggestions from './suggestions/Suggestions'
 import Footer from '@/components/_layouts/Footer'
 
-const Feed = () => {
+const Feed = ({ user }) => {
 	return (
 		<>
 			<Header />
@@ -25,7 +25,7 @@ const Feed = () => {
 				<section className="hidden xl:inline-grid md:col-span-1">
 					<div className="fixed top-20">
 						{/* Mini profile */}
-						<MiniProfile />
+						<MiniProfile user={user} />
 						{/* Suggestions */}
 						<Suggestions />
 					</div>

@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import { UserButton } from '@clerk/nextjs'
 
 function Footer() {
 	return (
