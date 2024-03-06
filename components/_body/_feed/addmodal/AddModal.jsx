@@ -28,7 +28,7 @@ const AddModal = () => {
 				className="fixed z-10 inset-0 overflow-y-auto"
 				onClose={setOpen}
 			>
-				<div className="flex items-end justify-center min-h-[800px] sm:min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+				<div className="flex items-center lg:items-end justify-center min-h-[800px] sm:min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
 					<Transition.Child
 						as={Fragment}
 						enter="ease-out duration-300"
@@ -58,16 +58,19 @@ const AddModal = () => {
 						leaveFrom="opacity-100 translate-y-0 sm:scale-100"
 						leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
 					>
-						<div className="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full">
+						<div className="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all -mt-10 sm:align-middle sm:max-w-sm sm:w-full">
 							<div>
 								{selectedFile ? (
-									<Image
-										className="object-cover w-full rounded-lg"
-										src={selectedFile}
-										alt="selected"
-										width={130}
-										height={130}
-									/>
+									<div className="flex-col flex justify-center items-center w-64 lg:w-full">
+										{' '}
+										<Image
+											className="object-cover w-44 rounded-lg"
+											src={selectedFile}
+											alt="selected"
+											width={130}
+											height={130}
+										/>
+									</div>
 								) : (
 									<div
 										onClick={() => filePickerRef.current.click()}
@@ -110,7 +113,7 @@ const AddModal = () => {
 								<div className="mt-5 sm:mt-6">
 									<button
 										type="button"
-										className="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-offset-2 focus:ring-2 focus:ring-red-500 sm:text-sm disabled:bg-gray-300 disabled:cursor-not-allowed hover:disabled:bg-gray-300 capitalize"
+										className="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-400 text-base font-medium text-white hover:bg-gray-500 focus:outline-none focus:ring-offset-2 focus:ring-2 focus:ring-gray-400 sm:text-sm disabled:bg-gray-200 disabled:cursor-not-allowed hover:disabled:bg-gray-200 capitalize"
 									>
 										upload post
 									</button>
