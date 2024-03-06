@@ -1,4 +1,3 @@
-'use client'
 import React from 'react'
 import profiles from '../../../_mapper/profiles'
 import Story from './_ui/Story'

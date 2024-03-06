@@ -4,12 +4,56 @@ import { modalState } from '@/app/store/atoms/modalAtoms'
 import { useRecoilState } from 'recoil'
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useRef, useState } from 'react'
+import {
+	addDoc,
+	collection,
+	doc,
+	serverTimestamp,
+	updateDoc,
+} from 'firebase/firestore'
+import { db, storage } from '@/firebase'
+import { ref, getDownloadURL, uploadBytes } from 'firebase/storage'
+import { useUser } from '@clerk/nextjs'
 
-const AddModal = () => {
+const ModalPost = () => {
+	const { isLoading, isSignedIn, user } = useUser()
 	const [open, setOpen] = useRecoilState(modalState)
 	const filePickerRef = useRef(null)
 	const captionRef = useRef(null)
+	const [loading, setLoading] = useState(false)
 	const [selectedFile, setSelectedFile] = useState(null)
+
+	const uploadPost = async () => {
+		if (loading) return
+		if (!user) return
+
+		setLoading(true)
+
+		const docRef = await addDoc(collection(db, 'users', user.id, 'posts'), {
+			userId: user.id,
+			fullName: user.fullName,
+			caption: captionRef.current.value,
+			profileImg: user.imageUrl,
+			timestamp: serverTimestamp(),
+		})
+
+		const imageRef = ref(storage, `users/${user.id}/posts/${docRef.id}/image`)
+
+		// Convertir l'URL base64 en un blob
+		const blob = await fetch(selectedFile).then((res) => res.blob())
+
+		// Télécharger le blob
+		await uploadBytes(imageRef, blob).then(async (snapshot) => {
+			const downloadURL = await getDownloadURL(imageRef)
+			await updateDoc(doc(db, 'users', user.id, 'posts', docRef.id), {
+				image: downloadURL,
+			})
+		})
+
+		setOpen(false)
+		setLoading(false)
+		setSelectedFile(null)
+	}
 
 	const addImageToPost = (e) => {
 		const reader = new FileReader()
@@ -113,9 +157,11 @@ const AddModal = () => {
 								<div className="mt-5 sm:mt-6">
 									<button
 										type="button"
+										disabled={!selectedFile}
 										className="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-400 text-base font-medium text-white hover:bg-gray-500 focus:outline-none focus:ring-offset-2 focus:ring-2 focus:ring-gray-400 sm:text-sm disabled:bg-gray-200 disabled:cursor-not-allowed hover:disabled:bg-gray-200 capitalize"
+										onClick={uploadPost}
 									>
-										upload post
+										{loading ? 'Uploading...' : 'Upload Post'}
 									</button>
 								</div>
 							</div>
@@ -127,4 +173,4 @@ const AddModal = () => {
 	)
 }
 
-export default AddModal
+export default ModalPost

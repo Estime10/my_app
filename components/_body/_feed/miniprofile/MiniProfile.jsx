@@ -1,8 +1,15 @@
+'use client'
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useUser } from '@clerk/nextjs'
 
-const MiniProfile = ({ user }) => {
+const MiniProfile = () => {
+	const { isLoading, isSignedIn, user } = useUser()
+	if (!isSignedIn) {
+		return null
+	}
+
 	return (
 		<div className="flex items-center justify-between mt-14 ml-10 ">
 			<Image

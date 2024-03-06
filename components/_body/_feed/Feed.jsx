@@ -20,9 +20,9 @@ const Feed = ({ user }) => {
 				</section>
 				{/* Section */}
 				<section className="hidden xl:inline-grid md:col-span-1">
-					<div className="fixed top-20">
+					<div className="fixed top-8">
 						{/* Mini profile */}
-						<MiniProfile user={user} />
+						<MiniProfile />
 						{/* Suggestions */}
 						<Suggestions />
 					</div>
