@@ -1,8 +1,14 @@
+'use client'
 import Image from 'next/image'
 import { UserButton } from '@clerk/nextjs'
 import { SignedOut, SignInButton } from '@clerk/nextjs'
+import Link from 'next/link'
+import { useRecoilState } from 'recoil'
+import { modalState } from '@/app/store/atoms/modalAtoms'
 
 function Header() {
+	const [open, setOpen] = useRecoilState(modalState)
+
 	return (
 		<div className="shadow-sm border-b bg-white sticky top-0 z-50">
 			<div
@@ -12,12 +18,14 @@ function Header() {
 				{/* // left  */}
 				<div className="relative hidden lg:inline-grid  w-44 h-0 top-[-52px] -left-[27.2px] cursor-pointer">
 					{/* logo large */}
-					<Image
-						src="/image/logo.png"
-						alt="Picture of the author"
-						width={300}
-						height={40}
-					/>
+					<Link href="/dashboard">
+						<Image
+							src="/image/logo.png"
+							alt="Picture of the author"
+							width={300}
+							height={40}
+						/>
+					</Link>
 				</div>
 				<div className="relative w-20 top-1 flex-shrink-0 lg:hidden cursor-pointer">
 					{/* logo mobile */}
@@ -59,14 +67,6 @@ function Header() {
 						height={10}
 						className="navBtn lg:inline-flex"
 					/>
-					{/* mobile menu */}
-					{/* <Image
-						src="/svg/menu.svg"
-						alt="home"
-						width={10}
-						height={10}
-						className="h-6 w-6 md:hidden cursor-pointer"
-					/> */}
 					<div className="relative navBtn">
 						<Image
 							src="/svg/send.svg"
@@ -81,6 +81,7 @@ function Header() {
 					</div>
 
 					<Image
+						onClick={() => setOpen(true)}
 						src="/svg/addCircle.svg"
 						alt="home"
 						width={10}
@@ -106,7 +107,7 @@ function Header() {
 						className="h-8 w-8 rounded-full cursor-pointer navBtn"
 					/>
 					<SignedOut>
-						<SignInButton afterSignInUrl="/" mode="modal" />
+						<SignInButton afterSignInUrl="/dashboard" mode="modal" />
 					</SignedOut>
 				</div>
 			</div>

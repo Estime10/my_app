@@ -1,6 +1,7 @@
 import React from 'react'
 import Feed from '@/components/_body/_feed/Feed'
 import { auth, currentUser } from '@clerk/nextjs'
+import AddModal from '@/components/_body/_feed/addmodal/AddModal'
 
 export default async function Dashbord() {
 	const { userId } = auth()
@@ -11,10 +12,10 @@ export default async function Dashbord() {
 	}
 
 	const user = await currentUser()
-	console.log(user)
 	return (
-		<main>
+		<main className="bg-slate-50">
 			<Feed user={user} />
+			<AddModal />
 		</main>
 	)
 }

@@ -1,6 +1,7 @@
 import React from 'react'
 import './globals.css'
 import { ClerkProvider } from '@clerk/nextjs'
+import RecoilContextProvider from './lib/recoilContextProvider'
 
 export const metadata = {
 	title: 'My_App',
@@ -14,7 +15,9 @@ export default function RootLayout({ children }) {
 			<meta name="description" content={metadata.description} />
 			<ClerkProvider>
 				<body>
-					<main>{children}</main>
+					<RecoilContextProvider>
+						<main>{children}</main>
+					</RecoilContextProvider>
 				</body>
 			</ClerkProvider>
 		</html>

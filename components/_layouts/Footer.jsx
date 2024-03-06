@@ -1,6 +1,10 @@
+'use client'
 import Image from 'next/image'
-
+import { useRecoilState } from 'recoil'
+import { modalState } from '@/app/store/atoms/modalAtoms'
 function Footer() {
+	const [open, setOpen] = useRecoilState(modalState)
+
 	return (
 		<div
 			className="shadow-sm border-t bg-white sticky bottom-0 z-50 
@@ -31,6 +35,7 @@ function Footer() {
 						</div>
 					</div>
 					<Image
+						onClick={() => setOpen(true)}
 						src="/svg/addCircle.svg"
 						alt="home"
 						width={10}
