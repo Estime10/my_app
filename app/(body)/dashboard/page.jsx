@@ -3,7 +3,7 @@ import ModalPost from '@/components/_body/_feed/modal/ModalPost'
 
 export default async function Dashbord() {
 	return (
-		<main className="bg-slate-50">
+		<main>
 			<Feed />
 			<ModalPost />
 		</main>

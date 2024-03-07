@@ -16,7 +16,7 @@ function Header() {
 			lg:mx-auto"
 			>
 				{/* // left  */}
-				<div className="relative hidden lg:inline-grid  w-44 h-0 top-[-52px] -left-[27.2px] cursor-pointer">
+				<div className="relative hidden lg:inline-grid  w-44 h-0 top-[-52px] left-[100px] cursor-pointer">
 					{/* logo large */}
 					<Link href="/dashboard">
 						<Image
@@ -27,7 +27,7 @@ function Header() {
 						/>
 					</Link>
 				</div>
-				<div className="relative w-20 top-1 flex-shrink-0 lg:hidden cursor-pointer">
+				<div className="relative w-20 top-0 flex-shrink-0 lg:hidden cursor-pointer">
 					{/* logo mobile */}
 					<Image
 						src="/image/logo_small.png"
@@ -38,35 +38,7 @@ function Header() {
 					/>
 				</div>
 				{/* // middle */}
-				<div className="max-w-xl">
-					<div className="relative mt-1 p-3 rounded-md lg:left-14">
-						<div className="absolute inset-y-0 pl-3 flex items-center pointer-events-none">
-							<Image
-								src="/svg/search.svg"
-								alt=""
-								width={20}
-								height={20}
-								className="h-5 w-5"
-							/>
-						</div>
-						<input
-							type="text"
-							className="-50 block w-full pl-10
-						sm:text-sm border-gray-300 rounded-md focus:ring-black focus:border-black"
-							placeholder="Search"
-						/>
-					</div>
-				</div>
-
-				{/* // right */}
-				<div className="flex items-center justify-end space-x-4 ">
-					<Image
-						src="/svg/home.svg"
-						alt="home"
-						width={10}
-						height={10}
-						className="navBtn lg:inline-flex"
-					/>
+				<div className="flex items-center space-x-10 relative top-[5px] ">
 					<div className="relative navBtn">
 						<Image
 							src="/svg/send.svg"
@@ -79,7 +51,6 @@ function Header() {
 							3
 						</div>
 					</div>
-
 					<Image
 						onClick={() => setOpen(true)}
 						src="/svg/addCircle.svg"
@@ -95,20 +66,28 @@ function Header() {
 						height={10}
 						className="navBtn"
 					/>
-					<Image
-						src="/svg/like.svg"
-						alt="home"
-						width={10}
-						height={10}
-						className="navBtn"
-					/>
-					<UserButton
-						afterSignOutUrl="/"
-						className="h-8 w-8 rounded-full cursor-pointer navBtn"
-					/>
-					<SignedOut>
-						<SignInButton afterSignInUrl="/dashboard" mode="modal" />
-					</SignedOut>
+				</div>
+
+				{/* // right */}
+
+				<div className="max-w-xl">
+					<div className="relative py-3 rounded-md lg:right-[130px]">
+						<div className="absolute inset-y-0 pl-3 flex items-center pointer-events-none">
+							<Image
+								src="/svg/search.svg"
+								alt=""
+								width={20}
+								height={20}
+								className="h-5 w-5"
+							/>
+						</div>
+						<input
+							type="text"
+							className="-50 block lg:w-[300px] w-[250px] pl-10
+						sm:text-sm border-gray-300 rounded-md focus:ring-black focus:border-black"
+							placeholder="Search"
+						/>
+					</div>
 				</div>
 			</div>
 		</div>

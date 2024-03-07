@@ -2,6 +2,7 @@
 import Image from 'next/image'
 import { useRecoilState } from 'recoil'
 import { modalState } from '@/app/store/atoms/modalAtoms'
+import { SignInButton, SignedOut, UserButton } from '@clerk/nextjs'
 function Footer() {
 	const [open, setOpen] = useRecoilState(modalState)
 
@@ -50,19 +51,16 @@ function Footer() {
 						className="navBtnClose"
 					/>
 					<Image
-						src="/svg/like.svg"
-						alt="home"
-						width={10}
-						height={10}
-						className="navBtnClose"
-					/>
-					<Image
 						src="/svg/profile.svg"
 						alt="home"
 						width={10}
 						height={10}
 						className="navBtnClose"
 					/>{' '}
+					<UserButton afterSignOutUrl="/" className=" navBtnClose" />
+					<SignedOut>
+						<SignInButton afterSignInUrl="/dashboard" mode="modal" />
+					</SignedOut>
 				</div>
 			</div>
 		</div>

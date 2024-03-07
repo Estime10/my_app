@@ -1,10 +1,14 @@
-import React from 'react'
+'use client'
+import React, { useState } from 'react'
 import Stories from './stories/Stories'
 import Posts from './posts/Posts'
 import MiniProfile from './miniprofile/MiniProfile'
 import Suggestions from './suggestions/Suggestions'
+import Loading from './loadingPosts'
 
 const Feed = () => {
+	const [isloading, setLoading] = useState(true)
+
 	return (
 		<>
 			<main
@@ -16,7 +20,8 @@ const Feed = () => {
 					{/* Stories */}
 					<Stories />
 					{/* Posts */}
-					<Posts />
+					{isloading && <Loading />}
+					<Posts setLoading={setLoading} />
 				</section>
 				{/* Section */}
 				<section className="hidden xl:inline-grid md:col-span-1">

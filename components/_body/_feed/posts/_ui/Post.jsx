@@ -74,11 +74,6 @@ const Post = ({ image, caption, id, profileImg, username, fullName }) => {
 		setHasLiked(likes.findIndex((like) => like.id === user.username) !== -1)
 	}, [likes])
 
-	// const [showComments, setShowComments] = useState(false)
-
-	// const toggleComments = () => {
-	// 	setShowComments(!showComments)
-	// }
 	return (
 		<div className="bg-white my-7 border rounded-xl">
 			{/* header */}
@@ -104,7 +99,7 @@ const Post = ({ image, caption, id, profileImg, username, fullName }) => {
 			<Image
 				className="object-cover w-full max-h-96"
 				src={image}
-				alt="post"
+				alt="post image"
 				width={200}
 				height={200}
 			/>
