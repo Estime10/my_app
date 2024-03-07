@@ -1,6 +1,26 @@
+import { db } from '@/firebase'
+import { useUser } from '@clerk/nextjs'
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
 import Image from 'next/image'
+import { useState } from 'react'
 
-const Post = ({ id, username, userAvatar, image, caption }) => {
+const Post = ({ username, userAvatar, image, caption, id }) => {
+	const { user } = useUser()
+	const [comment, setComment] = useState('')
+	const [comments, setComments] = useState([])
+	const sendComment = async (e) => {
+		e.preventDefault()
+		const commentToSend = comment
+		setComment('')
+
+		await addDoc(collection(db, 'users', user.id, 'posts', id, 'comments'), {
+			comment: commentToSend,
+			userId: user.id,
+			username: user.username,
+			profileImg: user.imageUrl,
+			timestamp: serverTimestamp(),
+		})
+	}
 	// const [showComments, setShowComments] = useState(false)
 
 	// const toggleComments = () => {
@@ -11,7 +31,7 @@ const Post = ({ id, username, userAvatar, image, caption }) => {
 			{/* header */}
 			<div className="flex items-center p-5">
 				<Image
-					className="rounded-full object-contain border p-1 mr-3"
+					className="rounded-full object-cover border p-1 mr-3 w-12 h-12"
 					src={userAvatar}
 					alt={username}
 					width={40}
@@ -27,14 +47,16 @@ const Post = ({ id, username, userAvatar, image, caption }) => {
 				/>
 			</div>
 			{/* image */}
+
 			<Image
-				className="object-cover w-full"
+				className="object-cover w-full max-h-96"
 				src={image}
 				alt="post"
 				width={200}
 				height={200}
 			/>
 			{/* buttons */}
+
 			<div className="flex justify-between px-4 pt-4">
 				<div className="flex space-x-4">
 					{/* like */}
@@ -85,6 +107,7 @@ const Post = ({ id, username, userAvatar, image, caption }) => {
 				<span>{caption}</span>
 			</div>
 			{/* comments */}
+
 			{/* input box */}
 			<form className="flex items-center p-4">
 				<Image
@@ -98,8 +121,17 @@ const Post = ({ id, username, userAvatar, image, caption }) => {
 					className="border-none flex-1 focus:ring-0"
 					type="text"
 					placeholder="Add a comment..."
+					value={comment}
+					onChange={(e) => setComment(e.target.value)}
 				/>
-				<button className="font-semibold text-gray-400 ">Post</button>
+				<button
+					type="submit"
+					disabled={!comment.trim()}
+					onClick={sendComment}
+					className="font-semibold text-gray-400 "
+				>
+					Post
+				</button>
 			</form>
 		</div>
 	)
