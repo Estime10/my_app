@@ -1,13 +1,12 @@
 'use client'
 import Image from 'next/image'
-import { UserButton } from '@clerk/nextjs'
-import { SignedOut, SignInButton } from '@clerk/nextjs'
 import Link from 'next/link'
 import { useRecoilState } from 'recoil'
 import { modalState } from '@/app/store/atoms/modalAtoms'
 
 function Header() {
 	const [open, setOpen] = useRecoilState(modalState)
+	const [openStory, setOpenStory] = useRecoilState(modalState)
 
 	return (
 		<div className="shadow-sm border-b bg-white sticky top-0 z-50">
@@ -60,7 +59,7 @@ function Header() {
 						className="navBtn"
 					/>
 					<Image
-						// onClick={() => setOpen(true)}
+						onClick={() => setOpenStory(true)}
 						src="/svg/image.svg"
 						alt="home"
 						width={10}
@@ -68,7 +67,6 @@ function Header() {
 						className="navBtn"
 					/>
 					<Image
-						// onClick={() => setOpen(true)}
 						src="/svg/profile.svg"
 						alt="home"
 						width={10}
