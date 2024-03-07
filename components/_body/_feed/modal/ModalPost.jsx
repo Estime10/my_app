@@ -22,7 +22,6 @@ const ModalPost = () => {
 	const captionRef = useRef(null)
 	const [loading, setLoading] = useState(false)
 	const [selectedFile, setSelectedFile] = useState(null)
-	const [postId, setPostId] = useState('')
 
 	const uploadPost = async () => {
 		if (loading) return
@@ -37,9 +36,6 @@ const ModalPost = () => {
 			profileImg: user.imageUrl,
 			timestamp: serverTimestamp(),
 		})
-
-		const postId = docRef.id
-		console.log('New post added with ID: ', postId)
 
 		const imageRef = ref(storage, `users/${user.id}/posts/${docRef.id}/image`)
 
@@ -57,7 +53,6 @@ const ModalPost = () => {
 		setOpen(false)
 		setLoading(false)
 		setSelectedFile(null)
-		setPostId(postId)
 	}
 
 	const addImageToPost = (e) => {

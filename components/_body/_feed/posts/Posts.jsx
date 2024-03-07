@@ -1,14 +1,7 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import Post from './_ui/Post'
-import {
-	collection,
-	onSnapshot,
-	orderBy,
-	query,
-	setDoc,
-	doc,
-} from 'firebase/firestore'
+import { collection, onSnapshot, orderBy, query } from 'firebase/firestore'
 import { db } from '@/firebase'
 import { useUser } from '@clerk/nextjs'
 

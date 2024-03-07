@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useUser } from '@clerk/nextjs'
 
 const MiniProfile = () => {
-	const { isLoading, isSignedIn, user } = useUser()
+	const { isSignedIn, user } = useUser()
 	if (!isSignedIn) {
 		return null
 	}
