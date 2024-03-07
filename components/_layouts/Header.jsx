@@ -12,11 +12,11 @@ function Header() {
 	return (
 		<div className="shadow-sm border-b bg-white sticky top-0 z-50">
 			<div
-				className="flex justify-between  max-w-6xl mx-5
+				className="flex justify-between  max-w-6xl mx-5 h-14
 			lg:mx-auto"
 			>
 				{/* // left  */}
-				<div className="relative hidden lg:inline-grid  w-44 h-0 top-[-52px] left-[100px] cursor-pointer">
+				<div className="relative hidden lg:inline-grid  w-44 h-0 top-[-58px] left-[100px] cursor-pointer">
 					{/* logo large */}
 					<Link href="/dashboard">
 						<Image
@@ -27,10 +27,10 @@ function Header() {
 						/>
 					</Link>
 				</div>
-				<div className="relative w-20 top-0 flex-shrink-0 lg:hidden cursor-pointer">
+				<div className="relative w-24 top-0 flex-shrink-0 lg:hidden cursor-pointer">
 					{/* logo mobile */}
 					<Image
-						src="/image/logo_small.png"
+						src="/image/logo_small-removebg-preview.png"
 						alt="Picture of the author"
 						width={40}
 						height={40}
@@ -38,7 +38,7 @@ function Header() {
 					/>
 				</div>
 				{/* // middle */}
-				<div className="flex items-center space-x-10 relative top-[5px] ">
+				<div className="flex items-center space-x-20 relative top-[5px] right-7 ">
 					<div className="relative navBtn">
 						<Image
 							src="/svg/send.svg"
@@ -47,7 +47,7 @@ function Header() {
 							height={10}
 							className="navBtn"
 						/>
-						<div className="absolute -top-2 -right-2 text-base w-5 h-5 bg-gray-400 rounded-full flex items-center justify-center animate-pulse text-white">
+						<div className="absolute -top-1 -right-2 text-base w-5 h-5 bg-gray-400 rounded-full flex items-center justify-center  text-white">
 							3
 						</div>
 					</div>
@@ -60,7 +60,16 @@ function Header() {
 						className="navBtn"
 					/>
 					<Image
-						src="/svg/userGroup.svg"
+						// onClick={() => setOpen(true)}
+						src="/svg/image.svg"
+						alt="home"
+						width={10}
+						height={10}
+						className="navBtn"
+					/>
+					<Image
+						// onClick={() => setOpen(true)}
+						src="/svg/profile.svg"
 						alt="home"
 						width={10}
 						height={10}

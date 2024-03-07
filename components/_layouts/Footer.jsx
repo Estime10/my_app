@@ -16,13 +16,6 @@ function Footer() {
 			lg:mx-auto"
 			>
 				<div className="flex items-center  space-x-6">
-					<Image
-						src="/svg/home.svg"
-						alt="home"
-						width={10}
-						height={10}
-						className="navBtnClose"
-					/>
 					<div className="relative navBtnClose">
 						<Image
 							src="/svg/send.svg"
@@ -36,15 +29,16 @@ function Footer() {
 						</div>
 					</div>
 					<Image
-						onClick={() => setOpen(true)}
-						src="/svg/addCircle.svg"
+						// onClick={() => setOpen(true)}
+						src="/svg/image.svg"
 						alt="home"
 						width={10}
 						height={10}
 						className="navBtnClose"
 					/>
 					<Image
-						src="/svg/userGroup.svg"
+						onClick={() => setOpen(true)}
+						src="/svg/addCircle.svg"
 						alt="home"
 						width={10}
 						height={10}
