@@ -29,9 +29,10 @@ const ModalPost = () => {
 
 		setLoading(true)
 
-		const docRef = await addDoc(collection(db, 'users', user.id, 'posts'), {
+		const docRef = await addDoc(collection(db, 'posts'), {
 			userId: user.id,
 			fullName: user.fullName,
+			username: user.username,
 			caption: captionRef.current.value,
 			profileImg: user.imageUrl,
 			timestamp: serverTimestamp(),
@@ -45,7 +46,7 @@ const ModalPost = () => {
 		// Télécharger le blob
 		await uploadBytes(imageRef, blob).then(async (snapshot) => {
 			const downloadURL = await getDownloadURL(imageRef)
-			await updateDoc(doc(db, 'users', user.id, 'posts', docRef.id), {
+			await updateDoc(doc(db, 'posts', docRef.id), {
 				image: downloadURL,
 			})
 		})

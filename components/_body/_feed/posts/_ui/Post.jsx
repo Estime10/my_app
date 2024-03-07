@@ -3,30 +3,36 @@ import { useUser } from '@clerk/nextjs'
 import {
 	addDoc,
 	collection,
+	deleteDoc,
+	doc,
 	onSnapshot,
 	orderBy,
 	query,
 	serverTimestamp,
+	setDoc,
 } from 'firebase/firestore'
 import Moment from 'react-moment'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
-const Post = ({ username, image, caption, id, timestamp }) => {
+const Post = ({ image, caption, id, profileImg, username, fullName }) => {
 	const { user } = useUser()
 	const [comment, setComment] = useState('')
 	const [comments, setComments] = useState([])
+	const [likes, setLikes] = useState([])
+	const [hasLiked, setHasLiked] = useState(false)
 
+	// get comments
 	useEffect(
 		() =>
 			onSnapshot(
 				query(
-					collection(db, 'users', user.id, 'posts', id, 'comments'),
+					collection(db, 'posts', id, 'comments'),
 					orderBy('timestamp', 'desc')
 				),
 				(snapshot) => setComments(snapshot.docs)
 			),
-		[db]
+		[db, id]
 	)
 
 	const sendComment = async (e) => {
@@ -34,7 +40,7 @@ const Post = ({ username, image, caption, id, timestamp }) => {
 		const commentToSend = comment
 		setComment('')
 
-		await addDoc(collection(db, 'users', user.id, 'posts', id, 'comments'), {
+		await addDoc(collection(db, 'posts', id, 'comments'), {
 			comment: commentToSend,
 			userId: user.id,
 			username: user.username,
@@ -42,6 +48,32 @@ const Post = ({ username, image, caption, id, timestamp }) => {
 			timestamp: serverTimestamp(),
 		})
 	}
+	// get likes
+	useEffect(
+		() =>
+			onSnapshot(collection(db, 'posts', id, 'likes'), (snapshot) =>
+				setLikes(snapshot.docs)
+			),
+		[db, id]
+	)
+
+	const likePost = async () => {
+		if (hasLiked) {
+			// remove like
+			await deleteDoc(doc(db, 'posts', id, 'likes', user.username))
+		} else {
+			await setDoc(doc(db, 'posts', id, 'likes', user.username), {
+				userId: user.id,
+				username: user.username,
+			})
+		}
+	}
+
+	// check if user has liked post
+	useEffect(() => {
+		setHasLiked(likes.findIndex((like) => like.id === user.username) !== -1)
+	}, [likes])
+
 	// const [showComments, setShowComments] = useState(false)
 
 	// const toggleComments = () => {
@@ -53,12 +85,12 @@ const Post = ({ username, image, caption, id, timestamp }) => {
 			<div className="flex items-center p-5">
 				<Image
 					className="rounded-full object-cover border p-1 mr-3 w-12 h-12"
-					src={user.imageUrl}
+					src={profileImg}
 					alt={username}
 					width={40}
 					height={40}
 				/>
-				<p className="flex-1 font-bold capitalize">{user.username}</p>
+				<p className="flex-1 font-bold capitalize">{username}</p>
 				<Image
 					className="h-5"
 					src="/svg/dots.svg"
@@ -81,21 +113,25 @@ const Post = ({ username, image, caption, id, timestamp }) => {
 			<div className="flex justify-between px-4 pt-4">
 				<div className="flex space-x-4">
 					{/* like */}
-					<Image
-						className="btn"
-						src="/svg/like.svg"
-						alt="like"
-						width={20}
-						height={20}
-					/>
-					{/* use js to replace when clicked */}
-					{/* <Image
-				className="btn"
-				src="/svg/likefill.svg"
-				alt="like"
-				width={20}
-				height={20}
-			/> */}
+					{hasLiked ? (
+						<Image
+							className="btn"
+							src="/svg/likefill.svg"
+							alt="like"
+							width={20}
+							height={20}
+							onClick={likePost}
+						/>
+					) : (
+						<Image
+							className="btn"
+							src="/svg/like.svg"
+							alt="like"
+							width={20}
+							height={20}
+							onClick={likePost}
+						/>
+					)}
 					{/* comment */}
 					<Image
 						className="btn"
@@ -122,14 +158,21 @@ const Post = ({ username, image, caption, id, timestamp }) => {
 				/>
 			</div>
 			{/* likes section */}
+			{likes.length > 0 && (
+				<div className="px-3 py-2">
+					<p className="font-bold text-xs">
+						{likes.length} {likes.length === 1 ? 'like' : 'likes'}
+					</p>
+				</div>
+			)}
 			{/* caption */}
-			<div className="p-5">
-				<span className="font-bold mr-1 capitalize">{user.username}</span>
+			<div className="px-3 py-2">
+				<span className="font-bold mr-1 capitalize">{username}</span>
 				<span>{caption}</span>
 			</div>
 			{/* comments */}
 			{comments.length > 0 && (
-				<div className="ml-10 h-20 overflow-y-scroll scrollbar-hide">
+				<div className="ml-3 h-20 overflow-y-scroll scrollbar-hide">
 					{comments.map((comment) => (
 						<div key={comment.id} className="flex items-center space-x-2 py-1">
 							<Image
