@@ -3,30 +3,36 @@ import { useUser } from '@clerk/nextjs'
 import {
 	addDoc,
 	collection,
+	deleteDoc,
+	doc,
 	onSnapshot,
 	orderBy,
 	query,
 	serverTimestamp,
+	setDoc,
 } from 'firebase/firestore'
 import Moment from 'react-moment'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
-const Post = ({ username, image, caption, id, timestamp }) => {
+const Post = ({ image, caption, id, profileImg, username }) => {
 	const { user } = useUser()
 	const [comment, setComment] = useState('')
 	const [comments, setComments] = useState([])
+	const [likes, setLikes] = useState([])
+	const [hasLiked, setHasLiked] = useState(false)
 
+	// get comments
 	useEffect(
 		() =>
 			onSnapshot(
 				query(
-					collection(db, 'users', user.id, 'posts', id, 'comments'),
+					collection(db, 'posts', id, 'comments'),
 					orderBy('timestamp', 'desc')
 				),
 				(snapshot) => setComments(snapshot.docs)
 			),
-		[db]
+		[db, id]
 	)
 
 	const sendComment = async (e) => {
@@ -34,7 +40,7 @@ const Post = ({ username, image, caption, id, timestamp }) => {
 		const commentToSend = comment
 		setComment('')
 
-		await addDoc(collection(db, 'users', user.id, 'posts', id, 'comments'), {
+		await addDoc(collection(db, 'posts', id, 'comments'), {
 			comment: commentToSend,
 			userId: user.id,
 			username: user.username,
@@ -42,23 +48,44 @@ const Post = ({ username, image, caption, id, timestamp }) => {
 			timestamp: serverTimestamp(),
 		})
 	}
-	// const [showComments, setShowComments] = useState(false)
+	// get likes
+	useEffect(
+		() =>
+			onSnapshot(collection(db, 'posts', id, 'likes'), (snapshot) =>
+				setLikes(snapshot.docs)
+			),
+		[db, id]
+	)
 
-	// const toggleComments = () => {
-	// 	setShowComments(!showComments)
-	// }
+	const likePost = async () => {
+		if (hasLiked) {
+			// remove like
+			await deleteDoc(doc(db, 'posts', id, 'likes', user.username))
+		} else {
+			await setDoc(doc(db, 'posts', id, 'likes', user.username), {
+				userId: user.id,
+				username: user.username,
+			})
+		}
+	}
+
+	// check if user has liked post
+	useEffect(() => {
+		setHasLiked(likes.findIndex((like) => like.id === user?.username) !== -1)
+	}, [likes])
+
 	return (
-		<div className="bg-white my-7 border rounded-sm">
+		<div className="bg-white my-7 border rounded-xl">
 			{/* header */}
 			<div className="flex items-center p-5">
 				<Image
 					className="rounded-full object-cover border p-1 mr-3 w-12 h-12"
-					src={user.imageUrl}
+					src={profileImg}
 					alt={username}
 					width={40}
 					height={40}
 				/>
-				<p className="flex-1 font-bold capitalize">{user.username}</p>
+				<p className="flex-1 font-bold capitalize">{username}</p>
 				<Image
 					className="h-5"
 					src="/svg/dots.svg"
@@ -72,35 +99,50 @@ const Post = ({ username, image, caption, id, timestamp }) => {
 			<Image
 				className="object-cover w-full max-h-96"
 				src={image}
-				alt="post"
+				alt="post image"
 				width={200}
 				height={200}
 			/>
 			{/* buttons */}
 
-			<div className="flex justify-between px-4 pt-4">
-				<div className="flex space-x-4">
+			<div className="flex justify-between items-center px-4 pt-4">
+				<div className="flex items-center">
 					{/* like */}
+					{hasLiked ? (
+						<Image
+							className="btn"
+							src="/svg/likefill.svg"
+							alt="like"
+							width={20}
+							height={20}
+							onClick={likePost}
+						/>
+					) : (
+						<Image
+							className="btn"
+							src="/svg/like.svg"
+							alt="like"
+							width={20}
+							height={20}
+							onClick={likePost}
+						/>
+					)}
+
+					{/* likes section */}
+					{likes.length > 0 && (
+						<div className="px-3 py-2">
+							<p className="font-bold text-xs">
+								{likes.length} {likes.length === 1 ? 'like' : 'likes'}
+							</p>
+						</div>
+					)}
+				</div>
+				<div className="flex space-x-4">
+					{/* save */}
 					<Image
 						className="btn"
-						src="/svg/like.svg"
-						alt="like"
-						width={20}
-						height={20}
-					/>
-					{/* use js to replace when clicked */}
-					{/* <Image
-				className="btn"
-				src="/svg/likefill.svg"
-				alt="like"
-				width={20}
-				height={20}
-			/> */}
-					{/* comment */}
-					<Image
-						className="btn"
-						src="/svg/chat.svg"
-						alt="chat"
+						src="/svg/save.svg"
+						alt="save"
 						width={20}
 						height={20}
 					/>
@@ -113,25 +155,19 @@ const Post = ({ username, image, caption, id, timestamp }) => {
 						height={20}
 					/>
 				</div>
-				<Image
-					className="btn"
-					src="/svg/save.svg"
-					alt="save"
-					width={20}
-					height={20}
-				/>
 			</div>
-			{/* likes section */}
 			{/* caption */}
-			<div className="p-5">
-				<span className="font-bold mr-1 capitalize">{user.username}</span>
-				<span>{caption}</span>
+			<div className="px-3 py-2 flex-nowrap">
+				<span className="font-bold mr-1 capitalize">{username}</span>
+				<span className=" max-h-xl overflow-y-scroll scrollbar-hide">
+					{caption}
+				</span>
 			</div>
 			{/* comments */}
 			{comments.length > 0 && (
-				<div className="ml-10 h-20 overflow-y-scroll scrollbar-hide">
+				<div className="ml-3 h-20 overflow-y-scroll scrollbar-hide">
 					{comments.map((comment) => (
-						<div key={comment.id} className="flex items-center space-x-2 mb-3">
+						<div key={comment.id} className="flex items-center space-x-2 py-1">
 							<Image
 								className="h-5 rounded-full"
 								src={comment.data().profileImg}
@@ -153,30 +189,25 @@ const Post = ({ username, image, caption, id, timestamp }) => {
 				</div>
 			)}
 			{/* input box */}
-			<form className="flex items-center p-4">
-				<Image
-					className="h-7"
-					src="/svg/happy.svg"
-					alt="happy"
-					width={20}
-					height={20}
-				/>
-				<input
-					className="border-none flex-1 focus:ring-0"
-					type="text"
-					placeholder="Add a comment..."
-					value={comment}
-					onChange={(e) => setComment(e.target.value)}
-				/>
-				<button
-					type="submit"
-					disabled={!comment.trim()}
-					onClick={sendComment}
-					className="font-semibold text-gray-400 "
-				>
-					Post
-				</button>
-			</form>
+			<div className="border-t-slate-50 border-t sticky z-10">
+				<form className="flex items-center py-2 ">
+					<input
+						className="border-none flex-1 focus:ring-0 mr-1 "
+						type="text"
+						placeholder="Add a comment..."
+						value={comment}
+						onChange={(e) => setComment(e.target.value)}
+					/>
+					<button
+						type="submit"
+						disabled={!comment.trim()}
+						onClick={sendComment}
+						className="font-semibold text-gray-400 px-4"
+					>
+						Post
+					</button>
+				</form>
+			</div>
 		</div>
 	)
 }

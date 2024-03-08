@@ -2,6 +2,7 @@
 import Image from 'next/image'
 import { useRecoilState } from 'recoil'
 import { modalState } from '@/app/store/atoms/modalAtoms'
+import { SignInButton, SignedOut, UserButton } from '@clerk/nextjs'
 function Footer() {
 	const [open, setOpen] = useRecoilState(modalState)
 
@@ -15,13 +16,6 @@ function Footer() {
 			lg:mx-auto"
 			>
 				<div className="flex items-center  space-x-6">
-					<Image
-						src="/svg/home.svg"
-						alt="home"
-						width={10}
-						height={10}
-						className="navBtnClose"
-					/>
 					<div className="relative navBtnClose">
 						<Image
 							src="/svg/send.svg"
@@ -35,22 +29,16 @@ function Footer() {
 						</div>
 					</div>
 					<Image
+						// onClick={() => setOpen(true)}
+						src="/svg/image.svg"
+						alt="home"
+						width={10}
+						height={10}
+						className="navBtnClose"
+					/>
+					<Image
 						onClick={() => setOpen(true)}
 						src="/svg/addCircle.svg"
-						alt="home"
-						width={10}
-						height={10}
-						className="navBtnClose"
-					/>
-					<Image
-						src="/svg/userGroup.svg"
-						alt="home"
-						width={10}
-						height={10}
-						className="navBtnClose"
-					/>
-					<Image
-						src="/svg/like.svg"
 						alt="home"
 						width={10}
 						height={10}
@@ -63,6 +51,10 @@ function Footer() {
 						height={10}
 						className="navBtnClose"
 					/>{' '}
+					<UserButton afterSignOutUrl="/" className=" navBtnClose" />
+					<SignedOut>
+						<SignInButton afterSignInUrl="/dashboard" mode="modal" />
+					</SignedOut>
 				</div>
 			</div>
 		</div>

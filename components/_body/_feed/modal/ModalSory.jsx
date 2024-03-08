@@ -1,6 +1,6 @@
 'use client'
 import Image from 'next/image'
-import { modalState } from '@/app/store/atoms/modalAtoms'
+import { modalStoryState } from '@/app/store/atoms/modalAtoms'
 import { useRecoilState } from 'recoil'
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useRef, useState } from 'react'
@@ -15,21 +15,21 @@ import { db, storage } from '@/firebase'
 import { ref, getDownloadURL, uploadBytes } from 'firebase/storage'
 import { useUser } from '@clerk/nextjs'
 
-const ModalPost = () => {
+const ModalStory = () => {
 	const { user } = useUser()
-	const [open, setOpen] = useRecoilState(modalState)
+	const [openStory, setOpenStory] = useRecoilState(modalStoryState)
 	const filePickerRef = useRef(null)
 	const captionRef = useRef(null)
 	const [loading, setLoading] = useState(false)
 	const [selectedFile, setSelectedFile] = useState(null)
 
-	const uploadPost = async () => {
+	const uploadStory = async () => {
 		if (loading) return
 		if (!user) return
 
 		setLoading(true)
 
-		const docRef = await addDoc(collection(db, 'posts'), {
+		const docRef = await addDoc(collection(db, 'stories'), {
 			userId: user.id,
 			fullName: user.fullName,
 			username: user.username,
@@ -38,7 +38,7 @@ const ModalPost = () => {
 			timestamp: serverTimestamp(),
 		})
 
-		const imageRef = ref(storage, `users/${user.id}/posts/${docRef.id}/image`)
+		const imageRef = ref(storage, `users/${user.id}/stories/${docRef.id}/image`)
 
 		// Convertir l'URL base64 en un blob
 		const blob = await fetch(selectedFile).then((res) => res.blob())
@@ -46,17 +46,17 @@ const ModalPost = () => {
 		// Télécharger le blob
 		await uploadBytes(imageRef, blob).then(async (snapshot) => {
 			const downloadURL = await getDownloadURL(imageRef)
-			await updateDoc(doc(db, 'posts', docRef.id), {
+			await updateDoc(doc(db, 'stories', docRef.id), {
 				image: downloadURL,
 			})
 		})
 
-		setOpen(false)
+		setOpenStory(false)
 		setLoading(false)
 		setSelectedFile(null)
 	}
 
-	const addImageToPost = (e) => {
+	const addImageToStory = (e) => {
 		const reader = new FileReader()
 		if (e.target.files[0]) {
 			reader.readAsDataURL(e.target.files[0])
@@ -67,11 +67,11 @@ const ModalPost = () => {
 		}
 	}
 	return (
-		<Transition.Root show={open} as={Fragment}>
+		<Transition.Root show={openStory} as={Fragment}>
 			<Dialog
 				as="div"
 				className="fixed z-10 inset-0 overflow-y-auto"
-				onClose={setOpen}
+				onClose={setOpenStory}
 			>
 				<div className="flex items-center lg:items-end justify-center min-h-[800px] sm:min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
 					<Transition.Child
@@ -135,14 +135,14 @@ const ModalPost = () => {
 											as="h3"
 											className="text-lg leading-6 font-medium text-gray-900"
 										>
-											Upload a post
+											Upload a story
 										</Dialog.Title>
 										<div>
 											<input
 												ref={filePickerRef}
 												type="file"
 												hidden
-												onChange={addImageToPost}
+												onChange={addImageToStory}
 											/>
 										</div>
 										<div>
@@ -160,9 +160,9 @@ const ModalPost = () => {
 										type="button"
 										disabled={!selectedFile}
 										className="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-400 text-base font-medium text-white hover:bg-gray-500 focus:outline-none focus:ring-offset-2 focus:ring-2 focus:ring-gray-400 sm:text-sm disabled:bg-gray-200 disabled:cursor-not-allowed hover:disabled:bg-gray-200 capitalize"
-										onClick={uploadPost}
+										onClick={uploadStory}
 									>
-										{loading ? 'Uploading...' : 'Upload Post'}
+										{loading ? 'Uploading...' : 'Upload Story'}
 									</button>
 								</div>
 							</div>
@@ -174,4 +174,4 @@ const ModalPost = () => {
 	)
 }
 
-export default ModalPost
+export default ModalStory

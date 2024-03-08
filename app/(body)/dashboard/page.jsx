@@ -1,12 +1,13 @@
 import Feed from '@/components/_body/_feed/Feed'
 import ModalPost from '@/components/_body/_feed/modal/ModalPost'
-import { auth, currentUser } from '@clerk/nextjs'
+import ModalStory from '@/components/_body/_feed/modal/ModalSory'
 
 export default async function Dashbord() {
 	return (
-		<main className="bg-slate-50">
+		<main>
 			<Feed />
 			<ModalPost />
+			<ModalStory />
 		</main>
 	)
 }

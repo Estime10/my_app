@@ -20,12 +20,12 @@ html {
 
 @layer components {
 	.navBtn {
-		@apply hidden h-6 w-6 md:inline-flex
+		@apply hidden h-10 w-8 md:inline-flex
 cursor-pointer hover:scale-125
 transition-all duration-150 ease-out;
 	}
 	.navBtnClose {
-		@apply lg:hidden h-6 w-6 hover:scale-125
+		@apply lg:hidden h-8 w-8 hover:scale-125
 transition-all duration-150 ease-out;
 	}
 	.btn {
