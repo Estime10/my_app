@@ -1,22 +1,21 @@
 'use client'
 import Image from 'next/image'
-import { UserButton } from '@clerk/nextjs'
-import { SignedOut, SignInButton } from '@clerk/nextjs'
 import Link from 'next/link'
 import { useRecoilState } from 'recoil'
 import { modalState } from '@/app/store/atoms/modalAtoms'
 
 function Header() {
 	const [open, setOpen] = useRecoilState(modalState)
+	const [openStory, setOpenStory] = useRecoilState(modalState)
 
 	return (
 		<div className="shadow-sm border-b bg-white sticky top-0 z-50">
 			<div
-				className="flex justify-between  max-w-6xl mx-5
+				className="flex justify-between  max-w-6xl mx-5 h-14
 			lg:mx-auto"
 			>
 				{/* // left  */}
-				<div className="relative hidden lg:inline-grid  w-44 h-0 top-[-52px] -left-[27.2px] cursor-pointer">
+				<div className="relative hidden lg:inline-grid  w-44 h-0 top-[-58px] left-[100px] cursor-pointer">
 					{/* logo large */}
 					<Link href="/dashboard">
 						<Image
@@ -27,10 +26,10 @@ function Header() {
 						/>
 					</Link>
 				</div>
-				<div className="relative w-20 top-1 flex-shrink-0 lg:hidden cursor-pointer">
+				<div className="relative w-24 top-0 flex-shrink-0 lg:hidden cursor-pointer">
 					{/* logo mobile */}
 					<Image
-						src="/image/logo_small.png"
+						src="/image/logo_small-removebg-preview.png"
 						alt="Picture of the author"
 						width={40}
 						height={40}
@@ -38,8 +37,48 @@ function Header() {
 					/>
 				</div>
 				{/* // middle */}
+				<div className="flex items-center space-x-20 relative top-[5px] right-7 ">
+					<div className="relative navBtn">
+						<Image
+							src="/svg/send.svg"
+							alt="home"
+							width={10}
+							height={10}
+							className="navBtn"
+						/>
+						<div className="absolute -top-1 -right-2 text-base w-5 h-5 bg-gray-400 rounded-full flex items-center justify-center  text-white">
+							3
+						</div>
+					</div>
+					<Image
+						onClick={() => setOpen(true)}
+						src="/svg/addCircle.svg"
+						alt="home"
+						width={10}
+						height={10}
+						className="navBtn"
+					/>
+					<Image
+						onClick={() => setOpenStory(true)}
+						src="/svg/image.svg"
+						alt="home"
+						width={10}
+						height={10}
+						className="navBtn"
+					/>
+					<Image
+						src="/svg/profile.svg"
+						alt="home"
+						width={10}
+						height={10}
+						className="navBtn"
+					/>
+				</div>
+
+				{/* // right */}
+
 				<div className="max-w-xl">
-					<div className="relative mt-1 p-3 rounded-md lg:left-14">
+					<div className="relative py-3 rounded-md lg:right-[130px]">
 						<div className="absolute inset-y-0 pl-3 flex items-center pointer-events-none">
 							<Image
 								src="/svg/search.svg"
@@ -51,64 +90,11 @@ function Header() {
 						</div>
 						<input
 							type="text"
-							className="-50 block w-full pl-10
+							className="-50 block lg:w-[300px] w-[250px] pl-10
 						sm:text-sm border-gray-300 rounded-md focus:ring-black focus:border-black"
 							placeholder="Search"
 						/>
 					</div>
-				</div>
-
-				{/* // right */}
-				<div className="flex items-center justify-end space-x-4 ">
-					<Image
-						src="/svg/home.svg"
-						alt="home"
-						width={10}
-						height={10}
-						className="navBtn lg:inline-flex"
-					/>
-					<div className="relative navBtn">
-						<Image
-							src="/svg/send.svg"
-							alt="home"
-							width={10}
-							height={10}
-							className="navBtn"
-						/>
-						<div className="absolute -top-2 -right-2 text-base w-5 h-5 bg-gray-400 rounded-full flex items-center justify-center animate-pulse text-white">
-							3
-						</div>
-					</div>
-
-					<Image
-						onClick={() => setOpen(true)}
-						src="/svg/addCircle.svg"
-						alt="home"
-						width={10}
-						height={10}
-						className="navBtn"
-					/>
-					<Image
-						src="/svg/userGroup.svg"
-						alt="home"
-						width={10}
-						height={10}
-						className="navBtn"
-					/>
-					<Image
-						src="/svg/like.svg"
-						alt="home"
-						width={10}
-						height={10}
-						className="navBtn"
-					/>
-					<UserButton
-						afterSignOutUrl="/"
-						className="h-8 w-8 rounded-full cursor-pointer navBtn"
-					/>
-					<SignedOut>
-						<SignInButton afterSignInUrl="/dashboard" mode="modal" />
-					</SignedOut>
 				</div>
 			</div>
 		</div>
