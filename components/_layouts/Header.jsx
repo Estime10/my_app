@@ -1,20 +1,17 @@
 'use client'
 import Image from 'next/image'
-import Link from 'next/link'
 import { useRecoilState } from 'recoil'
-import { modalState } from '@/app/store/atoms/modalAtoms'
+import { modalState, modalStoryState } from '@/app/store/atoms/modalAtoms'
+import Link from 'next/link'
 
 function Header() {
-	const [open, setOpen] = useRecoilState(modalState)
-	const [openStory, setOpenStory] = useRecoilState(modalState)
+	const [openFirstModal, setOpenFirstModal] = useRecoilState(modalState)
+	const [openSecondModal, setOpenSecondModal] = useRecoilState(modalStoryState)
 
 	return (
 		<div className="shadow-sm border-b bg-white sticky top-0 z-50">
-			<div
-				className="flex justify-between  max-w-6xl mx-5 h-14
-			lg:mx-auto"
-			>
-				{/* // left  */}
+			<div className="flex justify-between  max-w-6xl mx-5 h-14 lg:mx-auto">
+				{/* left */}
 				<div className="relative hidden lg:inline-grid  w-44 h-0 top-[-58px] left-[100px] cursor-pointer">
 					{/* logo large */}
 					<Link href="/dashboard">
@@ -36,7 +33,7 @@ function Header() {
 						className="h-20 w-20"
 					/>
 				</div>
-				{/* // middle */}
+				{/* middle */}
 				<div className="flex items-center space-x-20 relative top-[5px] right-7 ">
 					<div className="relative navBtn">
 						<Image
@@ -51,7 +48,7 @@ function Header() {
 						</div>
 					</div>
 					<Image
-						onClick={() => setOpen(true)}
+						onClick={() => setOpenFirstModal(true)}
 						src="/svg/addCircle.svg"
 						alt="home"
 						width={10}
@@ -59,7 +56,7 @@ function Header() {
 						className="navBtn"
 					/>
 					<Image
-						onClick={() => setOpenStory(true)}
+						onClick={() => setOpenSecondModal(true)}
 						src="/svg/image.svg"
 						alt="home"
 						width={10}
@@ -75,7 +72,7 @@ function Header() {
 					/>
 				</div>
 
-				{/* // right */}
+				{/* right */}
 
 				<div className="max-w-xl">
 					<div className="relative py-3 rounded-md lg:right-[130px]">
@@ -90,8 +87,7 @@ function Header() {
 						</div>
 						<input
 							type="text"
-							className="-50 block lg:w-[300px] w-[250px] pl-10
-						sm:text-sm border-gray-300 rounded-md focus:ring-black focus:border-black"
+							className="-50 block lg:w-[300px] w-[250px] pl-10 sm:text-sm border-gray-300 rounded-md focus:ring-black focus:border-black"
 							placeholder="Search"
 						/>
 					</div>

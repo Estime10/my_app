@@ -1,6 +1,6 @@
 'use client'
 import Image from 'next/image'
-import { modalState } from '@/app/store/atoms/modalAtoms'
+import { modalStoryState } from '@/app/store/atoms/modalAtoms'
 import { useRecoilState } from 'recoil'
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useRef, useState } from 'react'
@@ -17,13 +17,13 @@ import { useUser } from '@clerk/nextjs'
 
 const ModalStory = () => {
 	const { user } = useUser()
-	const [openStory, setOpenStory] = useRecoilState(modalState)
+	const [openStory, setOpenStory] = useRecoilState(modalStoryState)
 	const filePickerRef = useRef(null)
 	const captionRef = useRef(null)
 	const [loading, setLoading] = useState(false)
 	const [selectedFile, setSelectedFile] = useState(null)
 
-	const uploadPost = async () => {
+	const uploadStory = async () => {
 		if (loading) return
 		if (!user) return
 
@@ -160,7 +160,7 @@ const ModalStory = () => {
 										type="button"
 										disabled={!selectedFile}
 										className="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-400 text-base font-medium text-white hover:bg-gray-500 focus:outline-none focus:ring-offset-2 focus:ring-2 focus:ring-gray-400 sm:text-sm disabled:bg-gray-200 disabled:cursor-not-allowed hover:disabled:bg-gray-200 capitalize"
-										onClick={uploadPost}
+										onClick={uploadStory}
 									>
 										{loading ? 'Uploading...' : 'Upload Story'}
 									</button>

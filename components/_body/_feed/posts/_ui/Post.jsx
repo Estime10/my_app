@@ -15,7 +15,7 @@ import Moment from 'react-moment'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
-const Post = ({ image, caption, id, profileImg, username, fullName }) => {
+const Post = ({ image, caption, id, profileImg, username }) => {
 	const { user } = useUser()
 	const [comment, setComment] = useState('')
 	const [comments, setComments] = useState([])
@@ -71,7 +71,7 @@ const Post = ({ image, caption, id, profileImg, username, fullName }) => {
 
 	// check if user has liked post
 	useEffect(() => {
-		setHasLiked(likes.findIndex((like) => like.id === user.username) !== -1)
+		setHasLiked(likes.findIndex((like) => like.id === user?.username) !== -1)
 	}, [likes])
 
 	return (
