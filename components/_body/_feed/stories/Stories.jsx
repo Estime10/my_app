@@ -1,19 +1,35 @@
-import React from 'react'
-import profiles from '../../../_mapper/profiles'
+import React, { useEffect, useState } from 'react'
 import Story from './_ui/Story'
+import { collection, onSnapshot, orderBy, query } from 'firebase/firestore'
+import { db } from '@/firebase'
 
 const Stories = () => {
+	const [stories, setStories] = useState([])
+
+	// d'afficher les stories dans l'ordre de leur date de publication mais aussi de les mettre à jour en temps réel grâce à onSnapshot et le current user dabord
+	useEffect(() => {
+		const unsubscribe = onSnapshot(
+			query(collection(db, 'stories'), orderBy('timestamp', 'desc')),
+			(snapshot) => {
+				setStories(snapshot.docs)
+			}
+		)
+		return () => unsubscribe()
+	}, [db])
+
 	return (
 		<div
 			className="flex space-x-2 py-6 px-2 lg:px-3 bg-white border-gray-200 border 
 		rounded-b-xl capitalize overflow-x-scroll scrollbar-hide "
 		>
-			{profiles.map((profile) => (
+			{stories.map((storie) => (
 				<Story
-					key={profile.id}
-					img={profile.avatar}
-					username={profile.username}
-					name={profile.name}
+					key={storie.id}
+					id={storie.id}
+					username={storie.data().username}
+					profileImg={storie.data().profileImg}
+					image={storie.data().image}
+					name={storie.data().name}
 				/>
 			))}
 		</div>

@@ -1,10 +1,10 @@
 import Image from 'next/image'
 
-const Story = ({ img, username, name }) => {
+const Story = ({ image, caption, id, profileImg, username }) => {
 	return (
 		<div>
 			<Image
-				src={img}
+				src={profileImg}
 				alt="test"
 				width={80}
 				height={80}
@@ -12,6 +12,7 @@ const Story = ({ img, username, name }) => {
 				object-contain cursor-pointer hover:scale-110 transition-transform duration-200 ease-out"
 			/>
 			<p className="text-sm w-14 truncate text-center">{username}</p>
+			{/* créer une modal on click */}
 		</div>
 	)
 }
