@@ -4,7 +4,7 @@ export default authMiddleware({
 	// Routes that can be accessed while signed out
 	publicRoutes: [
 		'/', // The home page
-		['api/webhooks/clerk'], // Clerk webhooks
+		// ['api/webhooks/clerk'], // Clerk webhooks
 	],
 	// Routes that can always be accessed, and have
 	// no information
