@@ -1,16 +1,5 @@
 import { db } from '@/firebase'
 import { useUser } from '@clerk/nextjs'
-import {
-	addDoc,
-	collection,
-	deleteDoc,
-	doc,
-	onSnapshot,
-	orderBy,
-	query,
-	serverTimestamp,
-	setDoc,
-} from 'firebase/firestore'
 import Moment from 'react-moment'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
@@ -21,58 +10,6 @@ const Post = ({ image, caption, id, profileImg, username }) => {
 	const [comments, setComments] = useState([])
 	const [likes, setLikes] = useState([])
 	const [hasLiked, setHasLiked] = useState(false)
-
-	// get comments
-	useEffect(
-		() =>
-			onSnapshot(
-				query(
-					collection(db, 'posts', id, 'comments'),
-					orderBy('timestamp', 'desc')
-				),
-				(snapshot) => setComments(snapshot.docs)
-			),
-		[db, id]
-	)
-
-	const sendComment = async (e) => {
-		e.preventDefault()
-		const commentToSend = comment
-		setComment('')
-
-		await addDoc(collection(db, 'posts', id, 'comments'), {
-			comment: commentToSend,
-			userId: user.id,
-			username: user.username,
-			profileImg: user.imageUrl,
-			timestamp: serverTimestamp(),
-		})
-	}
-	// get likes
-	useEffect(
-		() =>
-			onSnapshot(collection(db, 'posts', id, 'likes'), (snapshot) =>
-				setLikes(snapshot.docs)
-			),
-		[db, id]
-	)
-
-	const likePost = async () => {
-		if (hasLiked) {
-			// remove like
-			await deleteDoc(doc(db, 'posts', id, 'likes', user.username))
-		} else {
-			await setDoc(doc(db, 'posts', id, 'likes', user.username), {
-				userId: user.id,
-				username: user.username,
-			})
-		}
-	}
-
-	// check if user has liked post
-	useEffect(() => {
-		setHasLiked(likes.findIndex((like) => like.id === user?.username) !== -1)
-	}, [likes])
 
 	return (
 		<div className="bg-white my-7 border rounded-xl">

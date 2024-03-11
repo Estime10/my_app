@@ -4,15 +4,6 @@ import { modalState } from '@/app/store/atoms/modalAtoms'
 import { useRecoilState } from 'recoil'
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useRef, useState } from 'react'
-import {
-	addDoc,
-	collection,
-	doc,
-	serverTimestamp,
-	updateDoc,
-} from 'firebase/firestore'
-import { db, storage } from '@/firebase'
-import { ref, getDownloadURL, uploadBytes } from 'firebase/storage'
 import { useUser } from '@clerk/nextjs'
 
 const ModalPost = () => {
@@ -23,49 +14,6 @@ const ModalPost = () => {
 	const [loading, setLoading] = useState(false)
 	const [selectedFile, setSelectedFile] = useState(null)
 
-	const uploadPost = async () => {
-		if (loading) return
-		if (!user) return
-
-		setLoading(true)
-
-		const docRef = await addDoc(collection(db, 'posts'), {
-			userId: user.id,
-			fullName: user.fullName,
-			username: user.username,
-			caption: captionRef.current.value,
-			profileImg: user.imageUrl,
-			timestamp: serverTimestamp(),
-		})
-
-		const imageRef = ref(storage, `users/${user.id}/posts/${docRef.id}/image`)
-
-		// Convertir l'URL base64 en un blob
-		const blob = await fetch(selectedFile).then((res) => res.blob())
-
-		// Télécharger le blob
-		await uploadBytes(imageRef, blob).then(async (snapshot) => {
-			const downloadURL = await getDownloadURL(imageRef)
-			await updateDoc(doc(db, 'posts', docRef.id), {
-				image: downloadURL,
-			})
-		})
-
-		setOpen(false)
-		setLoading(false)
-		setSelectedFile(null)
-	}
-
-	const addImageToPost = (e) => {
-		const reader = new FileReader()
-		if (e.target.files[0]) {
-			reader.readAsDataURL(e.target.files[0])
-		}
-
-		reader.onload = (readerEvent) => {
-			setSelectedFile(readerEvent.target.result)
-		}
-	}
 	return (
 		<Transition.Root show={open} as={Fragment}>
 			<Dialog
@@ -142,7 +90,7 @@ const ModalPost = () => {
 												ref={filePickerRef}
 												type="file"
 												hidden
-												onChange={addImageToPost}
+												// onChange={addImageToPost}
 											/>
 										</div>
 										<div>
@@ -160,7 +108,7 @@ const ModalPost = () => {
 										type="button"
 										disabled={!selectedFile}
 										className="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-400 text-base font-medium text-white hover:bg-gray-500 focus:outline-none focus:ring-offset-2 focus:ring-2 focus:ring-gray-400 sm:text-sm disabled:bg-gray-200 disabled:cursor-not-allowed hover:disabled:bg-gray-200 capitalize"
-										onClick={uploadPost}
+										// onClick={uploadPost}
 									>
 										{loading ? 'Uploading...' : 'Upload Post'}
 									</button>

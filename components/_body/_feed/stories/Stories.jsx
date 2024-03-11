@@ -1,21 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import Story from './_ui/Story'
-import { collection, onSnapshot, orderBy, query } from 'firebase/firestore'
-import { db } from '@/firebase'
 
 const Stories = () => {
 	const [stories, setStories] = useState([])
-
-	// d'afficher les stories dans l'ordre de leur date de publication mais aussi de les mettre à jour en temps réel grâce à onSnapshot et le current user dabord
-	useEffect(() => {
-		const unsubscribe = onSnapshot(
-			query(collection(db, 'stories'), orderBy('timestamp', 'desc')),
-			(snapshot) => {
-				setStories(snapshot.docs)
-			}
-		)
-		return () => unsubscribe()
-	}, [db])
 
 	return (
 		<div
