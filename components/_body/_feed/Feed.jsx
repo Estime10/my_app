@@ -1,10 +1,10 @@
 'use client'
 import React, { useState } from 'react'
-import Stories from './stories/Stories'
 import Posts from './posts/Posts'
 import MiniProfile from './miniprofile/MiniProfile'
 import Suggestions from './suggestions/Suggestions'
 import Loading from './loadingPosts'
+import StoryList from './stories/StoryList'
 
 const Feed = () => {
 	const [isloading, setLoading] = useState(true)
@@ -17,8 +17,8 @@ const Feed = () => {
 			>
 				{/* Section middle */}
 				<section className="col-span-2">
-					{/* Stories */}
-					<Stories />
+					{/* StoryList */}
+					<StoryList />
 					{/* Posts */}
 					{isloading && <Loading />}
 					<Posts setLoading={setLoading} />

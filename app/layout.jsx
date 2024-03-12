@@ -14,7 +14,7 @@ export default function RootLayout({ children }) {
 			<title>{metadata.title}</title>
 			<meta name="description" content={metadata.description} />
 			<ClerkProvider>
-				<body className="bg-slate-50">
+				<body>
 					<RecoilContextProvider>
 						<main>{children}</main>
 					</RecoilContextProvider>

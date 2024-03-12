@@ -11,24 +11,38 @@
 }
 
 body {
-	font-family: 'Lora', serif;
-	background-color: rgb((248 250 252));
+	font-family: 'Equinox', sans-serif;
+	background-color: #f2f2f2dc;
 }
+
 html {
 	scroll-behavior: smooth;
 }
 
-@layer components {
-	.navBtn {
-		@apply hidden h-10 w-8 md:inline-flex
-cursor-pointer hover:scale-125
-transition-all duration-150 ease-out;
-	}
-	.navBtnClose {
-		@apply lg:hidden h-8 w-8 hover:scale-125
-transition-all duration-150 ease-out;
-	}
-	.btn {
-		@apply h-6 hover:scale-125 cursor-pointer transition-all duration-150 ease-out;
-	}
+.cl-formButtonPrimary {
+	@apply bg-gray-400 text-white;
+}
+
+.cl-formButtonPrimary:hover {
+	@apply bg-gray-500;
+}
+
+.cl-footerAboutLink {
+	@apply text-gray-400;
+}
+
+.cl-footerAboutLink:hover {
+	@apply text-gray-500;
+}
+
+.navBtn {
+	@apply hidden h-10 w-8 md:inline-flex cursor-pointer hover:scale-125 transition-all duration-150 ease-out;
+}
+
+.navBtnClose {
+	@apply lg:hidden h-8 w-8 hover:scale-125 transition-all duration-150 ease-out;
+}
+
+.btn {
+	@apply h-6 hover:scale-125 cursor-pointer transition-all duration-150 ease-out;
 }

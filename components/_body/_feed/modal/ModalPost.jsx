@@ -14,6 +14,49 @@ const ModalPost = () => {
 	const [loading, setLoading] = useState(false)
 	const [selectedFile, setSelectedFile] = useState(null)
 
+	const uploadPost = async () => {
+		if (loading || !user) return
+
+		setLoading(true)
+
+		const docRef = await addDoc(collection(db, 'posts'), {
+			userId: user.id,
+			fullName: user.fullName,
+			username: user.username,
+			caption: captionRef.current.value,
+			profileImg: user.imageUrl,
+			timestamp: serverTimestamp(),
+		})
+
+		const imageRef = ref(storage, `users/${user.id}/posts/${docRef.id}/image`)
+
+		// Convertir l'URL base64 en un blob
+		const blob = await fetch(selectedFile).then((res) => res.blob())
+
+		// Télécharger le blob
+		await uploadBytes(imageRef, blob).then(async (snapshot) => {
+			const downloadURL = await getDownloadURL(imageRef)
+			await updateDoc(doc(db, 'posts', docRef.id), {
+				image: downloadURL,
+			})
+		})
+
+		setOpen(false)
+		setLoading(false)
+		setSelectedFile(null)
+	}
+
+	const addImageToPost = (e) => {
+		const reader = new FileReader()
+		if (e.target.files[0]) {
+			reader.readAsDataURL(e.target.files[0])
+		}
+
+		reader.onload = (readerEvent) => {
+			setSelectedFile(readerEvent.target.result)
+		}
+	}
+
 	return (
 		<Transition.Root show={open} as={Fragment}>
 			<Dialog

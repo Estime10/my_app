@@ -1,10 +1,10 @@
 import Image from 'next/image'
 
-const Story = ({ image, caption, id, profileImg, username }) => {
+const Story = ({ image, username }) => {
 	return (
 		<div>
 			<Image
-				src={profileImg}
+				src={image}
 				alt="test"
 				width={80}
 				height={80}

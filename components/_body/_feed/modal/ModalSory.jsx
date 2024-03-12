@@ -4,6 +4,17 @@ import { modalStoryState } from '@/app/store/atoms/modalAtoms'
 import { useRecoilState } from 'recoil'
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useRef, useState } from 'react'
+import {
+	addDoc,
+	collection,
+	doc,
+	getDoc,
+	serverTimestamp,
+	setDoc,
+	updateDoc,
+} from 'firebase/firestore'
+import { db, storage } from '@/firebase'
+import { ref, getDownloadURL, uploadBytes } from 'firebase/storage'
 import { useUser } from '@clerk/nextjs'
 
 const ModalStory = () => {
@@ -14,6 +25,61 @@ const ModalStory = () => {
 	const [loading, setLoading] = useState(false)
 	const [selectedFile, setSelectedFile] = useState(null)
 
+	const uploadStory = async () => {
+		if (loading || !user) return
+
+		setLoading(true)
+
+		const userRef = doc(db, 'users', user.id)
+		const userDoc = await getDoc(userRef)
+
+		if (!userDoc.exists()) {
+			// Si l'utilisateur n'existe pas, créez-le
+			await setDoc(userRef, {
+				fullName: user.fullName,
+				username: user.username,
+				profileImg: user.imageUrl,
+				timestamp: serverTimestamp(),
+			})
+		}
+
+		const docRef = await addDoc(collection(db, 'stories'), {
+			userId: user.id,
+			fullName: user.fullName,
+			username: user.username,
+			caption: captionRef.current.value,
+			profileImg: user.imageUrl,
+			timestamp: serverTimestamp(),
+		})
+
+		const imageRef = ref(storage, `users/${user.id}/stories/${docRef.id}/image`)
+
+		// Convertir l'URL base64 en un blob
+		const blob = await fetch(selectedFile).then((res) => res.blob())
+
+		// Télécharger le blob
+		await uploadBytes(imageRef, blob).then(async (snapshot) => {
+			const downloadURL = await getDownloadURL(imageRef)
+			await updateDoc(doc(db, 'stories', docRef.id), {
+				image: downloadURL,
+			})
+		})
+
+		setOpenStory(false)
+		setLoading(false)
+		setSelectedFile(null)
+	}
+
+	const addImageToStory = (e) => {
+		const reader = new FileReader()
+		if (e.target.files[0]) {
+			reader.readAsDataURL(e.target.files[0])
+		}
+
+		reader.onload = (readerEvent) => {
+			setSelectedFile(readerEvent.target.result)
+		}
+	}
 	return (
 		<Transition.Root show={openStory} as={Fragment}>
 			<Dialog

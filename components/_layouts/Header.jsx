@@ -9,7 +9,11 @@ function Header() {
 	const [openSecondModal, setOpenSecondModal] = useRecoilState(modalStoryState)
 
 	return (
-		<div className="shadow-sm border-b bg-white sticky top-0 z-50">
+		<div
+			className="shadow-sm border-b bg-white sticky 
+		-top-[6px]
+		lg:top-0 z-50"
+		>
 			<div className="flex justify-between  max-w-6xl mx-5 h-14 lg:mx-auto">
 				{/* left */}
 				<div className="relative hidden lg:inline-grid  w-44 h-0 top-[-58px] left-[100px] cursor-pointer">
@@ -23,7 +27,7 @@ function Header() {
 						/>
 					</Link>
 				</div>
-				<div className="relative w-24 top-0 flex-shrink-0 lg:hidden cursor-pointer">
+				<div className="relative w-24 -top-[8px] lg:top-0 flex-shrink-0 lg:hidden cursor-pointer">
 					{/* logo mobile */}
 					<Image
 						src="/image/logo_small-removebg-preview.png"
@@ -87,7 +91,8 @@ function Header() {
 						</div>
 						<input
 							type="text"
-							className="-50 block lg:w-[300px] w-[250px] pl-10 sm:text-sm border-gray-300 rounded-md focus:ring-black focus:border-black"
+							className=" block lg:w-[300px] w-[250px] pl-10 sm:text-sm border-gray-300 rounded-md -mt-[5px] lg:-mt-[2px] focus:ring-0
+							 focus:ring-gray-400 focus:border-gray-400"
 							placeholder="Search"
 						/>
 					</div>

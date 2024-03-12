@@ -6,7 +6,11 @@ module.exports = {
 		'./app/**/*.{js,ts,jsx,tsx,mdx}',
 	],
 	theme: {
-		extend: {},
+		extend: {
+			fontFamily: {
+				equinox: ['Equinox', 'sans-serif'],
+			},
+		},
 	},
 	plugins: [
 		require('@tailwindcss/forms'),
