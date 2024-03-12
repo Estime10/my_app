@@ -99,7 +99,7 @@ const Post = ({ image, caption, id, profileImg, username }) => {
 			<Image
 				className="object-cover w-full max-h-96"
 				src={image}
-				alt="post image"
+				alt="post"
 				width={200}
 				height={200}
 			/>

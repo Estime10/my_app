@@ -87,7 +87,8 @@ function Header() {
 						</div>
 						<input
 							type="text"
-							className="-50 block lg:w-[300px] w-[250px] pl-10 sm:text-sm border-gray-300 rounded-md focus:ring-black focus:border-black"
+							className=" block lg:w-[300px] w-[250px] pl-10 sm:text-sm border-gray-300 rounded-md -mt-[5px] lg:-mt-[2px] focus:ring-0
+							 focus:ring-gray-400 focus:border-gray-400"
 							placeholder="Search"
 						/>
 					</div>

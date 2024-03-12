@@ -24,8 +24,7 @@ const ModalPost = () => {
 	const [selectedFile, setSelectedFile] = useState(null)
 
 	const uploadPost = async () => {
-		if (loading) return
-		if (!user) return
+		if (loading || !user) return
 
 		setLoading(true)
 
@@ -66,6 +65,7 @@ const ModalPost = () => {
 			setSelectedFile(readerEvent.target.result)
 		}
 	}
+
 	return (
 		<Transition.Root show={open} as={Fragment}>
 			<Dialog

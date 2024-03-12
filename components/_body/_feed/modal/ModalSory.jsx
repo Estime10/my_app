@@ -8,7 +8,9 @@ import {
 	addDoc,
 	collection,
 	doc,
+	getDoc,
 	serverTimestamp,
+	setDoc,
 	updateDoc,
 } from 'firebase/firestore'
 import { db, storage } from '@/firebase'
@@ -24,10 +26,22 @@ const ModalStory = () => {
 	const [selectedFile, setSelectedFile] = useState(null)
 
 	const uploadStory = async () => {
-		if (loading) return
-		if (!user) return
+		if (loading || !user) return
 
 		setLoading(true)
+
+		const userRef = doc(db, 'users', user.id)
+		const userDoc = await getDoc(userRef)
+
+		if (!userDoc.exists()) {
+			// Si l'utilisateur n'existe pas, créez-le
+			await setDoc(userRef, {
+				fullName: user.fullName,
+				username: user.username,
+				profileImg: user.imageUrl,
+				timestamp: serverTimestamp(),
+			})
+		}
 
 		const docRef = await addDoc(collection(db, 'stories'), {
 			userId: user.id,

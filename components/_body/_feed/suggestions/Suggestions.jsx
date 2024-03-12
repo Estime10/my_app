@@ -1,38 +1,47 @@
-import suggestions from '@/components/_mapper/suggestions'
-import React from 'react'
-import Image from 'next/image'
+import React, { useState, useEffect } from 'react'
+import {
+	collection,
+	getDocs,
+	orderBy,
+	query,
+	onSnapshot,
+} from 'firebase/firestore'
+import { db } from '@/firebase'
+import { useUser } from '@clerk/nextjs'
+import Suggestion from './_ui/Suggrestion'
 
 const Suggestions = () => {
+	const [users, setUsers] = useState([])
+	const { user } = useUser()
+
+	useEffect(() => {
+		if (!user) return
+		const unsubscribe = onSnapshot(
+			query(collection(db, 'users'), orderBy('timestamp', 'desc')),
+			(snapshot) => {
+				console.log(snapshot.docs.map((doc) => doc.data()))
+
+				setUsers(snapshot.docs.map((doc) => doc.data()))
+			}
+		)
+		return () => unsubscribe()
+	}, [user])
+
 	return (
 		<div className="mt-4 ml-10">
-			<div className="flex justify-between text-sm mb-5">
+			<div className="flex justify-between text-sm mb-10 border-b border-gray-400 py-5">
 				<h3 className="text-sm font-bold text-gray-600 capitalize">
 					suggestions for you
 				</h3>
-				<button className="text-gray-400 font-semibold capitalize">
-					see all
-				</button>
 			</div>
-			{suggestions.map((profile) => (
-				<div
-					key={profile.id}
-					className="flex items-center justify-between mt-3"
-				>
-					<Image
-						className="rounded-full border p-[2px] w-10 h-10"
-						src={profile.avatar}
-						alt="profile pic"
-						width={40}
-						height={40}
-					/>
-					<div className="flex-1 mx-4">
-						<h2 className="font-semibold">{profile.username}</h2>
-						<h3 className="text-xs text-gray-600">{profile.name}</h3>
-					</div>
-					<button className="text-gray-400 font-semibold capitalize">
-						follow
-					</button>
-				</div>
+			{users.map((user) => (
+				<Suggestion
+					key={user.id}
+					id={user.id}
+					username={user.username}
+					image={user.profileImg}
+					fullName={user.fullName}
+				/>
 			))}
 		</div>
 	)
