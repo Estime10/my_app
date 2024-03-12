@@ -12,13 +12,6 @@ const MiniProfile = () => {
 
 	return (
 		<div className="flex items-center justify-between mt-14 ml-10 ">
-			{/* <Image
-				className="rounded-full border p-[2px] w-16 h-16"
-				src={user.imageUrl}
-				alt="profile pic"
-				width={40}
-				height={40}
-			/> */}
 			<div className="rounded-full border p-[2px]  ">
 				<UserButton afterSignOutUrl="/" />
 				<SignedOut>
