@@ -21,6 +21,8 @@ const Post = ({ image, caption, id, profileImg, username }) => {
 	const [comments, setComments] = useState([])
 	const [likes, setLikes] = useState([])
 	const [hasLiked, setHasLiked] = useState(false)
+	const [saves, setSaves] = useState([])
+	const [hasSaved, setHasSaved] = useState(false)
 
 	// get comments
 	useEffect(
@@ -73,6 +75,32 @@ const Post = ({ image, caption, id, profileImg, username }) => {
 	useEffect(() => {
 		setHasLiked(likes.findIndex((like) => like.id === user?.username) !== -1)
 	}, [likes])
+
+	// get saves
+	useEffect(
+		() =>
+			onSnapshot(collection(db, 'posts', id, 'saves'), (snapshot) =>
+				setSaves(snapshot.docs)
+			),
+		[db, id]
+	)
+
+	const savePost = async () => {
+		if (hasSaved) {
+			// remove save
+			await deleteDoc(doc(db, 'posts', id, 'saves', user.username))
+		} else {
+			await setDoc(doc(db, 'posts', id, 'saves', user.username), {
+				userId: user.id,
+				username: user.username,
+			})
+		}
+	}
+
+	// check if user has saved post
+	useEffect(() => {
+		setHasSaved(saves.findIndex((save) => save.id === user?.username) !== -1)
+	}, [saves])
 
 	return (
 		<div className="bg-white my-7 border rounded-xl">
@@ -137,15 +165,29 @@ const Post = ({ image, caption, id, profileImg, username }) => {
 						</div>
 					)}
 				</div>
+				{/* save */}
 				<div className="flex space-x-4">
-					{/* save */}
-					<Image
-						className="btn"
-						src="/svg/save.svg"
-						alt="save"
-						width={20}
-						height={20}
-					/>
+					{hasSaved ? (
+						<Image
+							className="btn"
+							src="/svg/savefill.svg"
+							alt="save"
+							width={20}
+							height={20}
+							onClick={savePost}
+						/>
+					) : (
+						<Image
+							className="btn"
+							src="/svg/save.svg"
+							alt="save"
+							width={20}
+							height={20}
+							onClick={savePost}
+						/>
+					)}
+					{/* saves section */}
+
 					{/* share */}
 					<Image
 						className="btn"

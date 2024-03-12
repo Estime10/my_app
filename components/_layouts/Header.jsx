@@ -9,7 +9,11 @@ function Header() {
 	const [openSecondModal, setOpenSecondModal] = useRecoilState(modalStoryState)
 
 	return (
-		<div className="shadow-sm border-b bg-white sticky top-0 z-50">
+		<div
+			className="shadow-sm border-b bg-white sticky 
+		-top-[6px]
+		lg:top-0 z-50"
+		>
 			<div className="flex justify-between  max-w-6xl mx-5 h-14 lg:mx-auto">
 				{/* left */}
 				<div className="relative hidden lg:inline-grid  w-44 h-0 top-[-58px] left-[100px] cursor-pointer">
@@ -23,7 +27,7 @@ function Header() {
 						/>
 					</Link>
 				</div>
-				<div className="relative w-24 top-0 flex-shrink-0 lg:hidden cursor-pointer">
+				<div className="relative w-24 -top-[8px] lg:top-0 flex-shrink-0 lg:hidden cursor-pointer">
 					{/* logo mobile */}
 					<Image
 						src="/image/logo_small-removebg-preview.png"

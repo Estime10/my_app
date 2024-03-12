@@ -1,17 +1,17 @@
+import { useUser } from '@clerk/nextjs'
 import React, { useState, useEffect } from 'react'
 import { collection, orderBy, query, onSnapshot } from 'firebase/firestore'
 import { db } from '@/firebase'
-import { useUser } from '@clerk/nextjs'
-import Suggestion from './_ui/Suggrestion'
+import Story from './_ui/Story'
 
-const Suggestions = () => {
-	const [users, setUsers] = useState([])
+const StoryList = () => {
 	const { user } = useUser()
+	const [users, setUsers] = useState([])
 
 	useEffect(() => {
 		if (!user) return
 		const unsubscribe = onSnapshot(
-			query(collection(db, 'users'), orderBy('timestamp', 'desc')),
+			query(collection(db, 'users'), orderBy('timestamp', 'asc')),
 			(snapshot) => {
 				console.log(snapshot.docs.map((doc) => doc.data()))
 
@@ -22,14 +22,12 @@ const Suggestions = () => {
 	}, [user])
 
 	return (
-		<div className="mt-4 ml-10">
-			<div className="flex justify-between text-sm mb-10 border-b border-gray-400 py-5">
-				<h3 className="text-sm font-bold text-gray-600 capitalize">
-					suggestions for you
-				</h3>
-			</div>
+		<div
+			className="flex space-x-2 py-6 px-2 lg:px-3 bg-white border-gray-200 border 
+		rounded-b-xl capitalize overflow-x-scroll scrollbar-hide "
+		>
 			{users.map((user) => (
-				<Suggestion
+				<Story
 					key={user.id}
 					id={user.id}
 					username={user.username}
@@ -41,4 +39,4 @@ const Suggestions = () => {
 	)
 }
 
-export default Suggestions
+export default StoryList
