@@ -28,7 +28,7 @@ const ModalPost = () => {
 
 		setLoading(true)
 
-		const docRef = await addDoc(collection(db, 'posts'), {
+		const postRef = await addDoc(collection(db, 'posts'), {
 			userId: user.id,
 			fullName: user.fullName,
 			username: user.username,
@@ -37,15 +37,20 @@ const ModalPost = () => {
 			timestamp: serverTimestamp(),
 		})
 
-		const imageRef = ref(storage, `users/${user.id}/posts/${docRef.id}/image`)
+		// Ajouter l'ID du post à la collection de l'utilisateur
+		await updateDoc(doc(db, 'users', user.id), {
+			posts: {
+				[postRef.id]: true,
+			},
+		})
 
+		const imageRef = ref(storage, `users/${user.id}/posts/${postRef.id}/image`)
 		// Convertir l'URL base64 en un blob
 		const blob = await fetch(selectedFile).then((res) => res.blob())
-
 		// Télécharger le blob
-		await uploadBytes(imageRef, blob).then(async (snapshot) => {
+		await uploadBytes(imageRef, blob).then(async () => {
 			const downloadURL = await getDownloadURL(imageRef)
-			await updateDoc(doc(db, 'posts', docRef.id), {
+			await updateDoc(doc(db, 'posts', postRef.id), {
 				image: downloadURL,
 			})
 		})
