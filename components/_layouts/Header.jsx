@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { useRecoilState } from 'recoil'
 import { modalState, modalStoryState } from '@/app/store/atoms/modalAtoms'
 import Link from 'next/link'
-
+import Searchbar from '../_layouts/_ui/Searchbar'
 function Header() {
 	const [openFirstModal, setOpenFirstModal] = useRecoilState(modalState)
 	const [openSecondModal, setOpenSecondModal] = useRecoilState(modalStoryState)
@@ -38,7 +38,7 @@ function Header() {
 					/>
 				</div>
 				{/* middle */}
-				<div className="flex items-center space-x-20 relative top-[5px] right-7 ">
+				<div className="flex items-center space-x-20 relative top-[5px] right-28 ">
 					<div className="relative navBtn">
 						<Image
 							src="/svg/send.svg"
@@ -78,25 +78,7 @@ function Header() {
 
 				{/* right */}
 
-				<div className="max-w-xl">
-					<div className="relative py-3 rounded-md lg:right-[130px]">
-						<div className="absolute inset-y-0 pl-3 flex items-center pointer-events-none">
-							<Image
-								src="/svg/search.svg"
-								alt=""
-								width={20}
-								height={20}
-								className="h-5 w-5"
-							/>
-						</div>
-						<input
-							type="text"
-							className=" block lg:w-[300px] w-[250px] pl-10 sm:text-sm border-gray-300 rounded-md -mt-[5px] lg:-mt-[2px] focus:ring-0
-							 focus:ring-gray-400 focus:border-gray-400"
-							placeholder="Search"
-						/>
-					</div>
-				</div>
+				<Searchbar />
 			</div>
 		</div>
 	)
