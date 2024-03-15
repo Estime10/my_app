@@ -1,70 +1,52 @@
 import React, { useState, useRef, useEffect } from 'react'
 import Image from 'next/image'
 import { collection, query, where, getDocs } from 'firebase/firestore'
-import { db } from '@/firebase' // Importez votre configuration Firebase depuis un fichier séparé
+import { db } from '@/firebase'
 import Link from 'next/link'
+import { motion } from 'framer-motion'
 
 const SearchBar = () => {
 	const [searchTerm, setSearchTerm] = useState('')
 	const [searchResults, setSearchResults] = useState([])
-	const [noUsersFound, setNoUsersFound] = useState(false) // Initialiser l'état noUsersFound à false
+	const [noUsersFound, setNoUsersFound] = useState(false)
 	const dropdownRef = useRef(null)
 
-	// Fonction pour rechercher des utilisateurs par leur nom d'utilisateur
 	const searchUsersByUsername = async (searchTerm) => {
 		if (searchTerm.trim() === '') {
-			console.log('Le terme de recherche est vide.')
 			setSearchResults([])
-			setNoUsersFound(false) // Réinitialiser l'état noUsersFound lorsque la recherche est vide
+			setNoUsersFound(false)
 			return
 		}
 
-		// Créer une référence à la collection 'users'
 		const usersRef = collection(db, 'users')
-
-		// Créer une requête pour rechercher les utilisateurs avec le nom d'utilisateur correspondant au terme de recherche
 		const q = query(
 			usersRef,
 			where('username', '>=', searchTerm),
 			where('username', '<=', searchTerm + '\uf8ff')
 		)
 
-		// Exécuter la requête et récupérer les résultats
 		const querySnapshot = await getDocs(q)
-
-		// Récupérer les données des utilisateurs correspondants
 		const users = []
 		querySnapshot.forEach((doc) => {
-			// Récupérer les données de chaque document utilisateur
 			const userData = doc.data()
-			console.log('Utilisateur trouvé:', userData)
-			// Ajouter les données utilisateur à un tableau
 			users.push(userData)
 		})
 
-		// Mettre à jour les résultats de recherche
 		setSearchResults(users)
-
-		// Mettre à jour l'état noUsersFound en fonction des résultats de la recherche
-		setNoUsersFound(users.length === 0) // Mettre à jour l'état noUsersFound si le tableau users est vide
-
-		console.log('Résultats de la recherche:', users)
+		setNoUsersFound(users.length === 0)
 	}
 
-	// Gérer les modifications dans le champ de recherche
 	const handleSearchChange = (event) => {
 		const value = event.target.value
 		setSearchTerm(value)
-		console.log('Terme de recherche mis à jour:', value)
 		searchUsersByUsername(value)
 	}
 
-	// Effacer le contenu du champ de recherche lorsque l'utilisateur clique en dehors de l'input
 	const handleClickOutside = (event) => {
 		if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
 			setSearchTerm('')
 			setSearchResults([])
-			setNoUsersFound(false) // Réinitialiser l'état noUsersFound à false lorsque l'utilisateur clique en dehors de l'input
+			setNoUsersFound(false)
 		}
 	}
 
@@ -76,12 +58,11 @@ const SearchBar = () => {
 	}, [])
 
 	const handleClickInside = (event) => {
-		// Empêcher la propagation de l'événement pour éviter que handleClickOutside ne se déclenche
 		event.stopPropagation()
 	}
 
 	const handleSearchSubmit = (event) => {
-		event.preventDefault() // Empêcher le comportement par défaut du formulaire
+		event.preventDefault()
 		if (searchTerm.trim() !== '') {
 			searchUsersByUsername(searchTerm)
 		}
@@ -104,34 +85,45 @@ const SearchBar = () => {
 					</div>
 				</form>
 			</div>
-			{/* Afficher l'aperçu des utilisateurs correspondants */}
-			<div
+			<motion.div
 				ref={dropdownRef}
-				className="absolute right-[-120px] lg:right-3 bg-gray-200  rounded-b-lg shadow-md lg:mt-[-0.75rem] mt-[-0.72rem] w-[245px] lg:w-[275px] z-0 max-h-44 "
+				initial={{ opacity: 0, y: -10 }}
+				animate={{ opacity: 1, y: 0 }}
+				exit={{ opacity: 0, y: -10 }}
+				transition={{ duration: 0.3 }}
+				className="absolute right-[-120px] lg:right-3 bg-gray-200 rounded-b-lg shadow-md lg:mt-[-0.75rem] mt-[-0.72rem] w-[245px] lg:w-[275px] z-10 max-h-44 overflow-y-auto"
 			>
 				{noUsersFound ? (
-					<div className="text-gray-500 p-1 hover:bg-gray-300 rounded-sm border-b border-gray-500 uppercase text-center">
+					<motion.div
+						initial={{ opacity: 0, y: -10 }}
+						animate={{ opacity: 1, y: 0 }}
+						exit={{ opacity: 0, y: -10 }}
+						transition={{ duration: 0.3 }}
+						className="text-gray-500 p-1 hover:bg-gray-300 rounded-sm border-b border-gray-500 uppercase text-center"
+					>
 						No users found
-					</div>
+					</motion.div>
 				) : (
 					<ResearchResult searchResults={searchResults} />
 				)}
-			</div>
+			</motion.div>
 		</div>
 	)
 }
 
-// Composant ResearchResult pour afficher les résultats de la recherche
 const ResearchResult = ({ searchResults }) => (
 	<>
 		{searchResults.map((user) => (
-			<div
+			<motion.div
 				key={user.id}
+				initial={{ opacity: 0, y: -10 }}
+				animate={{ opacity: 1, y: 0 }}
+				exit={{ opacity: 0, y: -10 }}
+				transition={{ duration: 0.3 }}
 				className="p-1 hover:bg-gray-300 rounded-sm border-b border-gray-500"
 			>
-				{/* Utiliser Link de Next.js pour envelopper le nom d'utilisateur dans un lien */}
 				<Link href={`/profile/${user.id}`}>
-					<div className="flex items-center ">
+					<div className="flex items-center">
 						<Image
 							src={user.profileImg}
 							alt="profile image"
@@ -139,10 +131,10 @@ const ResearchResult = ({ searchResults }) => (
 							height={30}
 							className="rounded-full cursor-pointer"
 						/>
-						<span className="ml-2 uppercase ">{user.username}</span>
+						<span className="ml-2 uppercase">{user.username}</span>
 					</div>
 				</Link>
-			</div>
+			</motion.div>
 		))}
 	</>
 )

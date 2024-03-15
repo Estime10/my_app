@@ -46,3 +46,11 @@ html {
 .btn {
 	@apply h-6 hover:scale-125 cursor-pointer transition-all duration-150 ease-out;
 }
+
+.avatar {
+	background: radial-gradient(
+		circle,
+		rgba(209, 213, 218, 1) 0%,
+		rgba(145, 148, 152, 1) 70%
+	);
+}

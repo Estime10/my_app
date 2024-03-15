@@ -24,7 +24,7 @@ function Footer() {
 							height={10}
 							className="navBtnClose "
 						/>
-						<div className="absolute -top-2 -right-2 text-base w-5 h-5 bg-gray-400 rounded-full flex items-center justify-center animate-pulse text-white">
+						<div className="absolute -top-2 -right-2 text-base w-5 h-5 bg-gray-400 rounded-full flex items-center justify-center text-white">
 							3
 						</div>
 					</div>

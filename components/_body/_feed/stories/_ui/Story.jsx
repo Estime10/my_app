@@ -4,7 +4,7 @@ import { doc, getDoc } from 'firebase/firestore'
 import { db } from '@/firebase'
 import { Modal } from 'flowbite'
 import Moment from 'react-moment'
-import { motion, AnimatePresence } from 'framer-motion' // Import de Framer Motion
+import { motion, AnimatePresence } from 'framer-motion'
 
 const StoryCard = ({ image, username, id, stories = {} }) => {
 	const [modal, setModal] = useState(null)
@@ -65,6 +65,9 @@ const StoryCard = ({ image, username, id, stories = {} }) => {
 			}
 		}
 	}, [showModal])
+	const pauseTimer = () => {
+		clearTimeout(timer)
+	}
 
 	const toggleModal = (event) => {
 		const isToggle = event.currentTarget.dataset.modalToggle
@@ -88,7 +91,7 @@ const StoryCard = ({ image, username, id, stories = {} }) => {
 		setProgressWidth(0)
 	}
 
-	const borderClass = hasStory ? 'border-black' : 'border-gray-400'
+	const borderClass = hasStory ? 'avatar' : 'border-gray-600 '
 
 	return (
 		<div>
@@ -106,7 +109,7 @@ const StoryCard = ({ image, username, id, stories = {} }) => {
 						height={80}
 						data-modal-target="extralarge-modal"
 						data-modal-toggle="extralarge-modal"
-						className={`h-14 w-14 rounded-full border-2 p-[1.5px] object-contain md:w-auto cursor-pointer ${borderClass}`}
+						className={`h-14 w-14 rounded-full border-4 p-[1.5px] object-contain md:w-auto cursor-pointer ${borderClass}`}
 					/>
 					<span className="text-sm w-14 truncate text-center cursor-default">
 						{username}
@@ -137,7 +140,7 @@ const StoryCard = ({ image, username, id, stories = {} }) => {
 					>
 						<motion.div
 							id="extralarge-modal"
-							className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center z-50 bg-black bg-opacity-50"
+							className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center z-50 bg-white "
 						>
 							<div className="p-6">
 								{storyData && (
