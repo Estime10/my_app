@@ -1,11 +1,11 @@
 'use client'
 import Image from 'next/image'
 import { useRecoilState } from 'recoil'
-import { modalState } from '@/app/store/atoms/modalAtoms'
+import { modalState, modalStoryState } from '@/app/store/atoms/modalAtoms'
 import { SignInButton, SignedOut, UserButton } from '@clerk/nextjs'
 function Footer() {
-	const [open, setOpen] = useRecoilState(modalState)
-
+	const [openFirstModal, setOpenFirstModal] = useRecoilState(modalState)
+	const [openSecondModal, setOpenSecondModal] = useRecoilState(modalStoryState)
 	return (
 		<div
 			className="shadow-sm border-t bg-white sticky -bottom-1 z-50 
@@ -29,7 +29,7 @@ function Footer() {
 						</div>
 					</div>
 					<Image
-						// onClick={() => setOpen(true)}
+						onClick={() => setOpenSecondModal(true)}
 						src="/svg/image.svg"
 						alt="home"
 						width={10}
@@ -37,7 +37,7 @@ function Footer() {
 						className="navBtnClose"
 					/>
 					<Image
-						onClick={() => setOpen(true)}
+						onClick={() => setOpenFirstModal(true)}
 						src="/svg/addCircle.svg"
 						alt="home"
 						width={10}
