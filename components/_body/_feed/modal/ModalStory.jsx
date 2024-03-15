@@ -21,7 +21,6 @@ const ModalStory = () => {
 	const { user } = useUser()
 	const [openStory, setOpenStory] = useRecoilState(modalStoryState)
 	const filePickerRef = useRef(null)
-	const captionRef = useRef(null)
 	const [loading, setLoading] = useState(false)
 	const [selectedFile, setSelectedFile] = useState(null)
 
@@ -47,7 +46,6 @@ const ModalStory = () => {
 			userId: user.id,
 			fullName: user.fullName,
 			username: user.username,
-			caption: captionRef.current.value,
 			profileImg: user.imageUrl,
 			timestamp: serverTimestamp(),
 		})
@@ -165,14 +163,6 @@ const ModalStory = () => {
 												type="file"
 												hidden
 												onChange={addImageToStory}
-											/>
-										</div>
-										<div>
-											<input
-												type="text"
-												ref={captionRef}
-												className="border-none focus:ring-0 w-full text-center"
-												placeholder="Please enter a caption..."
 											/>
 										</div>
 									</div>

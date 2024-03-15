@@ -2779,9 +2779,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"framer-motion@npm:^11.0.12":
-  version: 11.0.12
-  resolution: "framer-motion@npm:11.0.12"
+"framer-motion@npm:^11.0.14":
+  version: 11.0.14
+  resolution: "framer-motion@npm:11.0.14"
   dependencies:
     tslib: "npm:^2.4.0"
   peerDependencies:
@@ -2795,7 +2795,7 @@ __metadata:
       optional: true
     react-dom:
       optional: true
-  checksum: 10c0/a29ddc34f8d99208e9e76ce09fa2ae431630ba7c57b7efea240b4a6effb63cfe06ca5091fa737bb599efe436d2f8223018a9363b0bd2c02d2e19bdd9e30d8342
+  checksum: 10c0/ce54b8183f3924d3a0d09343b33feb89fba348910cea9fd459909da265279e680552e8cbe5594492b39bb53beefb028bd83681ba7319573d3470a0abc3b90a76
   languageName: node
   linkType: hard
 
@@ -3959,7 +3959,7 @@ __metadata:
     eslint-config-next: "npm:14.1.1"
     firebase: "npm:^10.8.1"
     flowbite: "npm:^2.3.0"
-    framer-motion: "npm:^11.0.12"
+    framer-motion: "npm:^11.0.14"
     lucide-react: "npm:^0.344.0"
     moment: "npm:^2.30.1"
     next: "npm:14.1.1"

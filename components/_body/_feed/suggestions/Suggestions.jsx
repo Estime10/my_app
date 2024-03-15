@@ -13,7 +13,7 @@ const Suggestions = () => {
 		const unsubscribe = onSnapshot(
 			query(collection(db, 'users'), orderBy('timestamp', 'desc')),
 			(snapshot) => {
-				console.log(snapshot.docs.map((doc) => doc.data()))
+				// console.log(snapshot.docs.map((doc) => doc.data()))
 
 				setUsers(snapshot.docs.map((doc) => doc.data()))
 			}
