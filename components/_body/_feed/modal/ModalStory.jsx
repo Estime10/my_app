@@ -21,7 +21,6 @@ const ModalStory = () => {
 	const { user } = useUser()
 	const [openStory, setOpenStory] = useRecoilState(modalStoryState)
 	const filePickerRef = useRef(null)
-	const captionRef = useRef(null)
 	const [loading, setLoading] = useState(false)
 	const [selectedFile, setSelectedFile] = useState(null)
 
@@ -43,24 +42,31 @@ const ModalStory = () => {
 			})
 		}
 
-		const docRef = await addDoc(collection(db, 'stories'), {
+		const storyRef = await addDoc(collection(db, 'stories'), {
 			userId: user.id,
 			fullName: user.fullName,
 			username: user.username,
-			caption: captionRef.current.value,
 			profileImg: user.imageUrl,
 			timestamp: serverTimestamp(),
 		})
 
-		const imageRef = ref(storage, `users/${user.id}/stories/${docRef.id}/image`)
+		// Ajouter l'ID de l'histoire à la collection de l'utilisateur
+		await updateDoc(userRef, {
+			stories: {
+				[storyRef.id]: true,
+			},
+		})
 
+		const imageRef = ref(
+			storage,
+			`users/${user.id}/stories/${storyRef.id}/image`
+		)
 		// Convertir l'URL base64 en un blob
 		const blob = await fetch(selectedFile).then((res) => res.blob())
-
 		// Télécharger le blob
-		await uploadBytes(imageRef, blob).then(async (snapshot) => {
+		await uploadBytes(imageRef, blob).then(async () => {
 			const downloadURL = await getDownloadURL(imageRef)
-			await updateDoc(doc(db, 'stories', docRef.id), {
+			await updateDoc(doc(db, 'stories', storyRef.id), {
 				image: downloadURL,
 			})
 		})
@@ -157,14 +163,6 @@ const ModalStory = () => {
 												type="file"
 												hidden
 												// onChange={addImageToStory}
-											/>
-										</div>
-										<div>
-											<input
-												type="text"
-												ref={captionRef}
-												className="border-none focus:ring-0 w-full text-center"
-												placeholder="Please enter a caption..."
 											/>
 										</div>
 									</div>

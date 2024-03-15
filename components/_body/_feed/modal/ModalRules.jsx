@@ -3,7 +3,16 @@ import React, { useEffect, useState } from 'react'
 import { Modal } from 'flowbite'
 import { useRouter } from 'next/navigation'
 import { useUser } from '@clerk/nextjs'
-import { doc, getDoc, serverTimestamp, setDoc } from 'firebase/firestore'
+import {
+	collection,
+	doc,
+	getDoc,
+	getDocs,
+	query,
+	serverTimestamp,
+	setDoc,
+	where,
+} from 'firebase/firestore'
 import { db } from '@/firebase'
 const ModalRules = () => {
 	const { user } = useUser()
@@ -42,6 +51,28 @@ const ModalRules = () => {
 				profileImg: user.imageUrl,
 				timestamp: serverTimestamp(),
 			})
+
+			// Récupérer les posts de l'utilisateur
+			const postsQuery = query(
+				collection(db, 'posts'),
+				where('userId', '==', user.id)
+			)
+			const postsSnapshot = await getDocs(postsQuery)
+			const posts = postsSnapshot.docs.map((doc) => doc.data())
+
+			// Enregistrer les posts dans la collection "users"
+			await setDoc(userRef, { posts: posts }, { merge: true })
+
+			// Récupérer les stories de l'utilisateur
+			const storiesQuery = query(
+				collection(db, 'stories'),
+				where('userId', '==', user.id)
+			)
+			const storiesSnapshot = await getDocs(storiesQuery)
+			const stories = storiesSnapshot.docs.map((doc) => doc.data())
+
+			// Enregistrer les stories dans la collection "users"
+			await setDoc(userRef, { stories: stories }, { merge: true })
 		}
 
 		// Rediriger vers /dashboard

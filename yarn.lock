@@ -2839,6 +2839,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"framer-motion@npm:^11.0.14":
+  version: 11.0.14
+  resolution: "framer-motion@npm:11.0.14"
+  dependencies:
+    tslib: "npm:^2.4.0"
+  peerDependencies:
+    "@emotion/is-prop-valid": "*"
+    react: ^18.0.0
+    react-dom: ^18.0.0
+  peerDependenciesMeta:
+    "@emotion/is-prop-valid":
+      optional: true
+    react:
+      optional: true
+    react-dom:
+      optional: true
+  checksum: 10c0/ce54b8183f3924d3a0d09343b33feb89fba348910cea9fd459909da265279e680552e8cbe5594492b39bb53beefb028bd83681ba7319573d3470a0abc3b90a76
+  languageName: node
+  linkType: hard
+
 "fs-minipass@npm:^2.0.0":
   version: 2.1.0
   resolution: "fs-minipass@npm:2.1.0"
@@ -4123,6 +4143,7 @@ __metadata:
     eslint-config-next: "npm:14.1.1"
     firebase: "npm:^10.8.1"
     flowbite: "npm:^2.3.0"
+    framer-motion: "npm:^11.0.14"
     lucide-react: "npm:^0.344.0"
     moment: "npm:^2.30.1"
     mongodb: "npm:^6.5.0"
