@@ -119,20 +119,20 @@ const StoryCard = ({ image, username, id, stories = {} }) => {
 						initial={{
 							opacity: 0,
 							scale: 0.5,
-							backgroundColor: 'rgba(0, 0, 0, 0)',
+							backgroundColor: 'rgba(255, 255, 255, 0)',
 						}}
 						animate={{
 							opacity: 1,
 							scale: 1,
-							backgroundColor: 'rgba(0, 0, 0, 0.5)',
+							backgroundColor: 'rgba(255, 255, 255, 1)',
 						}}
 						exit={{
 							opacity: 0,
 							scale: 0.5,
-							backgroundColor: 'rgba(0, 0, 0, 0)',
+							backgroundColor: 'rgba(255, 255, 255, 0)',
 						}}
-						transition={{ duration: 0.3 }}
-						className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center z-50 bg-black bg-opacity-50 overflow-y-hidden"
+						transition={{ duration: 0.5 }}
+						className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center z-50 overflow-y-hidden"
 						onClick={toggleModal}
 					>
 						<motion.div
