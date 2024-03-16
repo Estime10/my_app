@@ -2,7 +2,13 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { UserButton, useUser } from '@clerk/nextjs'
+import {
+	SignIn,
+	SignInButton,
+	SignedOut,
+	UserButton,
+	useUser,
+} from '@clerk/nextjs'
 
 const MiniProfile = () => {
 	const { isSignedIn, user } = useUser()
@@ -13,7 +19,7 @@ const MiniProfile = () => {
 	return (
 		<div className="flex items-center justify-between mt-14 ml-10 ">
 			<div className="rounded-full border p-[2px]  ">
-				<UserButton afterSignOutUrl="/" />
+				<UserButton />
 			</div>
 
 			<div className="flex-1 mx-4">

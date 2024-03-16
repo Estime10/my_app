@@ -91,7 +91,7 @@ const StoryCard = ({ image, username, id, stories = {} }) => {
 		setProgressWidth(0)
 	}
 
-	const borderClass = hasStory ? 'avatar' : 'border-gray-600 '
+	const borderClass = hasStory ? 'border-gray-600 ' : 'avatar'
 
 	return (
 		<div>
