@@ -1,5 +1,8 @@
 import { db } from '@/firebase'
 import { useUser } from '@clerk/nextjs'
+import Moment from 'react-moment'
+import Image from 'next/image'
+import { useEffect, useState } from 'react'
 import {
 	addDoc,
 	collection,
@@ -11,9 +14,6 @@ import {
 	serverTimestamp,
 	setDoc,
 } from 'firebase/firestore'
-import Moment from 'react-moment'
-import Image from 'next/image'
-import { useEffect, useState } from 'react'
 
 const Post = ({ image, caption, id, profileImg, username }) => {
 	const { user } = useUser()
@@ -114,13 +114,6 @@ const Post = ({ image, caption, id, profileImg, username }) => {
 					height={40}
 				/>
 				<p className="flex-1 font-bold capitalize">{username}</p>
-				<Image
-					className="h-5"
-					src="/svg/dots.svg"
-					alt="dots"
-					width={20}
-					height={20}
-				/>
 			</div>
 			{/* image */}
 

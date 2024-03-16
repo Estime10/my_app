@@ -1,7 +1,7 @@
 import React from 'react'
 import './globals.css'
 import { ClerkProvider } from '@clerk/nextjs'
-import RecoilContextProvider from './lib/recoilContextProvider'
+import RecoilContextProvider from './lib/recoil/recoilContextProvider'
 
 export const metadata = {
 	title: 'My_App',

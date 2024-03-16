@@ -25,7 +25,7 @@ const StoryList = () => {
 	}, [])
 
 	return (
-		<div className="flex space-x-2 py-6 px-2 lg:px-3 bg-white border-gray-200 border rounded-b-xl capitalize overflow-x-scroll scrollbar-hide">
+		<div className="flex space-x-2 p-6 px-2 lg:px-3 bg-white border-gray-200 border rounded-b-xl capitalize overflow-x-scroll scrollbar-hide">
 			{users.map((user) => (
 				<div key={user.id}>
 					<Story
