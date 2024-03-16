@@ -34,9 +34,9 @@ html {
 .cl-footerAboutLink:hover {
 	@apply text-gray-500;
 }
-.cl-avatarBox {
+/* .cl-avatarBox {
 	@apply w-[80px] h-[75px];
-}
+} */
 
 .navBtn {
 	@apply hidden h-10 w-8 md:inline-flex cursor-pointer hover:scale-125 transition-all duration-150 ease-out;

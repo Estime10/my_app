@@ -3,7 +3,14 @@ import { useUser } from '@clerk/nextjs'
 import Moment from 'react-moment'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
-import { collection, onSnapshot, orderBy, query } from 'firebase/firestore'
+import {
+	addDoc,
+	collection,
+	onSnapshot,
+	orderBy,
+	query,
+	serverTimestamp,
+} from 'firebase/firestore'
 
 const Post = ({ image, caption, id, profileImg, username }) => {
 	const { user } = useUser()
