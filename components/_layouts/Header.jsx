@@ -27,7 +27,7 @@ function Header() {
 						/>
 					</Link>
 				</div>
-				<div className="relative w-24 -top-[8px] lg:top-0 flex-shrink-0 lg:hidden cursor-pointer">
+				<div className="relative w-16 -top-[5px] lg:top-0 flex-shrink-0 lg:hidden cursor-pointer">
 					{/* logo mobile */}
 					<Image
 						src="/image/logo_small-removebg-preview.png"

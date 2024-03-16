@@ -65,9 +65,6 @@ const StoryCard = ({ image, username, id, stories = {} }) => {
 			}
 		}
 	}, [showModal])
-	const pauseTimer = () => {
-		clearTimeout(timer)
-	}
 
 	const toggleModal = (event) => {
 		const isToggle = event.currentTarget.dataset.modalToggle
@@ -111,7 +108,7 @@ const StoryCard = ({ image, username, id, stories = {} }) => {
 						data-modal-toggle="extralarge-modal"
 						className={`h-14 w-14 rounded-full border-4 p-[1.5px] object-contain md:w-auto cursor-pointer ${borderClass}`}
 					/>
-					<span className="text-sm w-14 truncate text-center cursor-default">
+					<span className="text-xs w-14 truncate text-center cursor-default">
 						{username}
 					</span>
 				</div>

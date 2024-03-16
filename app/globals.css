@@ -34,10 +34,13 @@ html {
 .cl-footerAboutLink:hover {
 	@apply text-gray-500;
 }
-/* .cl-avatarBox {
-	@apply w-[80px] h-[75px];
-} */
+.cl-card {
+	@apply w-[700px] h-[500px] bg-white shadow-md;
+}
 
+.cl-pageScrollBox {
+	@apply overflow-y-scroll scrollbar-hide;
+}
 .navBtn {
 	@apply hidden h-10 w-8 md:inline-flex cursor-pointer hover:scale-125 transition-all duration-150 ease-out;
 }
@@ -48,6 +51,14 @@ html {
 
 .btn {
 	@apply h-6 hover:scale-125 cursor-pointer transition-all duration-150 ease-out;
+}
+
+.suggestions-container {
+	@apply mt-4 ml-10;
+}
+
+.suggestions-list {
+	@apply max-h-[250px] overflow-y-auto scrollbar-hide;
 }
 
 .avatar {

@@ -6,10 +6,13 @@ import { useEffect, useState } from 'react'
 import {
 	addDoc,
 	collection,
+	deleteDoc,
+	doc,
 	onSnapshot,
 	orderBy,
 	query,
 	serverTimestamp,
+	setDoc,
 } from 'firebase/firestore'
 
 const Post = ({ image, caption, id, profileImg, username }) => {
@@ -111,13 +114,6 @@ const Post = ({ image, caption, id, profileImg, username }) => {
 					height={40}
 				/>
 				<p className="flex-1 font-bold capitalize">{username}</p>
-				<Image
-					className="h-5"
-					src="/svg/dots.svg"
-					alt="dots"
-					width={20}
-					height={20}
-				/>
 			</div>
 			{/* image */}
 
