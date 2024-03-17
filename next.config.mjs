@@ -6,6 +6,7 @@ const nextConfig = {
 			'i.pinimg.com',
 			'img.clerk.com',
 			'firebasestorage.googleapis.com',
+			'flowbite.s3.amazonaws.com',
 		],
 	},
 }

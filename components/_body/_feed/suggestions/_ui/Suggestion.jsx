@@ -15,9 +15,7 @@ const Suggestion = ({ image, username, fullName }) => {
 				<h3 className="text-xs text-gray-600">{fullName}</h3>
 			</div>
 			<div className="mt-4 lg:mt-0">
-				<button className="text-gray-400 font-semibold text-sm uppercase border border-gray-400 p-[2.5px] rounded-md ">
-					follow
-				</button>
+				<button className="btn-hover">follow</button>
 			</div>
 		</div>
 	)

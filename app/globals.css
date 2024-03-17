@@ -59,6 +59,85 @@ html {
 .btn {
 	@apply h-6 hover:scale-125 cursor-pointer transition-all duration-150 ease-out;
 }
+.btn-follow {
+	@apply w-20 text-xs font-semibold text-white cursor-pointer mx-2 my-2 h-6 text-center border-none bg-gradient-to-r  transition-all duration-200 rounded-md shadow-md uppercase;
+	background-size: 300% 100%;
+	background-image: linear-gradient(
+		to right,
+		#cdcdcd,
+		#485563,
+		#2b5876,
+		#4e4376
+	);
+}
+.btn-follow:hover {
+	background-position: 100% 0;
+	transition: all 0.4s ease-in-out;
+}
+.btn-follow:focus {
+	outline: none;
+}
+.btn-uploads {
+	@apply w-44 text-xs font-semibold text-white cursor-pointer mx-2 my-2 h-6 text-center 
+	border-none bg-gradient-to-r transition-all duration-200 rounded-md shadow-md uppercase;
+	background-size: 300% 100%;
+	background-image: linear-gradient(
+		to right,
+		#cdcdcd,
+		#485563,
+		#2b5876,
+		#4e4376
+	);
+}
+
+.btn-uploads:hover {
+	@apply hover:disabled:bg-gray-200;
+	background-position: 100% 0;
+	transition: all 0.4s ease-in-out;
+}
+
+.btn-uploads:focus {
+	outline: none;
+}
+
+.btn-uploads:disabled {
+	@apply bg-gray-200 text-gray-200 cursor-not-allowed;
+}
+
+.btn-hover {
+	@apply w-20 text-xs font-semibold text-white cursor-pointer mx-2 my-2 h-6 text-center border-none bg-gradient-to-r  transition-all duration-200 rounded-md shadow-md uppercase;
+	background-size: 300% 100%;
+	background-image: linear-gradient(
+		to right,
+		#cdcdcd,
+		#485563,
+		#2b5876,
+		#4e4376
+	);
+}
+
+.btn-hover:hover {
+	background-position: 100% 0;
+	transition: all 0.4s ease-in-out;
+}
+
+.btn-hover:focus {
+	outline: none;
+}
+
+.btn-custom {
+	@apply inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-gradient-to-r from-gray-400 to-gray-900 text-base font-medium text-white hover:bg-gradient-to-r hover:from-gray-500 hover:to-gray-900 focus:outline-none focus:ring-offset-2 focus:ring-2 focus:ring-gray-400 sm:text-sm disabled:bg-gray-200 disabled:cursor-not-allowed transition-all duration-200  uppercase;
+	background-size: 300% 100%;
+}
+
+.btn-custom:hover {
+	background-position: 100% 0;
+	transition: all 0.4s ease-in-out;
+}
+
+.btn-custom:focus {
+	outline: none;
+}
 
 .suggestions-container {
 	@apply mt-4 ml-10;

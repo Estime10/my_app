@@ -167,11 +167,11 @@ const ModalStory = () => {
 										</div>
 									</div>
 								</div>
-								<div className="mt-5 sm:mt-6">
+								<div className="mt-5 text-center sm:mt-6">
 									<button
 										type="button"
 										disabled={!selectedFile}
-										className="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-400 text-base font-medium text-white hover:bg-gray-500 focus:outline-none focus:ring-offset-2 focus:ring-2 focus:ring-gray-400 sm:text-sm disabled:bg-gray-200 disabled:cursor-not-allowed hover:disabled:bg-gray-200 capitalize"
+										className="btn-uploads"
 										onClick={uploadStory}
 									>
 										{loading ? 'Uploading...' : 'Upload Story'}

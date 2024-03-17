@@ -18,9 +18,7 @@ const Setting = () => {
 					<UserProfile />
 					<div className="mt-4">
 						<SignOutButton>
-							<button className="text-gray-400 font-semibold uppercase border border-gray-400 p-[2.5px] rounded-md">
-								log out
-							</button>
+							<button className="btn-follow">log out</button>
 						</SignOutButton>
 						<span className="flex lg:mt-3 text-xs text-gray-400 uppercase mt-4">
 							*make sure to log out to save your changes

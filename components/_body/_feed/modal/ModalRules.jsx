@@ -129,19 +129,19 @@ const ModalRules = () => {
 									<button
 										data-modal-hide="static-modal"
 										type="button"
-										className="text-white bg-gray-400 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+										className="btn-uploads"
 										onClick={handleAccept}
 									>
 										I accept
 									</button>
-									<button
+									{/* <button
 										disabled
 										data-modal-hide="static-modal"
 										type="button"
 										className="cursor-not-allowed py-2.5 px-5 ms-3 text-sm font-medium focus:outline-none bg-transparent rounded-lg border border-gray-200 "
 									>
 										Decline
-									</button>
+									</button> */}
 								</div>
 							</div>
 						</div>

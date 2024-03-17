@@ -132,7 +132,9 @@ const ResearchResult = ({ searchResults }) => (
 							height={30}
 							className="rounded-full cursor-pointer"
 						/>
-						<span className="ml-2 uppercase">{user.username}</span>
+						<span className="ml-2 uppercase text-xs truncate">
+							{user.username}
+						</span>
 					</div>
 				</Link>
 			</motion.div>
