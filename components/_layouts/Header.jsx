@@ -2,11 +2,17 @@
 import Image from 'next/image'
 import { useRecoilState } from 'recoil'
 import { modalState, modalStoryState } from '@/app/store/atoms/modalAtoms'
+import { useUser } from '@clerk/nextjs'
 import Link from 'next/link'
 import Searchbar from '../_layouts/_ui/Searchbar'
 function Header() {
 	const [openFirstModal, setOpenFirstModal] = useRecoilState(modalState)
 	const [openSecondModal, setOpenSecondModal] = useRecoilState(modalStoryState)
+	const { isSignedIn, user } = useUser()
+
+	if (!isSignedIn) {
+		return null
+	}
 
 	return (
 		<div
