@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { collection, orderBy, query, onSnapshot } from 'firebase/firestore'
 import { db } from '@/firebase'
 import { useUser } from '@clerk/nextjs'
-import Suggestion from './_ui/Suggrestion'
+import Suggestion from './_ui/Suggestion'
 
 const Suggestions = () => {
 	const [users, setUsers] = useState([])

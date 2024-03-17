@@ -5,8 +5,10 @@ import { db } from '@/firebase'
 import { Modal } from 'flowbite'
 import Moment from 'react-moment'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useAuth } from '@clerk/nextjs'
 
 const StoryCard = ({ image, username, id, stories = {} }) => {
+	const { isSignedIn, user } = useAuth()
 	const [modal, setModal] = useState(null)
 	const [showModal, setShowModal] = useState(false)
 	const [storyDocId, setStoryDocId] = useState(null)
@@ -102,11 +104,11 @@ const StoryCard = ({ image, username, id, stories = {} }) => {
 						onClick={toggleModal}
 						src={image}
 						alt="test"
-						width={80}
-						height={80}
+						width={800}
+						height={800}
 						data-modal-target="extralarge-modal"
 						data-modal-toggle="extralarge-modal"
-						className={`h-14 w-14 rounded-full border-4 p-[1.5px] object-contain md:w-auto cursor-pointer ${borderClass}`}
+						className={`h-14 w-14 rounded-full border-4 p-[1.5px] object-cover md:w-auto cursor-pointer ${borderClass}`}
 					/>
 					<span className="text-xs w-14 truncate text-center cursor-default">
 						{username}

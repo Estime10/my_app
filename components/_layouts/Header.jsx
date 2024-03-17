@@ -11,7 +11,7 @@ function Header() {
 	return (
 		<div
 			className="shadow-sm border-b bg-white sticky 
-		-top-[6px]
+		-top-[12px]
 		lg:top-0 z-50"
 		>
 			<div className="flex justify-between  max-w-6xl mx-5 h-14 lg:mx-auto">
@@ -29,6 +29,7 @@ function Header() {
 				</div>
 				<div className="relative w-16 -top-[5px] lg:top-0 flex-shrink-0 lg:hidden cursor-pointer">
 					{/* logo mobile */}
+
 					<Image
 						src="/image/logo_small-removebg-preview.png"
 						alt="Picture of the author"
@@ -42,7 +43,7 @@ function Header() {
 					<div className="relative navBtn">
 						<Image
 							src="/svg/send.svg"
-							alt="home"
+							alt="send"
 							width={10}
 							height={10}
 							className="navBtn"
@@ -54,7 +55,7 @@ function Header() {
 					<Image
 						onClick={() => setOpenFirstModal(true)}
 						src="/svg/addCircle.svg"
-						alt="home"
+						alt="post"
 						width={10}
 						height={10}
 						className="navBtn"
@@ -62,14 +63,14 @@ function Header() {
 					<Image
 						onClick={() => setOpenSecondModal(true)}
 						src="/svg/image.svg"
-						alt="home"
+						alt="story"
 						width={10}
 						height={10}
 						className="navBtn"
 					/>
 					<Image
 						src="/svg/profile.svg"
-						alt="home"
+						alt="profile"
 						width={10}
 						height={10}
 						className="navBtn"
@@ -77,8 +78,20 @@ function Header() {
 				</div>
 
 				{/* right */}
-
-				<Searchbar />
+				<div className="flex">
+					<Searchbar />
+					<div className="relative top-4 -left-1">
+						<Link href="/explorer">
+							<Image
+								src="/svg/search.svg"
+								alt="explorer"
+								width={10}
+								height={10}
+								className="navBtnClose"
+							/>
+						</Link>
+					</div>
+				</div>
 			</div>
 		</div>
 	)

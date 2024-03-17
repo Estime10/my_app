@@ -14,7 +14,7 @@ function Footer() {
 	}
 	return (
 		<div
-			className="shadow-sm border-t bg-white sticky -bottom-1 z-50 
+			className="shadow-sm border-t bg-white sticky -bottom-2 z-50 
 		flex md:hidden justify-center"
 		>
 			<div

@@ -69,14 +69,15 @@ const SearchBar = () => {
 	}
 
 	return (
-		<div className="relative -left-32" onClick={handleClickInside}>
+		<div className="relative -left-24" onClick={handleClickInside}>
 			<div className="py-3 rounded-md lg:right-[130px] w-[140px]">
 				<form className="max-w-md mx-auto" onSubmit={handleSearchSubmit}>
 					<div className="relative lg:-left-[162px]">
 						<input
 							type="search"
 							id="default-search"
-							className="block w-[270px] lg:w-[300px] ps-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:border-gray-400"
+							className="block w-[200px] lg:w-[300px] ps-4 text-sm text-gray-900 border
+							border-gray-300 rounded-lg bg-gray-50 focus:border-gray-400"
 							placeholder="Search User..."
 							required
 							value={searchTerm}
@@ -91,7 +92,7 @@ const SearchBar = () => {
 				animate={{ opacity: 1, y: 0 }}
 				exit={{ opacity: 0, y: -10 }}
 				transition={{ duration: 0.3 }}
-				className="absolute right-[-120px] lg:right-3 bg-gray-200 rounded-b-lg shadow-md lg:mt-[-0.75rem] mt-[-0.72rem] w-[245px] lg:w-[275px] z-10 max-h-44 overflow-y-auto"
+				className="absolute right-[-53px] lg:right-3 bg-gray-200 rounded-b-lg shadow-md lg:mt-[-0.75rem] mt-[-0.72rem] w-[185px] lg:w-[275px] z-10 max-h-44 overflow-y-auto"
 			>
 				{noUsersFound ? (
 					<motion.div

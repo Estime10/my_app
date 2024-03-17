@@ -7,13 +7,11 @@ import {
 	collection,
 	doc,
 	getDoc,
-	getDocs,
-	query,
-	serverTimestamp,
 	setDoc,
-	where,
+	serverTimestamp,
 } from 'firebase/firestore'
 import { db } from '@/firebase'
+
 const ModalRules = () => {
 	const { user } = useUser()
 	const [loading, setLoading] = useState(false)
@@ -34,11 +32,9 @@ const ModalRules = () => {
 		}
 	}, [])
 
-	// Fonction pour gérer la redirection vers /dashboard
-	const handleAccept = async () => {
-		if (loading || !user) return
-
-		setLoading(true)
+	// Fonction pour vérifier et mettre à jour les données de l'utilisateur
+	const checkAndUpdateUserData = async (userData) => {
+		if (!userData || !user) return
 
 		const userRef = doc(db, 'users', user.id)
 		const userDoc = await getDoc(userRef)
@@ -46,34 +42,50 @@ const ModalRules = () => {
 		if (!userDoc.exists()) {
 			// Si l'utilisateur n'existe pas, créez-le
 			await setDoc(userRef, {
-				fullName: user.fullName,
-				username: user.username,
-				profileImg: user.imageUrl,
+				fullName: userData.fullName,
+				username: userData.username,
+				profileImg: userData.imageUrl,
 				timestamp: serverTimestamp(),
 			})
-
-			// Récupérer les posts de l'utilisateur
-			const postsQuery = query(
-				collection(db, 'posts'),
-				where('userId', '==', user.id)
-			)
-			const postsSnapshot = await getDocs(postsQuery)
-			const posts = postsSnapshot.docs.map((doc) => doc.data())
-
-			// Enregistrer les posts dans la collection "users"
-			await setDoc(userRef, { posts: posts }, { merge: true })
-
-			// Récupérer les stories de l'utilisateur
-			const storiesQuery = query(
-				collection(db, 'stories'),
-				where('userId', '==', user.id)
-			)
-			const storiesSnapshot = await getDocs(storiesQuery)
-			const stories = storiesSnapshot.docs.map((doc) => doc.data())
-
-			// Enregistrer les stories dans la collection "users"
-			await setDoc(userRef, { stories: stories }, { merge: true })
+			return
 		}
+
+		const userDataFromDB = userDoc.data()
+
+		// Comparez les données actuelles avec les données de la base de données
+		if (
+			userData.fullName !== userDataFromDB.fullName ||
+			userData.username !== userDataFromDB.username ||
+			userData.imageUrl !== userDataFromDB.profileImg
+		) {
+			// Mise à jour des données dans la base de données
+			await setDoc(
+				userRef,
+				{
+					fullName: userData.fullName,
+					username: userData.username,
+					profileImg: userData.imageUrl,
+				},
+				{ merge: true }
+			)
+		}
+	}
+
+	// Fonction pour gérer la redirection vers /dashboard
+	const handleAccept = async () => {
+		if (loading || !user) return
+
+		setLoading(true)
+
+		// Récupérer les données actuelles de l'utilisateur
+		const userData = {
+			fullName: user.fullName,
+			username: user.username,
+			imageUrl: user.imageUrl,
+		}
+
+		// Vérifiez et mettez à jour les données de l'utilisateur
+		await checkAndUpdateUserData(userData)
 
 		// Rediriger vers /dashboard
 		router.push('/dashboard')

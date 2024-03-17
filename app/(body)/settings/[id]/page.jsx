@@ -1,13 +1,19 @@
 'use client'
-import React from 'react'
-import { useAuth, useUser } from '@clerk/nextjs'
-import Setting from '@/components/_body/_feed/setting/Setting'
-const SettingsId = () => {
-	const { isLoaded, userId, sessionId } = useAuth()
 
-	if (!isLoaded || !userId) {
-		return null
-	}
+import React, { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import { useAuth } from '@clerk/nextjs'
+import Setting from '@/components/_body/_options/setting/Setting'
+
+const SettingsId = () => {
+	const router = useRouter()
+	const { isLoaded, userId } = useAuth()
+
+	useEffect(() => {
+		if (!isLoaded || !userId) {
+			router.push('/')
+		}
+	}, [isLoaded, userId, router])
 
 	return (
 		<div>
