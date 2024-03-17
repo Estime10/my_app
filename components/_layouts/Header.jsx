@@ -74,13 +74,15 @@ function Header() {
 						height={10}
 						className="navBtn"
 					/>
-					<Image
-						src="/svg/profile.svg"
-						alt="profile"
-						width={10}
-						height={10}
-						className="navBtn"
-					/>
+					<Link href={`/profile/${user.id}`}>
+						<Image
+							src="/svg/profile.svg"
+							alt="profile"
+							width={10}
+							height={10}
+							className="navBtn"
+						/>
+					</Link>
 				</div>
 
 				{/* right */}

@@ -59,14 +59,15 @@ function Footer() {
 						height={10}
 						className="navBtnClose"
 					/>
-
-					<Image
-						src="/svg/profile.svg"
-						alt="home"
-						width={10}
-						height={10}
-						className="navBtnClose"
-					/>
+					<Link href={`/profile/${user.id}`}>
+						<Image
+							src="/svg/profile.svg"
+							alt="home"
+							width={10}
+							height={10}
+							className="navBtnClose"
+						/>
+					</Link>
 					<Link href={`/settings/${user.id}`}>
 						<Image
 							src="/svg/settings.svg"
