@@ -11,27 +11,29 @@ const MiniProfile = () => {
 	}
 
 	return (
-		<div className="flex items-center justify-between mt-14 ml-10">
-			<div className="rounded-full border-2  p-[2px]">
-				<Image
-					className="rounded-full  w-12 h-12"
-					src={user.imageUrl}
-					width={40}
-					height={40}
-				/>
-			</div>
+		<>
+			<div className="flex items-center justify-between mt-14 ml-10">
+				<div className="rounded-full border-2  p-[2px]">
+					<Image
+						className="rounded-full  w-12 h-12"
+						src={user.imageUrl}
+						width={40}
+						height={40}
+					/>
+				</div>
 
-			<div className="flex-1 mx-4">
-				<h2 className="font-bold">
-					{user.firstName} {user.lastName}
-				</h2>
-				<h3 className="text-xs text-gray-600">{user.username}</h3>
-			</div>
+				<div className="flex-1 mx-4">
+					<h2 className="font-bold">
+						{user.firstName} {user.lastName}
+					</h2>
+					<h3 className="text-xs text-gray-600">{user.username}</h3>
+				</div>
 
-			<button className="btn-hover  py-1">
-				<Link href={`/settings/${user.id}`}>Settings</Link>
-			</button>
-		</div>
+				<button className="btn-hover  py-1">
+					<Link href={`/settings/${user.id}`}>Settings</Link>
+				</button>
+			</div>
+		</>
 	)
 }
 

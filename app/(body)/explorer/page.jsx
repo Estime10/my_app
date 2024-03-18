@@ -3,8 +3,8 @@ import React from 'react'
 
 export default async function Explorer() {
 	return (
-		<main>
+		<div>
 			<SuggestionMobile />
-		</main>
+		</div>
 	)
 }

@@ -4,10 +4,12 @@ import Gallery from './_ui/Gallery'
 
 const Profile = () => {
 	return (
-		<div>
-			<Hero />
-			<Gallery />
-		</div>
+		<>
+			<div>
+				<Hero />
+				<Gallery />
+			</div>
+		</>
 	)
 }
 

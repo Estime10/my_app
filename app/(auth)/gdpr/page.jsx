@@ -1,4 +1,4 @@
-import ModalRules from '@/components/_body/_feed/modal/ModalRules'
+import ModalRules from '@/components/_modal/ModalRules'
 import React from 'react'
 
 const Rules = () => {

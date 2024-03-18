@@ -6,7 +6,7 @@ import { useUser } from '@clerk/nextjs'
 
 const StoryList = () => {
 	const [users, setUsers] = useState([])
-	const { isSignedIn, user } = useUser()
+	const { isSignedIn, isLoaded, user } = useUser()
 
 	useEffect(() => {
 		const getUsers = async () => {
@@ -29,18 +29,31 @@ const StoryList = () => {
 	}, [isSignedIn, user])
 
 	return (
-		<div className="flex space-x-2 p-6 px-2 lg:px-3 bg-white border-gray-200 border rounded-b-xl capitalize overflow-x-scroll scrollbar-hide">
-			{users.map((user) => (
-				<div key={user.id}>
+		<>
+			<div className="flex space-x-2 p-6 px-2 lg:px-3 bg-white border-gray-200 border rounded-b-xl capitalize overflow-x-scroll scrollbar-hide">
+				{isLoaded && user ? (
 					<Story
 						id={user.id}
-						image={user.profileImg}
+						image={user.imageUrl}
 						username={user.username}
 						stories={user.stories}
 					/>
-				</div>
-			))}
-		</div>
+				) : null}
+
+				{users
+					.filter((u) => u.username !== user.username)
+					.map((user) => (
+						<div key={user.id}>
+							<Story
+								id={user.id}
+								image={user.profileImg}
+								username={user.username}
+								stories={user.stories}
+							/>
+						</div>
+					))}
+			</div>
+		</>
 	)
 }
 

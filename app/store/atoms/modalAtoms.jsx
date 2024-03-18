@@ -9,3 +9,8 @@ export const modalStoryState = atom({
 	key: 'modalStoryState',
 	default: false,
 })
+
+export const modalProfileState = atom({
+	key: 'modalProfileState',
+	default: false,
+})
