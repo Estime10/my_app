@@ -6,7 +6,7 @@ import { useUser } from '@clerk/nextjs'
 
 const StoryList = () => {
 	const [users, setUsers] = useState([])
-	const { isSignedIn, isLoaded, user } = useUser()
+	const { isSignedIn, user, isLoaded } = useUser()
 
 	useEffect(() => {
 		const getUsers = async () => {
@@ -29,19 +29,11 @@ const StoryList = () => {
 	}, [isSignedIn, user])
 
 	return (
-		<>
-			<div className="flex space-x-2 p-6 px-2 lg:px-3 bg-white border-gray-200 border rounded-b-xl capitalize overflow-x-scroll scrollbar-hide">
-				{isLoaded && user ? (
-					<Story
-						id={user.id}
-						image={user.imageUrl}
-						username={user.username}
-						stories={user.stories}
-					/>
-				) : null}
-
-				{users
-					.filter((u) => u.username !== user.username)
+		<div className="flex space-x-2 p-6 px-2 lg:px-3 bg-white border-gray-200 border rounded-b-xl capitalize overflow-x-scroll scrollbar-hide">
+			{isLoaded && user ? (
+				users
+					// Trie les utilisateurs en fonction de l'identifiant de l'utilisateur actuel
+					.sort((a, b) => (a.id === user.id ? -1 : b.id === user.id ? 1 : 0))
 					.map((user) => (
 						<div key={user.id}>
 							<Story
@@ -51,9 +43,13 @@ const StoryList = () => {
 								stories={user.stories}
 							/>
 						</div>
-					))}
-			</div>
-		</>
+					))
+			) : (
+				<div className="flex items-center justify-center w-full h-full">
+					<p className="text-gray-400 text-lg">Loading...</p>
+				</div>
+			)}
+		</div>
 	)
 }
 
