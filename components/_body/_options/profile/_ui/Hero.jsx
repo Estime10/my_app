@@ -18,7 +18,7 @@ function Hero() {
 	const [followingCount, setFollowingCount] = useState(0)
 
 	useEffect(() => {
-		const fetchData = async () => {
+		const fetchUserData = async () => {
 			if (isSignedIn && user) {
 				try {
 					// Récupérer les informations de l'utilisateur depuis la collection 'users'
@@ -36,26 +36,28 @@ function Hero() {
 					)
 					setPostCount(userPosts.length)
 
-					// Récupérer le nombre de followers (followersCount) depuis la collection 'followers'
-					const followersSnapshot = await getDocs(collection(db, 'followers'))
-					const userFollowers = followersSnapshot.docs.filter(
-						(doc) => doc.data().userId === user.id
+					// Récupérer le nombre de followers depuis la collection 'followed'
+					const followedSnapshot = await getDocs(
+						collection(db, 'followed', user.username, 'i_am_followed_by')
 					)
-					setFollowersCount(userFollowers.length)
+					const followersCount = followedSnapshot.size
+					console.log('Followers count:', followersCount)
+					setFollowersCount(followersCount)
 
-					// Récupérer le nombre de suivis (followingCount) depuis la collection 'following'
-					const followingSnapshot = await getDocs(collection(db, 'following'))
-					const userFollowing = followingSnapshot.docs.filter(
-						(doc) => doc.data().userId === user.id
+					// Récupérer le nombre de personnes suivies depuis la collection 'following'
+					const followingSnapshot = await getDocs(
+						collection(db, 'following', user.id, 'i_m_following')
 					)
-					setFollowingCount(userFollowing.length)
+					const followingCount = followingSnapshot.size
+					console.log('Following count:', followingCount)
+					setFollowingCount(followingCount)
 				} catch (error) {
-					console.error('Error fetching data:', error)
+					console.error('Error fetching user data:', error)
 				}
 			}
 		}
 
-		fetchData()
+		fetchUserData()
 	}, [isSignedIn, user])
 
 	return (
@@ -75,10 +77,11 @@ function Hero() {
 							</div>
 						</div>
 						<div className="mt-4 md:mt-0 md:ml-6">
-							<div className="flex space-x-4 items-center">
-								<h1 className="text-xl font-bold capitalize ">{fullName}</h1>
+							<div className="flex space-x-32 lg:space-x-24 items-center">
+								<h1 className=" text-base lg:text-xl font-bold capitalize ">
+									{fullName}
+								</h1>
 								<div className="flex ">
-									<button className="btn-hover">Follow</button>
 									<button
 										onClick={() => {
 											setOpenThirdModal(true)
@@ -97,7 +100,7 @@ function Hero() {
 							<p className="mb-1 text-gray-400 text-base capitalize">
 								{biography}
 							</p>
-							<div className="flex capitalize font-semibold justify-between">
+							<div className="flex capitalize font-semibold space-x-16">
 								<div className="flex flex-col">
 									posts
 									<span className="font-bold text-gray-400">{postCount}</span>
@@ -105,7 +108,7 @@ function Hero() {
 								<div className="flex flex-col">
 									followers
 									<span className="font-bold text-gray-400">
-										{followersCount}
+										{followersCount}{' '}
 									</span>
 								</div>
 								<div className="flex flex-col">
