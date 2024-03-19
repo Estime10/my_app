@@ -79,8 +79,17 @@ const Suggestion = ({ image, username, fullName }) => {
 				<h3 className="text-xs text-gray-600">{fullName}</h3>
 			</div>
 			<div className="mt-4 lg:mt-0">
-				<button className="btn-hover" onClick={toggleFollow}>
-					{isFollowing ? 'Unfollow' : 'Follow'}
+				<button
+					className={`btn-hover ${isFollowing ? 'hidden' : ''}`}
+					onClick={toggleFollow}
+				>
+					Follow
+				</button>
+				<button
+					className={`btn-unfollow ${isFollowing ? '' : 'hidden'}`}
+					onClick={toggleFollow}
+				>
+					Unfollow
 				</button>
 			</div>
 		</div>

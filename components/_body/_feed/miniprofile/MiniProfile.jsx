@@ -29,7 +29,7 @@ const MiniProfile = () => {
 					<h3 className="text-xs text-gray-600">{user.username}</h3>
 				</div>
 
-				<button className="btn-hover  py-1">
+				<button className="btn-hover py-1">
 					<Link href={`/settings/${user.id}`}>Settings</Link>
 				</button>
 			</div>

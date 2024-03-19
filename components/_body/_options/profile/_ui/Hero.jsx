@@ -41,7 +41,6 @@ function Hero() {
 						collection(db, 'followed', user.username, 'i_am_followed_by')
 					)
 					const followersCount = followedSnapshot.size
-					console.log('Followers count:', followersCount)
 					setFollowersCount(followersCount)
 
 					// Récupérer le nombre de personnes suivies depuis la collection 'following'
@@ -49,7 +48,6 @@ function Hero() {
 						collection(db, 'following', user.id, 'i_m_following')
 					)
 					const followingCount = followingSnapshot.size
-					console.log('Following count:', followingCount)
 					setFollowingCount(followingCount)
 				} catch (error) {
 					console.error('Error fetching user data:', error)

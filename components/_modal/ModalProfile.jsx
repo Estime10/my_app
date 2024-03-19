@@ -1,9 +1,9 @@
-'use client'
+import React, { useRef, useState, useEffect } from 'react'
 import Image from 'next/image'
 import { modalProfileState } from '@/app/store/atoms/modalAtoms'
 import { useRecoilState } from 'recoil'
 import { Dialog, Transition } from '@headlessui/react'
-import { Fragment, useRef, useState } from 'react'
+import { Fragment } from 'react'
 import {
 	addDoc,
 	collection,
@@ -11,13 +11,14 @@ import {
 	doc,
 	setDoc,
 	getDoc,
-} from 'firebase/firestore' // Ajout des méthodes de Firestore nécessaires
+} from 'firebase/firestore'
 import { db } from '@/firebase'
 import { useUser } from '@clerk/nextjs'
 
 const ModalProfile = () => {
 	const { user } = useUser()
 	const [openProfile, setOpenProfile] = useRecoilState(modalProfileState)
+	const [bio, setBio] = useState('')
 	const captionRef = useRef(null)
 	const [loading, setLoading] = useState(false)
 
@@ -30,20 +31,31 @@ const ModalProfile = () => {
 		const userDoc = await getDoc(userRef)
 
 		if (userDoc.exists()) {
-			// Si l'utilisateur existe déjà dans la base de données
 			await setDoc(
 				userRef,
 				{
-					// Mettez à jour les données de l'utilisateur avec la nouvelle bio
-					biography: captionRef.current.value,
+					biography: bio,
 				},
-				{ merge: true } // Merge pour ne pas écraser les données existantes
+				{ merge: true }
 			)
+
+			// Récupérer la biographie mise à jour de la base de données
+			const updatedUserDoc = await getDoc(userRef)
+			const updatedBio = updatedUserDoc.data().biography
+
+			// Mettre à jour l'état local de la biographie
+			setBio(updatedBio)
 		}
 
 		setOpenProfile(false)
 		setLoading(false)
 	}
+
+	useEffect(() => {
+		if (captionRef.current) {
+			captionRef.current.value = bio
+		}
+	}, [bio])
 
 	return (
 		<>
@@ -107,6 +119,7 @@ const ModalProfile = () => {
 										<input
 											type="text"
 											ref={captionRef}
+											onChange={(e) => setBio(e.target.value)}
 											className="border-none focus:ring-0 w-full text-center"
 											placeholder="Please enter a caption..."
 										/>
