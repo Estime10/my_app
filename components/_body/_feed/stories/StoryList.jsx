@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { collection, getDocs } from 'firebase/firestore'
+import { collection, getDocs, onSnapshot } from 'firebase/firestore'
 import { db } from '@/firebase'
 import Story from './_ui/Story'
 import { useUser } from '@clerk/nextjs'
@@ -9,24 +9,25 @@ const StoryList = () => {
 	const { isSignedIn, user, isLoaded } = useUser()
 
 	useEffect(() => {
-		const getUsers = async () => {
-			try {
-				if (isSignedIn && user) {
-					const usersCollection = collection(db, 'users')
-					const usersSnapshot = await getDocs(usersCollection)
-					const usersData = usersSnapshot.docs.map((doc) => ({
-						id: doc.id,
-						...doc.data(),
-					}))
-					setUsers(usersData)
+		const unsubscribe = onSnapshot(collection(db, 'users'), (snapshot) => {
+			const updatedUsers = []
+			snapshot.forEach((doc) => {
+				const userData = {
+					id: doc.id,
+					...doc.data(),
 				}
-			} catch (error) {
-				console.error('Error getting users:', error)
+				console.log('UserData for user', doc.id, ':', userData)
+				updatedUsers.push(userData)
+			})
+			setUsers(updatedUsers)
+		})
+
+		return () => {
+			if (unsubscribe) {
+				unsubscribe()
 			}
 		}
-
-		getUsers()
-	}, [isSignedIn, user])
+	}, [])
 
 	return (
 		<div className="flex space-x-2 p-6 px-2 lg:px-3 bg-white border-gray-200 border rounded-b-xl capitalize overflow-x-scroll scrollbar-hide">

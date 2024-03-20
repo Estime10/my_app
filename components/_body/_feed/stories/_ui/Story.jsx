@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
-import { doc, getDoc } from 'firebase/firestore'
+import { doc, getDoc, onSnapshot, updateDoc } from 'firebase/firestore'
 import { db } from '@/firebase'
 import { Modal } from 'flowbite'
 import Moment from 'react-moment'
@@ -20,17 +20,22 @@ const StoryCard = ({ image, username, id, stories = {} }) => {
 	let timer
 
 	useEffect(() => {
+		let unsubscribe
+
 		const fetchStoryData = async () => {
 			try {
 				if (hasStory) {
 					const storyRef = doc(db, 'stories', storyId)
-					const storySnapshot = await getDoc(storyRef)
-					if (storySnapshot.exists()) {
-						setStoryDocId(storySnapshot.id)
-						setStoryData(storySnapshot.data())
-					} else {
-						console.log('Story does not exist.')
-					}
+					unsubscribe = onSnapshot(storyRef, (doc) => {
+						if (doc.exists()) {
+							const newData = doc.data()
+							console.log('Story data has changed:', newData)
+							setStoryDocId(doc.id)
+							setStoryData(newData)
+						} else {
+							console.log('Story does not exist.')
+						}
+					})
 				} else {
 					console.log('User does not have a story.')
 				}
@@ -40,6 +45,12 @@ const StoryCard = ({ image, username, id, stories = {} }) => {
 		}
 
 		fetchStoryData()
+
+		return () => {
+			if (unsubscribe) {
+				unsubscribe()
+			}
+		}
 	}, [hasStory, storyId])
 
 	useEffect(() => {
@@ -92,6 +103,25 @@ const StoryCard = ({ image, username, id, stories = {} }) => {
 
 	const borderClass = hasStory ? 'border-red-400' : 'avatar'
 
+	const updateStoryView = async () => {
+		try {
+			if (storyDocId) {
+				await updateDoc(doc(db, 'stories', storyDocId), {
+					views: storyData.views + 1,
+				})
+				console.log('Story view updated successfully.')
+			}
+		} catch (error) {
+			console.error('Error updating story view:', error)
+		}
+	}
+
+	useEffect(() => {
+		if (showModal) {
+			updateStoryView()
+		}
+	}, [showModal])
+
 	return (
 		<>
 			<div>
@@ -110,7 +140,7 @@ const StoryCard = ({ image, username, id, stories = {} }) => {
 							data-modal-target="extralarge-modal"
 							data-modal-toggle="extralarge-modal"
 							className={`h-14 w-14 rounded-full border-2 p-[1.5px] object-cover md:w-auto cursor-pointer 
-						${borderClass}`}
+                            ${borderClass}`}
 						/>
 						<span className="text-xs w-14 truncate text-center cursor-default">
 							{username}
