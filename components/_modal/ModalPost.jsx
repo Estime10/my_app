@@ -44,6 +44,8 @@ const ModalPost = () => {
 			},
 		})
 
+		filePickerRef.current.value = null
+
 		const imageRef = ref(storage, `users/${user.id}/posts/${postRef.id}/image`)
 		// Convertir l'URL base64 en un blob
 		const blob = await fetch(selectedFile).then((res) => res.blob())
@@ -157,11 +159,16 @@ const ModalPost = () => {
 													ref={captionRef}
 													className="border-none focus:ring-0 w-full text-center"
 													placeholder="Please enter a caption..."
+													onBlur={() => {
+														captionRef.current.value = ''
+													}}
 												/>
 											</div>
 										</div>
 									</div>
-									<div className="mt-5 text-center sm:mt-6">
+									<div
+										className={`mt-5 text-center sm:mt-6 ${selectedFile ? 'flex' : 'flex-col'}`}
+									>
 										<button
 											type="button"
 											disabled={!selectedFile}
@@ -170,6 +177,18 @@ const ModalPost = () => {
 										>
 											{loading ? 'Uploading...' : 'Upload Post'}
 										</button>
+										{selectedFile && (
+											<button
+												type="button"
+												className="btn-cancel"
+												onClick={() => {
+													filePickerRef.current.value = ''
+													setSelectedFile(null)
+												}}
+											>
+												Cancel
+											</button>
+										)}
 									</div>
 								</div>
 							</div>

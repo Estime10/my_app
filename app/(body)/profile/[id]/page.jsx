@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@clerk/nextjs'
-import Profile from '@/components/_body/_options/profile/Profile'
+import Profile from '@/components/_body/_profile/profile/Profile'
 import ModalPost from '@/components/_modal/ModalPost'
 import ModalStory from '@/components/_modal/ModalStory'
 import ModalProfile from '@/components/_modal/ModalProfile'

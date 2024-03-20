@@ -164,11 +164,16 @@ const ModalStory = () => {
 													type="file"
 													hidden
 													onChange={addImageToStory}
+													onBlur={() => {
+														filePickerRef.current.value = ''
+													}}
 												/>
 											</div>
 										</div>
 									</div>
-									<div className="mt-5 text-center sm:mt-6">
+									<div
+										className={`mt-5 text-center sm:mt-6 ${selectedFile ? 'flex' : 'flex-col'}`}
+									>
 										<button
 											type="button"
 											disabled={!selectedFile}
@@ -177,6 +182,18 @@ const ModalStory = () => {
 										>
 											{loading ? 'Uploading...' : 'Upload Story'}
 										</button>
+										{selectedFile && (
+											<button
+												type="button"
+												className="btn-cancel"
+												onClick={() => {
+													filePickerRef.current.value = ''
+													setSelectedFile(null)
+												}}
+											>
+												Cancel
+											</button>
+										)}
 									</div>
 								</div>
 							</div>

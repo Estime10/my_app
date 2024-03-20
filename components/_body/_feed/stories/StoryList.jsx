@@ -16,7 +16,6 @@ const StoryList = () => {
 					id: doc.id,
 					...doc.data(),
 				}
-				console.log('UserData for user', doc.id, ':', userData)
 				updatedUsers.push(userData)
 			})
 			setUsers(updatedUsers)

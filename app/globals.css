@@ -124,6 +124,25 @@ html {
 .btn-uploads:disabled {
 	@apply bg-gray-200 text-gray-200 cursor-not-allowed;
 }
+.btn-cancel {
+	@apply w-44 text-xs font-semibold text-white cursor-pointer mx-2 my-2 h-6 text-center 
+	border-none bg-gradient-to-r transition-all duration-200 rounded-md shadow-md uppercase;
+	background-size: 300% 100%;
+	background-image: linear-gradient(
+		to right,
+		#4e4376,
+		#2b5876,
+		#485563,
+		#cdcdcd
+	);
+}
+.btn-cancel:hover {
+	background-position: 100% 0;
+	transition: all 0.4s ease-in-out;
+}
+.btn-cancel:focus {
+	outline: none;
+}
 
 .btn-hover {
 	@apply w-20 text-xs font-semibold text-white cursor-pointer mx-2 my-2 h-6 text-center border-none bg-gradient-to-r  transition-all duration-200 rounded-md shadow-md uppercase;
@@ -135,6 +154,30 @@ html {
 		#2b5876,
 		#4e4376
 	);
+}
+.btn-filter {
+	@apply w-20 text-xs font-semibold text-white cursor-pointer mx-2 my-2 h-6 text-center border-none bg-gradient-to-r  transition-all duration-200 rounded-md shadow-md uppercase;
+	background-size: 300% 100%;
+	background-image: linear-gradient(
+		to left,
+		#4e4376,
+		#2b5876,
+		#485563,
+		#cdcdcd
+	);
+}
+
+.btn-filter:hover {
+	background-position: 100% 0;
+	transition: all 0.4s ease-in-out;
+}
+
+.btn-filter:focus {
+	outline: none;
+}
+
+.active {
+	@apply bg-white text-gray-800;
 }
 
 .btn-hover:hover {

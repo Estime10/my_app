@@ -122,6 +122,9 @@ const ModalProfile = () => {
 											onChange={(e) => setBio(e.target.value)}
 											className="border-none focus:ring-0 w-full text-center"
 											placeholder="Please enter a caption..."
+											onBlur={() => {
+												captionRef.current.value = ''
+											}}
 										/>
 									</div>
 									<div className="mt-5 text-center sm:mt-6">

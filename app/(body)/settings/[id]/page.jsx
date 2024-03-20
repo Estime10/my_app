@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@clerk/nextjs'
-import Setting from '@/components/_body/_options/setting/Setting'
+import Setting from '@/components/_body/_option/setting/Setting'
 
 const SettingsId = () => {
 	const router = useRouter()

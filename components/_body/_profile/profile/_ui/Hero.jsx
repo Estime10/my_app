@@ -3,8 +3,24 @@ import Image from 'next/image'
 import { useRecoilState } from 'recoil'
 import { modalProfileState } from '@/app/store/atoms/modalAtoms'
 import { useUser } from '@clerk/nextjs'
-import { collection, getDocs, doc, getDoc } from 'firebase/firestore'
+import {
+	collection,
+	getDocs,
+	doc,
+	getDoc,
+	onSnapshot,
+} from 'firebase/firestore'
 import { db } from '@/firebase'
+
+const formatCount = (count) => {
+	if (count >= 1000000) {
+		return (count / 1000000).toFixed(1) + 'M'
+	} else if (count >= 1000) {
+		return (count / 1000).toFixed(1) + 'K'
+	} else {
+		return count
+	}
+}
 
 function Hero() {
 	const { isSignedIn, user } = useUser()
@@ -22,12 +38,18 @@ function Hero() {
 			if (isSignedIn && user) {
 				try {
 					// Récupérer les informations de l'utilisateur depuis la collection 'users'
-					const userDoc = await getDoc(doc(db, 'users', user.id))
-					const userData = userDoc.data()
-					setFullName(userData.fullName)
-					setUsername(userData.username)
-					setProfileImg(userData.profileImg)
-					setBiography(userData.biography)
+					const userDocRef = doc(db, 'users', user.id)
+					onSnapshot(userDocRef, (doc) => {
+						if (doc.exists()) {
+							const userData = doc.data()
+							setFullName(userData.fullName)
+							setUsername(userData.username)
+							setProfileImg(userData.profileImg)
+							setBiography(userData.biography)
+						} else {
+							console.log('User document does not exist.')
+						}
+					})
 
 					// Récupérer le nombre de publications (postCount) depuis la collection 'posts'
 					const postsSnapshot = await getDocs(collection(db, 'posts'))
@@ -98,7 +120,7 @@ function Hero() {
 							<p className="mb-1 text-gray-400 text-base capitalize">
 								{biography}
 							</p>
-							<div className="flex capitalize font-semibold space-x-16">
+							<div className="flex capitalize font-semibold space-x-16 mt-5">
 								<div className="flex flex-col">
 									posts
 									<span className="font-bold text-gray-400">{postCount}</span>
@@ -106,13 +128,13 @@ function Hero() {
 								<div className="flex flex-col">
 									followers
 									<span className="font-bold text-gray-400">
-										{followersCount}{' '}
+										{formatCount(followersCount)}
 									</span>
 								</div>
 								<div className="flex flex-col">
 									following
 									<span className="font-bold text-gray-400">
-										{followingCount}
+										{formatCount(followingCount)}
 									</span>
 								</div>
 							</div>
