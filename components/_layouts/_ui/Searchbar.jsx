@@ -29,7 +29,7 @@ const SearchBar = () => {
 		const users = []
 		querySnapshot.forEach((doc) => {
 			const userData = doc.data()
-			users.push(userData)
+			users.push({ id: doc.id, ...userData })
 		})
 
 		setSearchResults(users)
@@ -117,31 +117,34 @@ const SearchBar = () => {
 
 const ResearchResult = ({ searchResults }) => (
 	<>
-		{searchResults.map((user) => (
-			<motion.div
-				key={user.id}
-				initial={{ opacity: 0, y: -10 }}
-				animate={{ opacity: 1, y: 0 }}
-				exit={{ opacity: 0, y: -10 }}
-				transition={{ duration: 0.3 }}
-				className="p-1 hover:bg-gray-300 rounded-sm border-b border-gray-500"
-			>
-				<Link href={`/profile/${user.id}`}>
-					<div className="flex items-center">
-						<Image
-							src={user.profileImg}
-							alt="profile image"
-							width={30}
-							height={30}
-							className="rounded-full cursor-pointer"
-						/>
-						<span className="ml-2 uppercase text-xs truncate">
-							{user.username}
-						</span>
-					</div>
-				</Link>
-			</motion.div>
-		))}
+		{searchResults.map((user) => {
+			console.log('User ID from Firestore:', user.id)
+			return (
+				<motion.div
+					key={user.id}
+					initial={{ opacity: 0, y: -10 }}
+					animate={{ opacity: 1, y: 0 }}
+					exit={{ opacity: 0, y: -10 }}
+					transition={{ duration: 0.3 }}
+					className="p-1 hover:bg-gray-300 rounded-sm border-b border-gray-500"
+				>
+					<Link href={`/profiles/${user.id}`}>
+						<div className="flex items-center cursor-pointer">
+							<Image
+								src={user.profileImg}
+								alt="profile image"
+								width={30}
+								height={30}
+								className="rounded-full"
+							/>
+							<span className="ml-2 uppercase text-xs truncate">
+								{user.username}
+							</span>
+						</div>
+					</Link>
+				</motion.div>
+			)
+		})}
 	</>
 )
 

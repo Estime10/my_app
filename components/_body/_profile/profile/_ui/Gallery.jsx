@@ -1,32 +1,41 @@
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
-import { useUser } from '@clerk/nextjs'
-import { collection, onSnapshot } from 'firebase/firestore'
+import { useParams } from 'next/navigation'
+import { collection, onSnapshot, doc, getDoc } from 'firebase/firestore'
 import { db } from '@/firebase'
 import { motion } from 'framer-motion'
 
 const Gallery = () => {
-	const { user } = useUser()
+	const params = useParams()
 	const [userPosts, setUserPosts] = useState([])
 	const [userStories, setUserStories] = useState([])
+	const [username, setUsername] = useState('')
 	const [filter, setFilter] = useState('posts')
 
 	useEffect(() => {
-		const fetchUserPosts = async () => {
-			if (user) {
-				try {
+		const fetchUserData = async () => {
+			try {
+				// Récupérer les informations de l'utilisateur depuis la collection 'users'
+				const userDocRef = doc(db, 'users', params.id)
+				const userDoc = await getDoc(userDocRef)
+				if (userDoc.exists()) {
+					const userData = userDoc.data()
+					setUsername(userData.username)
+
+					// Récupérer les publications de l'utilisateur depuis la collection 'posts'
 					const postsRef = collection(db, 'posts')
 					const unsubscribePosts = onSnapshot(postsRef, (snapshot) => {
 						const posts = snapshot.docs
-							.filter((doc) => doc.data().userId === user.id)
+							.filter((doc) => doc.data().userId === params.id)
 							.map((doc) => ({ id: doc.id, ...doc.data() }))
 						setUserPosts(posts)
 					})
 
+					// Récupérer les stories de l'utilisateur depuis la collection 'stories'
 					const storiesRef = collection(db, 'stories')
 					const unsubscribeStories = onSnapshot(storiesRef, (snapshot) => {
 						const stories = snapshot.docs
-							.filter((doc) => doc.data().userId === user.id)
+							.filter((doc) => doc.data().userId === params.id)
 							.map((doc) => ({ id: doc.id, ...doc.data() }))
 						setUserStories(stories)
 					})
@@ -35,14 +44,16 @@ const Gallery = () => {
 						unsubscribePosts()
 						unsubscribeStories()
 					}
-				} catch (error) {
-					console.error('Error fetching user data:', error)
+				} else {
+					console.log('User document does not exist.')
 				}
+			} catch (error) {
+				console.error('Error fetching user data:', error)
 			}
 		}
 
-		fetchUserPosts()
-	}, [user])
+		fetchUserData()
+	}, [params.id])
 
 	const handleFilterChange = (newFilter) => {
 		setFilter(newFilter)

@@ -74,7 +74,7 @@ function Header() {
 						height={10}
 						className="navBtn"
 					/>
-					<Link href={`/profile/${user.id}`}>
+					<Link href={`/profiles/${user.id}`}>
 						<Image
 							src="/svg/profile.svg"
 							alt="profile"

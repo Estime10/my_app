@@ -1,6 +1,7 @@
 import React from 'react'
 import RecoilContextProvider from '@/app/lib/recoil/recoilContextProvider'
-import HeaderProfile from '@/components/_layouts/HeaderProfile'
+import HeaderSettings from '@/components/_layouts/HedearSettings'
+import Footer from '@/components/_layouts/Footer'
 
 export const metadata = {
 	title: 'My_App',
@@ -10,7 +11,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
 	return (
 		<RecoilContextProvider>
-			<HeaderProfile />
+			<HeaderSettings />
 			<div>{children}</div>
 		</RecoilContextProvider>
 	)

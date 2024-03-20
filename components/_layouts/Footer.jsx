@@ -59,7 +59,7 @@ function Footer() {
 						height={10}
 						className="navBtnClose"
 					/>
-					<Link href={`/profile/${user.id}`}>
+					<Link href={`/profiles/${user.id}`}>
 						<Image
 							src="/svg/profile.svg"
 							alt="home"

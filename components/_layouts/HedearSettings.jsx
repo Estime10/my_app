@@ -2,6 +2,7 @@
 import Image from 'next/image'
 import { useUser } from '@clerk/nextjs'
 import Link from 'next/link'
+
 function HeaderSettings() {
 	const { isSignedIn, user } = useUser()
 
@@ -12,29 +13,55 @@ function HeaderSettings() {
 	return (
 		<>
 			<div
-				className=" shadow-sm border-b bg-white sticky 
+				className="shadow-sm border-b bg-white sticky 
 		-top-[12px]
-		lg:top-0 z-50"
+		lg:top-0 z-100"
 			>
-				<div className="hidden lg:flex justify-center items-center space-x-10 max-w-6xl mx-5 h-14 lg:mx-auto">
-					<Link href="/dashboard/">
-						<Image
-							src="/svg/home.svg"
-							alt="home"
-							width={10}
-							height={10}
-							className="navBtn"
-						/>
-					</Link>
-					<Link href={`/profile/${user.id}`}>
-						<Image
-							src="/svg/profile.svg"
-							alt="profile"
-							width={10}
-							height={10}
-							className="navBtn"
-						/>
-					</Link>
+				<div className="lg:flex justify-center  max-w-6xl mx-5 h-14 hidden">
+					{/* middle */}
+					<div className="flex items-center space-x-20 relative left-28">
+						<Link href="/dashboard/">
+							<Image
+								src="/svg/home.svg"
+								alt="home"
+								width={10}
+								height={10}
+								className="navBtn"
+							/>
+						</Link>
+						<Link href={`/profiles/${user.id}`}>
+							<Image
+								src="/svg/profile.svg"
+								alt="profile"
+								width={10}
+								height={10}
+								className="navBtn"
+							/>
+						</Link>
+					</div>
+				</div>
+				<div className=" justify-center  max-w-6xl mx-5 h-14 lg:hidden">
+					{/* middle */}
+					<div className="flex items-center space-x-20 relative top-[13px] left-28">
+						<Link href="/dashboard/">
+							<Image
+								src="/svg/home.svg"
+								alt="home"
+								width={10}
+								height={10}
+								className="navBtnClose"
+							/>
+						</Link>
+						<Link href={`/profiile/${user.id}`}>
+							<Image
+								src="/svg/profile.svg"
+								alt="settings"
+								width={10}
+								height={10}
+								className="navBtnClose"
+							/>
+						</Link>
+					</div>
 				</div>
 			</div>
 		</>

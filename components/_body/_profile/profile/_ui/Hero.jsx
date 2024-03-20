@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { useRecoilState } from 'recoil'
 import { modalProfileState } from '@/app/store/atoms/modalAtoms'
-import { useUser } from '@clerk/nextjs'
+import { useParams } from 'next/navigation'
 import {
 	collection,
 	getDocs,
@@ -23,7 +23,7 @@ const formatCount = (count) => {
 }
 
 function Hero() {
-	const { isSignedIn, user } = useUser()
+	const params = useParams()
 	const [openSecondModal, setOpenThirdModal] = useRecoilState(modalProfileState)
 	const [fullName, setFullName] = useState('')
 	const [username, setUsername] = useState('')
@@ -35,50 +35,47 @@ function Hero() {
 
 	useEffect(() => {
 		const fetchUserData = async () => {
-			if (isSignedIn && user) {
-				try {
-					// Récupérer les informations de l'utilisateur depuis la collection 'users'
-					const userDocRef = doc(db, 'users', user.id)
-					onSnapshot(userDocRef, (doc) => {
-						if (doc.exists()) {
-							const userData = doc.data()
-							setFullName(userData.fullName)
-							setUsername(userData.username)
-							setProfileImg(userData.profileImg)
-							setBiography(userData.biography)
-						} else {
-							console.log('User document does not exist.')
-						}
-					})
+			try {
+				// Récupérer les informations de l'utilisateur depuis la collection 'users'
+				const userDocRef = doc(db, 'users', params.id)
+				const userDoc = await getDoc(userDocRef)
+				if (userDoc.exists()) {
+					const userData = userDoc.data()
+					setFullName(userData.fullName)
+					setUsername(userData.username)
+					setProfileImg(userData.profileImg)
+					setBiography(userData.biography)
 
 					// Récupérer le nombre de publications (postCount) depuis la collection 'posts'
 					const postsSnapshot = await getDocs(collection(db, 'posts'))
 					const userPosts = postsSnapshot.docs.filter(
-						(doc) => doc.data().userId === user.id
+						(doc) => doc.data().userId === params.id
 					)
 					setPostCount(userPosts.length)
 
 					// Récupérer le nombre de followers depuis la collection 'followed'
 					const followedSnapshot = await getDocs(
-						collection(db, 'followed', user.username, 'i_am_followed_by')
+						collection(db, 'followed', userData.username, 'i_am_followed_by')
 					)
 					const followersCount = followedSnapshot.size
 					setFollowersCount(followersCount)
 
 					// Récupérer le nombre de personnes suivies depuis la collection 'following'
 					const followingSnapshot = await getDocs(
-						collection(db, 'following', user.id, 'i_m_following')
+						collection(db, 'following', params.id, 'i_m_following')
 					)
 					const followingCount = followingSnapshot.size
 					setFollowingCount(followingCount)
-				} catch (error) {
-					console.error('Error fetching user data:', error)
+				} else {
+					console.log('User document does not exist.')
 				}
+			} catch (error) {
+				console.error('Error fetching user data:', error)
 			}
 		}
 
 		fetchUserData()
-	}, [isSignedIn, user])
+	}, [params.id])
 
 	return (
 		<>
