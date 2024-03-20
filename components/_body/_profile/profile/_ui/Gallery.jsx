@@ -61,17 +61,19 @@ const Gallery = () => {
 
 	return (
 		<div className="max-w-6xl">
-			<div className=" flex flex-col content-end items-center lg:w-[630px] ">
+			<div className="flex flex-col content-end items-center lg:w-[630px] ">
 				<div className="flex justify-center space-x-14 mt-5 ">
 					<button
 						onClick={() => handleFilterChange('posts')}
-						className={`btn-filter ${filter === 'posts' && 'active'}`}
+						className={`btn-filter ${filter === 'posts' && 'active'} ${userPosts.length === 0 ? 'disabled' : ''}`}
+						disabled={userPosts.length === 0} // Désactiver si le tableau userPosts est vide
 					>
 						Posts
 					</button>
 					<button
 						onClick={() => handleFilterChange('stories')}
-						className={`btn-filter ${filter === 'stories' && 'active'}`}
+						className={`btn-filter ${filter === 'stories' && 'active'} ${userStories.length === 0 ? 'btn-disabled' : ''}`}
+						disabled={userStories.length === 0} // Désactiver si le tableau userStories est vide
 					>
 						Stories
 					</button>

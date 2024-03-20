@@ -172,7 +172,7 @@ const ModalPost = () => {
 										<button
 											type="button"
 											disabled={!selectedFile}
-											className="btn-uploads"
+											className={`btn-uploads ${!selectedFile ? 'btn-uplpoadsDisabled' : ''}`}
 											onClick={uploadPost}
 										>
 											{loading ? 'Uploading...' : 'Upload Post'}

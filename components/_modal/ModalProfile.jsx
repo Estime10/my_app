@@ -126,15 +126,16 @@ const ModalProfile = () => {
 												captionRef.current.value = ''
 											}}
 										/>
-									</div>
-									<div className="mt-5 text-center sm:mt-6">
-										<button
-											type="button"
-											className="btn-uploads"
-											onClick={uploadBio}
-										>
-											{loading ? 'Uploading...' : 'Upload Bio'}
-										</button>
+										<div className="mt-5 text-center sm:mt-6">
+											<button
+												type="button"
+												className={`btn-uploads ${loading || !bio ? 'btn-uplpoadsDisabled' : ''}`}
+												onClick={uploadBio}
+												disabled={loading || !bio}
+											>
+												{loading ? 'Uploading...' : 'Upload Bio'}
+											</button>
+										</div>
 									</div>
 								</div>
 							</div>

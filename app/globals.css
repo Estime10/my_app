@@ -121,9 +121,23 @@ html {
 	outline: none;
 }
 
-.btn-uploads:disabled {
-	@apply bg-gray-200 text-gray-200 cursor-not-allowed;
+.btn-uplpoadsDisabled {
+	@apply w-44 text-xs font-semibold text-white cursor-not-allowed mx-2 my-2 h-6 text-center 
+	border-none bg-gradient-to-r transition-all duration-200 rounded-md shadow-md uppercase;
+	background-size: 300% 100%;
+	background-image: linear-gradient(to right, #aca9a9, #ffffff);
 }
+
+.btn-uploadsDisabled:hover {
+	@apply hover:disabled:bg-gray-200;
+	background-position: 100% 0;
+	transition: all 0.4s ease-in-out;
+}
+
+.btn-uploadsDisabled:focus {
+	outline: none;
+}
+
 .btn-cancel {
 	@apply w-44 text-xs font-semibold text-white cursor-pointer mx-2 my-2 h-6 text-center 
 	border-none bg-gradient-to-r transition-all duration-200 rounded-md shadow-md uppercase;
@@ -173,6 +187,24 @@ html {
 }
 
 .btn-filter:focus {
+	outline: none;
+}
+
+.active {
+	@apply bg-white text-gray-800;
+}
+.btn-disabled {
+	@apply w-20 text-xs font-semibold text-white cursor-not-allowed mx-2 my-2 h-6 text-center border-none transition-all duration-200 rounded-md shadow-md uppercase;
+	background-size: 300% 100%;
+	background-image: linear-gradient(to left, #aca9a9, #ffffff);
+}
+
+.btn-disabled:hover {
+	background-position: 100% 0;
+	transition: all 0.4s ease-in-out;
+}
+
+.btn-disabled:focus {
 	outline: none;
 }
 
