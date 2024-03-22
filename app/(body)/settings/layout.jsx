@@ -11,8 +11,8 @@ export const metadata = {
 export default function RootLayout({ children }) {
 	return (
 		<RecoilContextProvider>
-			<HeaderSettings />
 			<div>{children}</div>
+			<HeaderSettings />
 		</RecoilContextProvider>
 	)
 }

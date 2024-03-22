@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { useParams } from 'next/navigation'
-import { collection, onSnapshot, doc, getDoc } from 'firebase/firestore'
+import {
+	collection,
+	onSnapshot,
+	doc,
+	getDoc,
+	deleteDoc,
+} from 'firebase/firestore'
 import { db } from '@/firebase'
 import { motion } from 'framer-motion'
 import Moment from 'react-moment'
 import { useUser } from '@clerk/nextjs'
 import Loading from '@/components/_layouts/_ui/Loading'
+import { toast } from 'sonner'
 
 const Gallery = () => {
 	const [isLoading, setLoading] = useState(true)
@@ -73,6 +80,34 @@ const Gallery = () => {
 		setFilter(newFilter)
 	}
 
+	const deletePost = async (postId) => {
+		try {
+			await deleteDoc(doc(db, 'posts', postId))
+			console.log('Post deleted successfully.')
+		} catch (error) {
+			console.error('Error deleting post:', error)
+		}
+	}
+
+	const deleteStory = async (storyId) => {
+		try {
+			await deleteDoc(doc(db, 'stories', storyId))
+			console.log('Story deleted successfully.')
+		} catch (error) {
+			console.error('Error deleting story:', error)
+		}
+	}
+
+	const showalertStory = (story) => {
+		deleteStory(story.id)
+		toast.success('Story deleted successfully.')
+	}
+
+	const showalertPost = (post) => {
+		deletePost(post.id)
+		toast.success('Post deleted successfully.')
+	}
+
 	return (
 		<div className="max-w-6xl">
 			{isLoading ? (
@@ -127,6 +162,7 @@ const Gallery = () => {
 											<div>
 												<button>
 													<Image
+														onClick={() => showalertPost(post)}
 														src="/svg/dotsWhite.svg"
 														alt=""
 														width={25}
@@ -160,6 +196,7 @@ const Gallery = () => {
 								>
 									<div class="content-overlay rounded-md"></div>
 									<Image
+										onClick={() => showalertStory(story)}
 										className="lg:h-[200px] h-[250px] max-w-full rounded-lg bg-contain bg-center bg-no-repeat"
 										src={story.image}
 										alt=""

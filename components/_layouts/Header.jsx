@@ -45,7 +45,7 @@ function Header() {
 					/>
 				</div>
 				{/* middle */}
-				<div className="flex items-center space-x-20 relative top-[5px] right-28 ">
+				<div className="flex items-center space-x-20 relative top-[5px] right-28">
 					<div className="relative navBtn">
 						<Image
 							src="/svg/send.svg"

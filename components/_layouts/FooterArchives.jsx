@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useRecoilState } from 'recoil'
 import { modalState, modalStoryState } from '@/app/store/atoms/modalAtoms'
 import { useUser } from '@clerk/nextjs'
-function Footer() {
+function FooterArchives() {
 	const [openFirstModal, setOpenFirstModal] = useRecoilState(modalState)
 	const [openSecondModal, setOpenSecondModal] = useRecoilState(modalStoryState)
 	const { isSignedIn, user } = useUser()
@@ -21,7 +21,7 @@ function Footer() {
 				className="flex justify-between items-c max-w-6xl mx-5 h-14
 			lg:mx-auto"
 			>
-				<div className="flex items-center  space-x-9">
+				<div className="flex items-center  space-x-20">
 					<Link href="/dashboard">
 						<Image
 							src="/svg/home.svg"
@@ -43,22 +43,7 @@ function Footer() {
 							3
 						</div>
 					</div>
-					<Image
-						onClick={() => setOpenSecondModal(true)}
-						src="/svg/image.svg"
-						alt="home"
-						width={10}
-						height={10}
-						className="navBtnClose"
-					/>
-					<Image
-						onClick={() => setOpenFirstModal(true)}
-						src="/svg/addCircle.svg"
-						alt="home"
-						width={10}
-						height={10}
-						className="navBtnClose"
-					/>
+
 					<Link href={`/profiles/${user.id}`}>
 						<Image
 							src="/svg/profile.svg"
@@ -83,4 +68,4 @@ function Footer() {
 	)
 }
 
-export default Footer
+export default FooterArchives

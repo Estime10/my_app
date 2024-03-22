@@ -27,6 +27,7 @@ const Posts = ({ setLoading }) => {
 					username={post.data().username}
 					profileImg={post.data().profileImg}
 					image={post.data().image}
+					title={post.data().title}
 					caption={post.data().caption}
 				/>
 			))}

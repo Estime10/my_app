@@ -19,6 +19,7 @@ const ModalPost = () => {
 	const { user } = useUser()
 	const [open, setOpen] = useRecoilState(modalState)
 	const filePickerRef = useRef(null)
+	const titleRef = useRef(null)
 	const captionRef = useRef(null)
 	const [loading, setLoading] = useState(false)
 	const [selectedFile, setSelectedFile] = useState(null)
@@ -32,6 +33,7 @@ const ModalPost = () => {
 			userId: user.id,
 			fullName: user.fullName,
 			username: user.username,
+			title: titleRef.current.value,
 			caption: captionRef.current.value,
 			profileImg: user.imageUrl,
 			timestamp: serverTimestamp(),
@@ -112,6 +114,12 @@ const ModalPost = () => {
 							leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
 						>
 							<div className="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all -mt-10 sm:align-middle sm:max-w-sm sm:w-full">
+								<Dialog.Title
+									as="h3"
+									className="text-lg leading-6 font-medium uppercase text-gray-900 text-center mb-3"
+								>
+									Upload a post
+								</Dialog.Title>
 								<div>
 									{selectedFile ? (
 										<div className="flex-col flex justify-center items-center w-64 lg:w-full">
@@ -139,12 +147,6 @@ const ModalPost = () => {
 									)}
 									<div>
 										<div className="mt-3 text-center sm:mt-5">
-											<Dialog.Title
-												as="h3"
-												className="text-lg leading-6 font-medium text-gray-900"
-											>
-												Upload a post
-											</Dialog.Title>
 											<div>
 												<input
 													ref={filePickerRef}
@@ -156,11 +158,26 @@ const ModalPost = () => {
 											<div>
 												<input
 													type="text"
+													ref={titleRef}
+													className="border-none focus:ring-0 w-full text-center"
+													placeholder="Give a name to your post..."
+													onBlur={() => {
+														if (!titleRef.current.value.trim()) {
+															titleRef.current.value = ''
+														}
+													}}
+												/>
+											</div>
+											<div>
+												<input
+													type="text"
 													ref={captionRef}
 													className="border-none focus:ring-0 w-full text-center"
-													placeholder="Please enter a caption..."
+													placeholder="Write a caption..."
 													onBlur={() => {
-														captionRef.current.value = ''
+														if (!captionRef.current.value.trim()) {
+															captionRef.current.value = ''
+														}
 													}}
 												/>
 											</div>

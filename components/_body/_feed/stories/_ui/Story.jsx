@@ -185,7 +185,7 @@ const StoryCard = ({ image, username, id, stories = {} }) => {
 														></div>
 													</div>
 												</div>
-												<div className="flex items-center px-4 font-medium text-gray-400">
+												<div className="flex items-center px-4 font-medium text-gray-100">
 													<div className="flex flex-col">
 														<h3 className="text-lg">{storyData.username}</h3>
 														<Moment fromNow className="text-xs">

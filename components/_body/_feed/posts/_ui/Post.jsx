@@ -15,7 +15,7 @@ import {
 	setDoc,
 } from 'firebase/firestore'
 
-const Post = ({ image, caption, id, profileImg, username }) => {
+const Post = ({ image, caption, id, profileImg, username, title }) => {
 	const { user } = useUser()
 	const [comment, setComment] = useState('')
 	const [comments, setComments] = useState([])
@@ -115,6 +115,7 @@ const Post = ({ image, caption, id, profileImg, username }) => {
 						height={40}
 					/>
 					<p className="flex-1 font-bold capitalize">{username}</p>
+					<h1 className="font-semibold capitalize">{title}</h1>
 				</div>
 				{/* image */}
 
@@ -193,7 +194,7 @@ const Post = ({ image, caption, id, profileImg, username }) => {
 					</div>
 				</div>
 				{/* caption */}
-				<div className="px-3 py-2 flex-nowrap">
+				<div className="px-3 py-2 flex-nowrap items-center">
 					<span className="font-bold mr-1 capitalize">{username}</span>
 					<span className=" max-h-xl overflow-y-scroll scrollbar-hide">
 						{caption}
