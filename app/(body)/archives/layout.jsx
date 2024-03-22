@@ -9,7 +9,7 @@ export default function divLayout({ children }) {
 		<RecoilContextProvider>
 			<HeaderArchives />
 			<main>{children}</main>
-			<Toaster richColors />
+			<Toaster />
 			<FooterArchives />
 		</RecoilContextProvider>
 	)

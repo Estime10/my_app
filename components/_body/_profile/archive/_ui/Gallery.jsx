@@ -7,6 +7,11 @@ import {
 	doc,
 	getDoc,
 	deleteDoc,
+	getDocs,
+	query,
+	where,
+	updateDoc,
+	deleteField,
 } from 'firebase/firestore'
 import { db } from '@/firebase'
 import { motion } from 'framer-motion'
@@ -14,6 +19,7 @@ import Moment from 'react-moment'
 import { useUser } from '@clerk/nextjs'
 import Loading from '@/components/_layouts/_ui/Loading'
 import { toast } from 'sonner'
+import { set } from 'react-hook-form'
 
 const DeleteConfirmationModalStory = ({ isOpen, onClose, onConfirm }) => {
 	return (
@@ -158,11 +164,25 @@ const Gallery = () => {
 	}
 
 	const deleteStory = async (storyId) => {
+		if (isLoading || !user) return
+
+		setLoading(true)
+
 		try {
+			// Supprimer l'histoire de la collection des histoires
 			await deleteDoc(doc(db, 'stories', storyId))
+
+			// Obtenir le document de l'utilisateur
+			const userRef = doc(db, 'users', user.id)
+
+			// Supprimer le champ 'stories' du document utilisateur
+			await updateDoc(userRef, {
+				stories: deleteField(),
+			})
 		} catch (error) {
 			console.error('Error deleting story:', error)
 		}
+		setLoading(false)
 	}
 
 	const showAlertStory = (story) => {
