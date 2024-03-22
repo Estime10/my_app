@@ -1,12 +1,8 @@
 'use client'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRecoilState } from 'recoil'
-import { modalState, modalStoryState } from '@/app/store/atoms/modalAtoms'
 import { useUser } from '@clerk/nextjs'
 function FooterArchives() {
-	const [openFirstModal, setOpenFirstModal] = useRecoilState(modalState)
-	const [openSecondModal, setOpenSecondModal] = useRecoilState(modalStoryState)
 	const { isSignedIn, user } = useUser()
 
 	if (!isSignedIn) {

@@ -1,8 +1,7 @@
 'use client'
 import Image from 'next/image'
-
-import { useUser } from '@clerk/nextjs'
 import Link from 'next/link'
+import { useUser } from '@clerk/nextjs'
 
 function HeaderArchives() {
 	const { isSignedIn, user } = useUser()
@@ -55,7 +54,7 @@ function HeaderArchives() {
 								3
 							</div>
 						</div>
-						<Link href={`/profilie/${user.id}`}>
+						<Link href={`/profiles/${user.id}`}>
 							<Image
 								src="/svg/profile.svg"
 								alt="post"
