@@ -1,9 +1,9 @@
 'use client'
 import React, { useState } from 'react'
-import Posts from './posts/Posts'
-import MiniProfile from './miniprofile/MiniProfile'
-import Suggestions from './suggestions/Suggestions'
-import StoryList from './stories/StoryList'
+import Posts from '../_post/posts/Posts'
+import MiniProfile from '../_miniprofile/miniprofile/MiniProfile'
+import Suggestions from '../_users/suggestions/Suggestions'
+import StoryList from '../_story/stories/StoryList'
 import Loading from '@/components/_layouts/_ui/Loading'
 
 const Feed = () => {

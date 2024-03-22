@@ -279,9 +279,6 @@ const Gallery = () => {
 										<h1 class="font-bold text-base lg:text-lg text-white capitalize">
 											{post.title}
 										</h1>
-										<h3 class="font-light mt-2 lg:font-semibold text-xs lg:text-base text-white capitalize">
-											{post.caption}
-										</h3>
 										<div>
 											<Moment className="text-xs text-white" fromNow>
 												{post.timestamp?.toDate()}

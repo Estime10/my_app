@@ -1,6 +1,6 @@
 'use client'
 import React from 'react'
-import ArchivesDetails from '@/components/_body/_profile/archive/ArchiveDetails'
+import ArchivesDetails from '@/components/_body/_archive/archive/ArchiveDetails'
 
 const Archives = () => {
 	return (

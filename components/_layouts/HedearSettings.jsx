@@ -1,7 +1,7 @@
 'use client'
 import Image from 'next/image'
-import { useUser } from '@clerk/nextjs'
 import Link from 'next/link'
+import { useUser } from '@clerk/nextjs'
 
 function HeaderSettings() {
 	const { isSignedIn, user } = useUser()
@@ -14,51 +14,63 @@ function HeaderSettings() {
 		<>
 			<div
 				className="shadow-sm border-b bg-white sticky 
-		-top-[12px]
-		lg:top-0 z-100"
+		-top-[12px] 
+		lg:top-0 z-50"
 			>
-				<div className="lg:flex justify-center  max-w-6xl mx-5 h-14 hidden">
-					{/* middle */}
-					<div className="flex items-center space-x-20 relative left-28">
-						<Link href="/dashboard/">
+				<div className="hidden lg:flex justify-between  max-w-6xl mx-5 h-14 lg:mx-auto">
+					{/* left */}
+					<div className="relative hidden lg:inline-grid  w-44 h-0 top-[-58px] left-[100px] cursor-pointer">
+						{/* logo large */}
+						<Link href="/dashboard">
 							<Image
-								src="/svg/home.svg"
-								alt="home"
-								width={10}
-								height={10}
-								className="navBtn"
-							/>
-						</Link>
-						<Link href={`/profiles/${user.id}`}>
-							<Image
-								src="/svg/profile.svg"
-								alt="profile"
-								width={10}
-								height={10}
-								className="navBtn"
+								src="/image/logo.png"
+								alt="Picture of the author"
+								width={300}
+								height={40}
 							/>
 						</Link>
 					</div>
-				</div>
-				<div className=" justify-center  max-w-6xl mx-5 h-14 lg:hidden">
+
 					{/* middle */}
-					<div className="flex items-center space-x-20 relative top-[13px] left-28">
-						<Link href="/dashboard/">
+					<div className="flex items-center space-x-12 relative top-[5px] right-[438px] ">
+						<Link href="/dashboard">
 							<Image
 								src="/svg/home.svg"
-								alt="home"
+								alt="post"
 								width={10}
 								height={10}
-								className="navBtnClose"
+								className="navBtn"
 							/>
 						</Link>
-						<Link href={`/profiile/${user.id}`}>
+						<div className="relative navBtn">
+							<Image
+								src="/svg/send.svg"
+								alt="send"
+								width={10}
+								height={10}
+								className="navBtn"
+							/>
+							<div className="absolute -top-1 -right-2 text-base w-5 h-5 bg-gray-400 rounded-full flex items-center justify-center  text-white">
+								3
+							</div>
+						</div>
+						<Link href={`/profiles/${user.id}`}>
 							<Image
 								src="/svg/profile.svg"
+								alt="post"
+								width={10}
+								height={10}
+								className="navBtn"
+							/>
+						</Link>
+
+						<Link href={`/settings/${user.id}`}>
+							<Image
+								src="/svg/settings.svg"
 								alt="settings"
 								width={10}
 								height={10}
-								className="navBtnClose"
+								className="navBtn"
 							/>
 						</Link>
 					</div>
