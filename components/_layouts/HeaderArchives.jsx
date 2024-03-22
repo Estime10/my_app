@@ -1,13 +1,10 @@
 'use client'
 import Image from 'next/image'
-import { useRecoilState } from 'recoil'
-import { modalState, modalStoryState } from '@/app/store/atoms/modalAtoms'
+
 import { useUser } from '@clerk/nextjs'
 import Link from 'next/link'
 
 function HeaderArchives() {
-	const [openFirstModal, setOpenFirstModal] = useRecoilState(modalState)
-	const [openSecondModal, setOpenSecondModal] = useRecoilState(modalStoryState)
 	const { isSignedIn, user } = useUser()
 
 	if (!isSignedIn) {
@@ -17,9 +14,9 @@ function HeaderArchives() {
 	return (
 		<>
 			<div
-				className="shadow-sm border-b bg-white fixed w-full left-0 h-14 lg:h-16 0 
-			bottom-20 z-50 
-		"
+				className="shadow-sm border-b bg-white sticky 
+		-top-[12px] 
+		lg:top-0 z-50"
 			>
 				<div className="hidden lg:flex justify-between  max-w-6xl mx-5 h-14 lg:mx-auto">
 					{/* left */}
@@ -34,23 +31,13 @@ function HeaderArchives() {
 							/>
 						</Link>
 					</div>
-					<div className="relative w-16 -top-[5px] lg:top-0 flex-shrink-0 lg:hidden cursor-pointer">
-						{/* logo mobile */}
 
-						<Image
-							src="/image/logo_small-removebg-preview.png"
-							alt="Picture of the author"
-							width={40}
-							height={40}
-							className="h-20 w-20"
-						/>
-					</div>
 					{/* middle */}
-					<div className="flex items-center space-x-12 relative top-[5px] right-[466px] ">
+					<div className="flex items-center space-x-12 relative top-[5px] right-[438px] ">
 						<Link href="/dashboard">
 							<Image
 								src="/svg/home.svg"
-								alt="home"
+								alt="post"
 								width={10}
 								height={10}
 								className="navBtn"
@@ -68,15 +55,16 @@ function HeaderArchives() {
 								3
 							</div>
 						</div>
-						<Link href={`/profiles/${user.id}`}>
+						<Link href={`/profilie/${user.id}`}>
 							<Image
 								src="/svg/profile.svg"
-								alt="home"
+								alt="post"
 								width={10}
 								height={10}
 								className="navBtn"
 							/>
 						</Link>
+
 						<Link href={`/settings/${user.id}`}>
 							<Image
 								src="/svg/settings.svg"

@@ -19,6 +19,12 @@ const StoryCard = ({ image, username, id, stories = {} }) => {
 	const hasStory = stories[storyId]
 	let timer
 
+	// Fonction pour réinitialiser l'état de la modal et restaurer le style par défaut
+	const resetModalState = () => {
+		closeModal()
+		// Réinitialiser d'autres états de style ici au besoin
+	}
+
 	useEffect(() => {
 		let unsubscribe
 
@@ -34,6 +40,8 @@ const StoryCard = ({ image, username, id, stories = {} }) => {
 							setStoryData(newData)
 						} else {
 							console.log('Story does not exist.')
+							// Si l'histoire n'existe plus, réinitialisez la modal et restaurez le style par défaut
+							resetModalState()
 						}
 					})
 				} else {

@@ -15,7 +15,78 @@ import { useUser } from '@clerk/nextjs'
 import Loading from '@/components/_layouts/_ui/Loading'
 import { toast } from 'sonner'
 
+const DeleteConfirmationModalStory = ({ isOpen, onClose, onConfirm }) => {
+	return (
+		<div
+			className={`fixed top-0 left-0 w-full h-full flex items-center justify-center z-50 ${isOpen ? '' : 'hidden'}`}
+		>
+			<div className="absolute top-0 left-0 w-full h-full bg-gray-900 opacity-50"></div>
+			<div className="modal-card bg-white w-[23rem] rounded-lg shadow-lg z-50">
+				<div className="modal-header bg-gray-300 text-white rounded-t-lg text-center py-4 px-6 ">
+					<h2 className="text-lg font-bold text-center uppercase">
+						Do you want to delete this Story?
+					</h2>
+				</div>
+				<div className="modal-body font-semibold uppercase px-6 py-4 text-center">
+					<p>You won't be able to revert the process</p>
+				</div>
+				<div className="modal-footer flex justify-center space-x-14 py-4 px-6 rounded-b-lg">
+					<button
+						onClick={onConfirm}
+						className="w-32 h-12 text-xs font-semibold text-white cursor-pointer mx-2 my-2 text-center border-none rounded-md uppercase transition-all duration-200 shadow-md btn-hover-color-11"
+					>
+						Yes, delete it!
+					</button>
+					<button
+						onClick={onClose}
+						className="w-32 h-12 text-xs font-semibold text-white cursor-pointer mx-2 my-2 text-center border-none rounded-md uppercase transition-all duration-200 shadow-md btn-hover-color-8"
+					>
+						No, cancel!
+					</button>
+				</div>
+			</div>
+		</div>
+	)
+}
+const DeleteConfirmationModalPost = ({ isOpen, onClose, onConfirm }) => {
+	return (
+		<div
+			className={`fixed top-0 left-0 w-full h-full flex items-center justify-center z-50 ${isOpen ? '' : 'hidden'}`}
+		>
+			<div className="absolute top-0 left-0 w-full h-full bg-gray-900 opacity-50"></div>
+			<div className="modal-card bg-white w-1/3 rounded-lg shadow-lg z-50">
+				<div className="modal-header bg-gray-300 text-white text-center py-4 px-6 rounded-t-lg">
+					<h2 className="text-lg font-bold text-center uppercase">
+						Do you want to delete this Post?
+					</h2>
+				</div>
+				<div className="modal-body font-semibold uppercase px-6 py-4 text-center">
+					<p>You won't be able to revert the process</p>
+				</div>
+				<div className="modal-footer flex justify-center space-x-14 py-4 px-6 rounded-b-lg">
+					<button
+						onClick={onConfirm}
+						className="w-32 h-12 text-xs font-semibold text-white cursor-pointer mx-2 my-2 text-center border-none rounded-md uppercase transition-all duration-200 shadow-md btn-hover-color-11"
+					>
+						Yes, delete it!
+					</button>
+					<button
+						onClick={onClose}
+						className="w-32 h-12 text-xs font-semibold text-white cursor-pointer mx-2 my-2 text-center border-none rounded-md uppercase transition-all duration-200 shadow-md btn-hover-color-8"
+					>
+						No, cancel!
+					</button>
+				</div>
+			</div>
+		</div>
+	)
+}
+
 const Gallery = () => {
+	const [storyToDelete, setStoryToDelete] = useState(null)
+	const [postToDelete, setPostToDelete] = useState(null)
+	const [isPostModalOpen, setPostModalOpen] = useState(false)
+	const [isStoryModalOpen, setStoryModalOpen] = useState(false)
 	const [isLoading, setLoading] = useState(true)
 	const params = useParams()
 	const { user } = useUser()
@@ -80,6 +151,30 @@ const Gallery = () => {
 		setFilter(newFilter)
 	}
 
+	const showDeleteConfirmationStory = (story) => {
+		setStoryToDelete(story)
+		setStoryModalOpen(true)
+		setPostModalOpen(false)
+	}
+
+	const deleteStory = async (storyId) => {
+		try {
+			await deleteDoc(doc(db, 'stories', storyId))
+		} catch (error) {
+			console.error('Error deleting story:', error)
+		}
+	}
+
+	const showAlertStory = (story) => {
+		showDeleteConfirmationStory(story)
+	}
+
+	const showDeleteConfirmationPost = (post) => {
+		setPostToDelete(post)
+		setPostModalOpen(true)
+		setStoryModalOpen(false)
+	}
+
 	const deletePost = async (postId) => {
 		try {
 			await deleteDoc(doc(db, 'posts', postId))
@@ -89,23 +184,8 @@ const Gallery = () => {
 		}
 	}
 
-	const deleteStory = async (storyId) => {
-		try {
-			await deleteDoc(doc(db, 'stories', storyId))
-			console.log('Story deleted successfully.')
-		} catch (error) {
-			console.error('Error deleting story:', error)
-		}
-	}
-
-	const showalertStory = (story) => {
-		deleteStory(story.id)
-		toast.success('Story deleted successfully.')
-	}
-
-	const showalertPost = (post) => {
-		deletePost(post.id)
-		toast.success('Post deleted successfully.')
+	const showAlertPost = (post) => {
+		showDeleteConfirmationPost(post)
 	}
 
 	return (
@@ -151,6 +231,7 @@ const Gallery = () => {
 								>
 									<div class="content-overlay rounded-md max-w-full"></div>
 									<Image
+										onClick={() => showAlertPost(post)}
 										className="lg:h-[200px] h-[250px] max-w-full rounded-lg bg-contain bg-center bg-no-repeat"
 										src={post.image}
 										alt=""
@@ -160,9 +241,13 @@ const Gallery = () => {
 									<div class="content-details fadeIn-bottom">
 										{user.id === params.id && (
 											<div>
-												<button>
+												<button
+													onClick={() => {
+														setPostToDelete(post)
+														setPostModalOpen(true)
+													}}
+												>
 													<Image
-														onClick={() => showalertPost(post)}
 														src="/svg/dotsWhite.svg"
 														alt=""
 														width={25}
@@ -183,6 +268,15 @@ const Gallery = () => {
 											</Moment>
 										</div>
 									</div>
+									<DeleteConfirmationModalPost
+										isOpen={isPostModalOpen}
+										onClose={() => setPostModalOpen(false)}
+										onConfirm={() => {
+											deletePost(postToDelete.id)
+											setPostModalOpen(false)
+											toast.success('Post deleted successfully.')
+										}}
+									/>
 								</motion.div>
 							))}
 						{filter === 'stories' &&
@@ -196,7 +290,7 @@ const Gallery = () => {
 								>
 									<div class="content-overlay rounded-md"></div>
 									<Image
-										onClick={() => showalertStory(story)}
+										onClick={() => showAlertStory(story)}
 										className="lg:h-[200px] h-[250px] max-w-full rounded-lg bg-contain bg-center bg-no-repeat"
 										src={story.image}
 										alt=""
@@ -206,7 +300,12 @@ const Gallery = () => {
 									<div class="content-details fadeIn-bottom">
 										{user.id === params.id && (
 											<div>
-												<button>
+												<button
+													onClick={() => {
+														setStoryToDelete(story)
+														setStoryModalOpen(true)
+													}}
+												>
 													<Image
 														src="/svg/dotsWhite.svg"
 														alt=""
@@ -222,6 +321,15 @@ const Gallery = () => {
 									</div>
 								</motion.div>
 							))}
+						<DeleteConfirmationModalStory
+							isOpen={isStoryModalOpen}
+							onClose={() => setStoryModalOpen(false)}
+							onConfirm={() => {
+								deleteStory(storyToDelete.id)
+								setStoryModalOpen(false)
+								toast.success('Story deleted successfully.')
+							}}
+						/>
 					</motion.div>
 				</>
 			)}

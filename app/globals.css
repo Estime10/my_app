@@ -308,3 +308,45 @@ html {
 .fadeIn-bottom {
 	top: 80%;
 }
+
+.btn-hover-color-11 {
+	background-image: linear-gradient(
+		to right,
+		#eb3941,
+		#f15e64,
+		#fac0c2,
+		#d8c3c5
+	);
+	box-shadow: 0 5px 15px rgba(242, 97, 103, 0.4);
+}
+
+.btn-hover-color-11:hover {
+	background-image: linear-gradient(
+		to left,
+		#eb3941,
+		#f15e64,
+		#fac0c2,
+		#d8c3c5
+	);
+}
+
+.btn-hover-color-8 {
+	background-image: linear-gradient(
+		to right,
+		#29323c,
+		#a2a2a2,
+		#d1d1d1,
+		#fdfcff
+	);
+	box-shadow: 0 4px 15px 0 rgba(45, 54, 65, 0.75);
+}
+
+.btn-hover-color-8:hover {
+	background-image: linear-gradient(
+		to left,
+		#29323c,
+		#a2a2a2,
+		#d1d1d1,
+		#fdfcff
+	);
+}
