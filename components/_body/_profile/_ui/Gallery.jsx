@@ -7,6 +7,7 @@ import { motion } from 'framer-motion'
 import Moment from 'react-moment'
 import { useUser } from '@clerk/nextjs'
 import Loading from '@/components/_layouts/_ui/Loading'
+import Link from 'next/link'
 
 const Gallery = () => {
 	const [isLoading, setLoading] = useState(true)
@@ -74,15 +75,15 @@ const Gallery = () => {
 	}
 
 	return (
-		<div className="max-w-6xl">
+		<div className="lg:w-[630px] h-[1120px] w-[400px] lg:h-[1250px] ">
 			{isLoading ? (
-				<div className="flex items-center mt-10 justify-center w-full h-full lg:relative lg:top-12 left-44">
+				<div className="flex items-center mt-10  w-full h-full lg:relative lg:top-12 left-60">
 					<Loading />
 				</div>
 			) : (
 				<>
-					<div className="flex flex-col content-end items-center lg:w-[630px] ">
-						<div className="flex justify-center space-x-14 mt-5 ">
+					<div className="flex justify-center items-center mt-5">
+						<div className="flex justify-center">
 							<button
 								onClick={() => handleFilterChange('posts')}
 								className={`btn-filter ${filter === 'posts' && 'active'} ${userPosts.length === 0 ? 'btn-disabled' : ''}`}
@@ -100,7 +101,7 @@ const Gallery = () => {
 						</div>
 					</div>
 					<motion.div
-						className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-2 lg:w-[630px] w-[350px] mx-auto mt-5 gap-4 bg-white rounded-lg p-4 sm:p-6  "
+						className="rounded-xl flex flex-col items-center justify-center w-full h-full"
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 						transition={{ duration: 0.5 }}
@@ -108,77 +109,124 @@ const Gallery = () => {
 						{filter === 'posts' &&
 							userPosts.map((post) => (
 								<motion.div
-									className="content cursor-pointer mb-40"
+									className="w-[630px]  max-w-full rounded-lg
+										border border-gray-200 bg-white mb-10"
 									key={post.id}
 									initial={{ opacity: 0 }}
 									animate={{ opacity: 1 }}
 									transition={{ duration: 0.5 }}
 								>
-									<div class="content-overlay rounded-md max-w-full"></div>
+									<div className="flex items-center p-5">
+										<Image
+											className="rounded-full object-cover mr-3 w-12 h-12"
+											src={post.profileImg}
+											alt={post.username}
+											width={40}
+											height={40}
+										/>
+										<p className="flex-1 font-bold capitalize">
+											@{post.username}
+											<div className="text-gray-400 font-thin">
+												{post.fullName}
+											</div>
+										</p>
+										<div className="text-end">
+											<div>
+												{user?.id === params.id && (
+													<div className="cursor-pointer">
+														<button>
+															<Link href={`/posts/${post.id}`}>
+																<Image
+																	src="/svg/dots.svg"
+																	alt=""
+																	width={25}
+																	height={25}
+																/>
+															</Link>
+														</button>
+													</div>
+												)}
+
+												<Moment className="text-xs text-gray-400" fromNow>
+													{post.timestamp?.toDate()}
+												</Moment>
+											</div>
+										</div>
+									</div>
 									<Image
-										className="lg:h-[200px] h-[250px] max-w-full rounded-lg bg-contain bg-center bg-no-repeat"
+										className="object-cover w-full max-h-96"
 										src={post.image}
 										alt=""
 										width={300}
 										height={300}
 									/>
-									<div class="content-details fadeIn-bottom">
-										{user.id === params.id && (
-											<div>
-												<button>
-													<Image
-														src="/svg/dotsWhite.svg"
-														alt=""
-														width={25}
-														height={25}
-													/>
-												</button>
-											</div>
-										)}
-										<h1 class="font-bold text-base lg:text-lg text-white capitalize">
-											{post.title}
-										</h1>
-										<div>
-											<Moment className="text-xs text-white" fromNow>
-												{post.timestamp?.toDate()}
-											</Moment>
-										</div>
+									<div className="p-5 font-semibold capitalize">
+										<h1 className="font-semibold capitalize">{post.title}</h1>
+										<p className="font-thin text-gray-400 pt-2">
+											{post.caption}
+										</p>
 									</div>
 								</motion.div>
 							))}
 						{filter === 'stories' &&
 							userStories.map((story) => (
 								<motion.div
-									className="content cursor-pointer"
+									className="w-[630px]  max-w-full rounded-lg
+										border border-gray-200 bg-white mb-10"
 									key={story.id}
 									initial={{ opacity: 0 }}
 									animate={{ opacity: 1 }}
 									transition={{ duration: 0.5 }}
 								>
-									<div class="content-overlay rounded-md"></div>
+									<div className="flex items-center p-5">
+										<Image
+											className="rounded-full object-cover mr-3 w-12 h-12"
+											src={story.profileImg}
+											alt={story.username}
+											width={40}
+											height={40}
+										/>
+										<p className="flex-1 font-bold capitalize">
+											@{story.username}
+											<div className="text-gray-400 font-thin">
+												{story.fullName}
+											</div>
+										</p>
+										<div className="text-end">
+											<div>
+												{user?.id === params.id && (
+													<div className="cursor-pointer">
+														<button>
+															<Link href={`/stories/${story.id}`}>
+																<Image
+																	src="/svg/dots.svg"
+																	alt=""
+																	width={25}
+																	height={25}
+																/>
+															</Link>
+														</button>
+													</div>
+												)}
+
+												<Moment className="text-xs text-gray-400" fromNow>
+													{story.timestamp?.toDate()}
+												</Moment>
+											</div>
+										</div>
+									</div>
 									<Image
-										className="lg:h-[200px] h-[250px] max-w-full rounded-lg bg-contain bg-center bg-no-repeat"
+										className="object-cover w-full max-h-96"
 										src={story.image}
 										alt=""
 										width={300}
 										height={300}
 									/>
-									<div class="content-details fadeIn-bottom">
-										{user.id === params.id && (
-											<div>
-												<button>
-													<Image
-														src="/svg/dotsWhite.svg"
-														alt=""
-														width={25}
-														height={25}
-													/>
-												</button>
-											</div>
-										)}
-										<Moment className="content-text text-white" fromNow>
-											{story.timestamp?.toDate()}
-										</Moment>
+									<div className="p-5 font-semibold capitalize">
+										<h1 className="font-semibold capitalize">{story.title}</h1>
+										<p className="font-thin text-gray-400 pt-2">
+											{story.caption}
+										</p>
 									</div>
 								</motion.div>
 							))}

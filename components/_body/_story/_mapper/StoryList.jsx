@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { collection, getDocs, onSnapshot } from 'firebase/firestore'
 import { db } from '@/firebase'
-import Story from './_ui/Story'
+import Story from '../_ui/Story'
 import { useUser } from '@clerk/nextjs'
 import Loading from '@/components/_layouts/_ui/Loading'
 
 const StoryList = () => {
 	const [users, setUsers] = useState([])
 	const { isSignedIn, user, isLoaded } = useUser()
+	console.log('user', user)
 
 	useEffect(() => {
 		const unsubscribe = onSnapshot(collection(db, 'users'), (snapshot) => {

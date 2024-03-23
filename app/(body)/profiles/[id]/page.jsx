@@ -1,16 +1,21 @@
-'use client'
-import React from 'react'
-import ProfileDetails from '@/components/_body/_profile/profile/ProfileDetails'
+import { auth } from '@clerk/nextjs'
+import { redirect } from 'next/navigation'
+import ModalPost from '@/components/_modal/ModalPost'
+import ModalStory from '@/components/_modal/ModalStory'
+import ProfilePage from '@/components/_body/ProfilePage'
 
-const Profiles = () => {
+export default async function Profiles() {
+	const { userId } = auth()
+
+	if (!userId) {
+		redirect('/dasboard')
+	}
+
 	return (
-		<div
-			className="grid grid-cols-1 md:grid-cols-2 
-		md:max-w-3xl lg:grid-cols-3 xl:max-w-4xl mx-auto"
-		>
-			<ProfileDetails />
-		</div>
+		<main>
+			<ProfilePage />
+			<ModalPost />
+			<ModalStory />
+		</main>
 	)
 }
-
-export default Profiles

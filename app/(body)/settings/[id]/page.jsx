@@ -11,7 +11,7 @@ const SettingsId = () => {
 
 	useEffect(() => {
 		if (!isLoaded || !userId) {
-			router.push('/')
+			router.push('/dashboard')
 		}
 	}, [isLoaded, userId, router])
 

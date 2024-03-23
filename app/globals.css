@@ -251,10 +251,9 @@ html {
 	);
 }
 
-.content {
+/* .content {
 	position: relative;
-	width: 90%;
-	max-width: 400px;
+	width: 100%;
 	margin: auto;
 	overflow: hidden;
 }
@@ -307,7 +306,7 @@ html {
 
 .fadeIn-bottom {
 	top: 80%;
-}
+} */
 
 .btn-hover-color-11 {
 	background-image: linear-gradient(

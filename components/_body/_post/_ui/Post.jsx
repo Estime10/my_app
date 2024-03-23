@@ -127,7 +127,6 @@ const Post = ({ image, caption, id, profileImg, username, title }) => {
 					height={200}
 				/>
 				{/* buttons */}
-
 				<div className="flex justify-between items-center px-4 pt-4">
 					<div className="flex items-center">
 						{/* like */}

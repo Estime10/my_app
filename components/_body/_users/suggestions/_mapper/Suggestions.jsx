@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { collection, orderBy, query, onSnapshot } from 'firebase/firestore'
 import { db } from '@/firebase'
 import { useUser } from '@clerk/nextjs'
-import Suggestion from './_ui/Suggestion'
+import Suggestion from '../_ui/Suggestion'
 import Loading from '@/components/_layouts/_ui/Loading'
 
 const Suggestions = () => {
