@@ -187,11 +187,6 @@ function Hero() {
 												>
 													add bio
 												</button>
-												<button className="btn-unfollow">
-													<Link href={`/archives/${user.id}`}>
-														<span>edit image</span>
-													</Link>
-												</button>
 											</div>
 										) : (
 											<>

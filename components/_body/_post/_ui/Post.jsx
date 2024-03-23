@@ -207,22 +207,26 @@ const Post = ({ image, caption, id, profileImg, username, title }) => {
 								key={comment.id}
 								className="flex items-center space-x-2 py-1"
 							>
-								<Image
-									className="h-5 rounded-full"
-									src={comment.data().profileImg}
-									alt="comment"
-									width={20}
-									height={20}
-								/>
-								<p className="text-sm flex-1">
-									<span className="font-bold capitalize mr-2">
-										{comment.data().username}
-									</span>
-									{comment.data().comment}
-								</p>
-								<Moment className="pr-5 text-xs text-gray-400" fromNow>
-									{comment.data().timestamp?.toDate()}
-								</Moment>
+								<div>
+									<div className="flex space-x-1 ">
+										<Image
+											className="h-5 rounded-full"
+											src={comment.data().profileImg}
+											alt="comment"
+											width={20}
+											height={20}
+										/>
+										<span className="font-bold text-sm capitalize">
+											@{comment.data().username}
+										</span>
+									</div>
+									<p className="text-sm text-gray-400">
+										{comment.data().comment}
+									</p>
+									<Moment className="pr-5 pt-2 text-xs text-gray-400" fromNow>
+										{comment.data().timestamp?.toDate()}
+									</Moment>
+								</div>
 							</div>
 						))}
 					</div>
