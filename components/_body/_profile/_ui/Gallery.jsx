@@ -82,7 +82,7 @@ const Gallery = () => {
 				</div>
 			) : (
 				<>
-					<div className="flex justify-center items-center mt-5">
+					<div className="flex justify-center items-center my-5">
 						<div className="flex justify-center">
 							<button
 								onClick={() => handleFilterChange('posts')}
@@ -100,137 +100,129 @@ const Gallery = () => {
 							</button>
 						</div>
 					</div>
-					<motion.div
-						className="rounded-xl flex flex-col items-center justify-center w-full h-full"
-						initial={{ opacity: 0 }}
-						animate={{ opacity: 1 }}
-						transition={{ duration: 0.5 }}
-					>
-						{filter === 'posts' &&
-							userPosts.map((post) => (
-								<motion.div
-									className="w-[630px]  max-w-full rounded-lg
-										border border-gray-200 bg-white mb-10"
-									key={post.id}
-									initial={{ opacity: 0 }}
-									animate={{ opacity: 1 }}
-									transition={{ duration: 0.5 }}
-								>
-									<div className="flex items-center p-5">
-										<Image
-											className="rounded-full object-cover mr-3 w-12 h-12"
-											src={post.profileImg}
-											alt={post.username}
-											width={40}
-											height={40}
-										/>
-										<p className="flex-1 font-bold capitalize">
-											@{post.username}
-											<div className="text-gray-400 font-thin">
-												{post.fullName}
-											</div>
-										</p>
-										<div className="text-end">
-											<div>
-												{user?.id === params.id && (
-													<div className="cursor-pointer">
-														<button>
-															<Link href={`/posts/${post.id}`}>
-																<Image
-																	src="/svg/dots.svg"
-																	alt=""
-																	width={25}
-																	height={25}
-																/>
-															</Link>
-														</button>
-													</div>
-												)}
 
-												<Moment className="text-xs text-gray-400" fromNow>
-													{post.timestamp?.toDate()}
-												</Moment>
-											</div>
+					{filter === 'posts' &&
+						userPosts.map((post) => (
+							<motion.div
+								className="w-[630px]  max-w-full rounded-lg
+										border border-gray-200 bg-white mb-10"
+								key={post.id}
+								initial={{ opacity: 0 }}
+								animate={{ opacity: 1 }}
+								transition={{ duration: 0.5 }}
+							>
+								<div className="flex items-center p-5">
+									<Image
+										className="rounded-full object-cover mr-3 w-12 h-12"
+										src={post.profileImg}
+										alt={post.username}
+										width={40}
+										height={40}
+									/>
+									<p className="flex-1 font-bold capitalize">
+										@{post.username}
+										<div className="text-gray-400 font-thin">
+											{post.fullName}
+										</div>
+									</p>
+									<div className="text-end">
+										<div>
+											{user?.id === params.id && (
+												<div className="cursor-pointer">
+													<button>
+														<Link href={`/posts/${post.id}`}>
+															<Image
+																src="/svg/dots.svg"
+																alt=""
+																width={25}
+																height={25}
+															/>
+														</Link>
+													</button>
+												</div>
+											)}
+
+											<Moment className="text-xs text-gray-400" fromNow>
+												{post.timestamp?.toDate()}
+											</Moment>
 										</div>
 									</div>
-									<Image
-										className="object-cover w-full max-h-96"
-										src={post.image}
-										alt=""
-										width={300}
-										height={300}
-									/>
-									<div className="p-5 font-semibold capitalize">
-										<h1 className="font-semibold capitalize">{post.title}</h1>
-										<p className="font-thin text-gray-400 pt-2">
-											{post.caption}
-										</p>
-									</div>
-								</motion.div>
-							))}
-						{filter === 'stories' &&
-							userStories.map((story) => (
-								<motion.div
-									className="w-[630px]  max-w-full rounded-lg
+								</div>
+								<Image
+									className="object-cover w-full max-h-96"
+									src={post.image}
+									alt=""
+									width={300}
+									height={300}
+								/>
+								<div className="p-5 font-semibold capitalize">
+									<h1 className="font-semibold capitalize">{post.title}</h1>
+									<p className="font-thin text-gray-400 pt-2">{post.caption}</p>
+								</div>
+							</motion.div>
+						))}
+					{filter === 'stories' &&
+						userStories.map((story) => (
+							<motion.div
+								className="w-[630px]  max-w-full rounded-lg
 										border border-gray-200 bg-white mb-10"
-									key={story.id}
-									initial={{ opacity: 0 }}
-									animate={{ opacity: 1 }}
-									transition={{ duration: 0.5 }}
-								>
-									<div className="flex items-center p-5">
-										<Image
-											className="rounded-full object-cover mr-3 w-12 h-12"
-											src={story.profileImg}
-											alt={story.username}
-											width={40}
-											height={40}
-										/>
-										<p className="flex-1 font-bold capitalize">
-											@{story.username}
-											<div className="text-gray-400 font-thin">
-												{story.fullName}
-											</div>
-										</p>
-										<div className="text-end">
-											<div>
-												{user?.id === params.id && (
-													<div className="cursor-pointer">
-														<button>
-															<Link href={`/stories/${story.id}`}>
-																<Image
-																	src="/svg/dots.svg"
-																	alt=""
-																	width={25}
-																	height={25}
-																/>
-															</Link>
-														</button>
-													</div>
-												)}
+								key={story.id}
+								initial={{ opacity: 0 }}
+								animate={{ opacity: 1 }}
+								transition={{ duration: 0.5 }}
+							>
+								<div className="flex items-center p-5">
+									<Image
+										className="rounded-full object-cover mr-3 w-12 h-12"
+										src={story.profileImg}
+										alt={story.username}
+										width={40}
+										height={40}
+									/>
+									<p className="flex-1 font-bold capitalize">
+										@{story.username}
+										<div className="text-gray-400 font-thin">
+											{story.fullName}
+										</div>
+									</p>
+									<div className="text-end">
+										<div>
+											{user?.id === params.id && (
+												<div className="cursor-pointer">
+													<button>
+														<Link href={`/stories/${story.id}`}>
+															<Image
+																src="/svg/dots.svg"
+																alt=""
+																width={25}
+																height={25}
+															/>
+														</Link>
+													</button>
+												</div>
+											)}
 
-												<Moment className="text-xs text-gray-400" fromNow>
-													{story.timestamp?.toDate()}
-												</Moment>
-											</div>
+											<Moment className="text-xs text-gray-400" fromNow>
+												{story.timestamp?.toDate()}
+											</Moment>
 										</div>
 									</div>
-									<Image
-										className="object-cover w-full max-h-96"
-										src={story.image}
-										alt=""
-										width={300}
-										height={300}
-									/>
-									<div className="p-5 font-semibold capitalize">
-										<h1 className="font-semibold capitalize">{story.title}</h1>
-										<p className="font-thin text-gray-400 pt-2">
-											{story.caption}
-										</p>
-									</div>
-								</motion.div>
-							))}
-					</motion.div>
+								</div>
+								<Image
+									className="object-cover w-full max-h-96"
+									src={story.image}
+									alt=""
+									width={300}
+									height={300}
+								/>
+								<div className="p-5 font-semibold capitalize">
+									<h1 className="font-semibold capitalize">{story.title}</h1>
+									<p className="font-thin text-gray-400 pt-2">
+										{story.caption}
+									</p>
+								</div>
+							</motion.div>
+						))}
 				</>
 			)}
 		</div>
