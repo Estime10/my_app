@@ -140,7 +140,6 @@ const Gallery = () => {
 	const deletePost = async (postId) => {
 		try {
 			await deleteDoc(doc(db, 'posts', postId))
-			console.log('Post deleted successfully.')
 		} catch (error) {
 			console.error('Error deleting post:', error)
 		}
@@ -176,7 +175,6 @@ const Gallery = () => {
 								const comments = commentsSnapshot.docs.map((doc_1) =>
 									doc_1.data()
 								)
-								console.log('comments', comments) // Log des commentaires
 								return {
 									id: doc.id,
 									...postData,
@@ -186,7 +184,6 @@ const Gallery = () => {
 							})
 						const posts = await Promise.all(postsPromises)
 						posts.sort((a, b) => b.timestamp.toDate() - a.timestamp.toDate())
-						console.log('posts', posts)
 						setUserPosts(posts)
 					})
 
@@ -326,7 +323,7 @@ const Gallery = () => {
 									</div>
 
 									<p className="font-semibold  py-2">{post.caption}</p>
-									<div className="text-sm pb-1">
+									<div className="text-sm pb-1 h-20 overflow-y-scroll scrollbar-hide">
 										{post.comments.map((comment, index) => (
 											<div key={index} className=" pt-1">
 												<div className="flex items-center">

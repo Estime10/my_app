@@ -7,6 +7,7 @@ import Loading from '@/components/_layouts/_ui/Loading'
 
 const Suggestions = () => {
 	const [users, setUsers] = useState([])
+	const [followingUsers, setFollowingUsers] = useState([])
 	const { isSignedIn, user, isLoaded } = useUser()
 
 	useEffect(() => {
@@ -18,6 +19,20 @@ const Suggestions = () => {
 			}
 		)
 		return () => unsubscribe()
+	}, [user])
+
+	useEffect(() => {
+		if (user) {
+			const unsubscribe = onSnapshot(
+				collection(db, `following/${user.id}/i_m_following`),
+				(querySnapshot) => {
+					const followingUsers = querySnapshot.docs.map((doc) => doc.id)
+					console.log('Users you are following:', followingUsers)
+					setFollowingUsers(followingUsers) // Mise à jour de l'état
+				}
+			)
+			return () => unsubscribe()
+		}
 	}, [user])
 
 	return (

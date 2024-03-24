@@ -8,7 +8,6 @@ import Loading from '@/components/_layouts/_ui/Loading'
 const StoryList = () => {
 	const [users, setUsers] = useState([])
 	const { isSignedIn, user, isLoaded } = useUser()
-	console.log('user', user)
 
 	useEffect(() => {
 		const unsubscribe = onSnapshot(collection(db, 'users'), (snapshot) => {

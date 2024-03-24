@@ -1,6 +1,6 @@
 import React from 'react'
-import Header from '@/components/_layouts/Header'
-import Footer from '@/components/_layouts/Footer'
+import Header from '@/components/_layouts/_navbar/Header'
+import Footer from '@/components/_layouts/_navbar/Footer'
 import RecoilContextProvider from '@/app/lib/recoil/recoilContextProvider'
 
 export default function divLayout({ children }) {

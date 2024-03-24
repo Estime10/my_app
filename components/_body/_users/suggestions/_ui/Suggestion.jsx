@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { useUser } from '@clerk/nextjs'
 import Image from 'next/image'
 import {
 	collection,
@@ -9,6 +8,7 @@ import {
 	setDoc,
 } from 'firebase/firestore'
 import { db } from '@/firebase'
+import { useUser } from '@clerk/nextjs'
 
 const Suggestion = ({ image, username, fullName }) => {
 	const { user } = useUser()
@@ -18,7 +18,6 @@ const Suggestion = ({ image, username, fullName }) => {
 		const unsubscribe = onSnapshot(
 			collection(db, `following/${user.id}/i_m_following`),
 			(querySnapshot) => {
-				// Vérifiez si l'utilisateur actuel suit l'utilisateur suggéré
 				const isFollowing = querySnapshot.docs.some(
 					(doc) => doc.id === username
 				)
@@ -32,39 +31,36 @@ const Suggestion = ({ image, username, fullName }) => {
 		if (!user) return
 
 		try {
-			// Inverser la valeur de isFollowing
 			const newIsFollowing = !isFollowing
 
 			if (newIsFollowing) {
-				// Follow
 				await setDoc(doc(db, `following/${user.id}/i_m_following`, username), {
 					userId: user.id,
 					username: user.username,
+					image: user.imageUrl,
+					fullName: user.fullName,
 				})
 				await setDoc(
 					doc(db, `followed/${username}/i_am_followed_by`, user.id),
 					{
 						userId: user.id,
 						username: user.username,
+						image: user.imageUrl,
+						fullName: user.fullName,
 					}
 				)
-				console.log(`User ${user.username} followed user ${username}`)
 			} else {
-				// Unfollow
 				await deleteDoc(doc(db, `following/${user.id}/i_m_following`, username))
 				await deleteDoc(
 					doc(db, `followed/${username}/i_am_followed_by`, user.id)
 				)
-				console.log(`User ${user.username} unfollowed user ${username}`)
 			}
 
-			// Mettre à jour l'état isFollowing après la mise à jour réussie
 			setIsFollowing(newIsFollowing)
 		} catch (error) {
 			console.error('Error following/unfollowing user:', error)
 		}
 	}
-
 	return (
 		<div className="flex items-center mt-3">
 			<Image
