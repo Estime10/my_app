@@ -27,8 +27,7 @@ const Suggestions = () => {
 				collection(db, `following/${user.id}/i_m_following`),
 				(querySnapshot) => {
 					const followingUsers = querySnapshot.docs.map((doc) => doc.id)
-					console.log('Users you are following:', followingUsers)
-					setFollowingUsers(followingUsers) // Mise à jour de l'état
+					setFollowingUsers(followingUsers)
 				}
 			)
 			return () => unsubscribe()

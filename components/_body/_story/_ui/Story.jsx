@@ -29,7 +29,6 @@ const StoryCard = ({ image, username, id, stories = {} }) => {
 					unsubscribe = onSnapshot(storyRef, (doc) => {
 						if (doc.exists()) {
 							const newData = doc.data()
-							console.log('Story data has changed:', newData)
 							setStoryDocId(doc.id)
 							setStoryData(newData)
 						} else {

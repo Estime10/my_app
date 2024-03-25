@@ -67,6 +67,9 @@ const Post = ({ image, caption, id, profileImg, username, title }) => {
 			await setDoc(doc(db, 'posts', id, 'likes', user.username), {
 				userId: user.id,
 				username: user.username,
+				image: user.imageUrl,
+				fullName: user.fullName,
+				timestamp: serverTimestamp(),
 			})
 		}
 	}
@@ -93,6 +96,9 @@ const Post = ({ image, caption, id, profileImg, username, title }) => {
 			await setDoc(doc(db, 'posts', id, 'saves', user.username), {
 				userId: user.id,
 				username: user.username,
+				image: user.imageUrl,
+				fullName: user.fullName,
+				timestamp: serverTimestamp(),
 			})
 		}
 	}

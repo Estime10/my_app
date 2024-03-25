@@ -6,6 +6,7 @@ import {
 	onSnapshot,
 	deleteDoc,
 	setDoc,
+	serverTimestamp,
 } from 'firebase/firestore'
 import { db } from '@/firebase'
 import { useUser } from '@clerk/nextjs'
@@ -39,6 +40,7 @@ const Suggestion = ({ image, username, fullName }) => {
 					username: user.username,
 					image: user.imageUrl,
 					fullName: user.fullName,
+					timestamp: serverTimestamp(),
 				})
 				await setDoc(
 					doc(db, `followed/${username}/i_am_followed_by`, user.id),
@@ -47,6 +49,7 @@ const Suggestion = ({ image, username, fullName }) => {
 						username: user.username,
 						image: user.imageUrl,
 						fullName: user.fullName,
+						timestamp: serverTimestamp(),
 					}
 				)
 			} else {

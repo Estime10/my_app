@@ -242,6 +242,9 @@ html {
 .suggestions-list {
 	@apply max-h-[250px] overflow-y-auto scrollbar-hide;
 }
+.notifications-list {
+	@apply max-h-[550px] overflow-y-auto scrollbar-hide;
+}
 
 .avatar {
 	background: radial-gradient(
