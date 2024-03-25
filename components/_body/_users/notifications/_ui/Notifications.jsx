@@ -24,10 +24,12 @@ const Notifications = () => {
 		const unsubscribeFollowing = onSnapshot(
 			collection(db, `following/${user.id}/i_m_following`),
 			(querySnapshot) => {
-				const followingUsers = querySnapshot.docs.map((doc) => ({
-					id: doc.id,
-					...doc.data(),
-				}))
+				const followingUsers = querySnapshot.docs
+					.filter((doc) => doc.id !== user.id)
+					.map((doc) => ({
+						id: doc.id,
+						...doc.data(),
+					}))
 				setFollowingUsers(followingUsers)
 			}
 		)
@@ -73,10 +75,12 @@ const Notifications = () => {
 				const unsubscribe = onSnapshot(
 					collection(db, 'posts', doc.id, 'likes'),
 					(querySnapshot) => {
-						const likesUsers = querySnapshot.docs.map((doc) => ({
-							id: doc.id,
-							...doc.data(),
-						}))
+						const likesUsers = querySnapshot.docs
+							.filter((doc) => doc.id !== user.id)
+							.map((doc) => ({
+								id: doc.id,
+								...doc.data(),
+							}))
 						setLikesUsers((prevLikesUsers) => [
 							...prevLikesUsers,
 							...likesUsers,
@@ -96,50 +100,44 @@ const Notifications = () => {
 
 			<div className="followed-list">
 				<div className=" p-2 suggestions-list">
-					{followedUsers.map((user) => (
-						<div
-							className="flex items-center border-b border-gray-400 p-2"
-							key={user.id}
-						>
-							{' '}
-							<Image
-								className="rounded-full border p-[2px] w-10 h-10"
-								width={40}
-								height={40}
-								src={user.image}
-								alt="Profile"
-							/>
-							<div className="ml-2 flex items-center space-x-2">
-								<p className="font-bold text-xs uppercase">{user.username}</p>
-								<span className="text-gray-400 text-xs">is following you</span>
-								<div className="text-xs">
-									<Moment fromNow>{user.timestamp?.toDate()}</Moment>
+					{[...followedUsers, ...likesUsers]
+						.sort((a, b) => {
+							if (a.timestamp && b.timestamp) {
+								return b.timestamp.toDate() - a.timestamp.toDate()
+							} else {
+								return 0
+							}
+						})
+						.map((notification) => (
+							<div
+								className="flex items-center border-b border-gray-200 p-2"
+								key={notification.id}
+							>
+								{' '}
+								<Image
+									className="rounded-full border p-[2px] w-10 h-10"
+									width={40}
+									height={40}
+									src={notification.image}
+									alt="Profile"
+								/>
+								<div className="ml-2 flex items-center space-x-2">
+									<p className="font-bold text-xs uppercase">
+										{notification.username}
+									</p>
+									<span className="text-gray-400 text-xs">
+										{notification.type === 'follow'
+											? 'is following you'
+											: 'liked your post'}
+									</span>
+									<div className="text-xs">
+										{notification.timestamp && (
+											<Moment fromNow>{notification.timestamp.toDate()}</Moment>
+										)}
+									</div>
 								</div>
 							</div>
-						</div>
-					))}
-
-					{likesUsers.map((user) => (
-						<div
-							className="flex items-center border-b border-gray-400 p-2 "
-							key={user.id}
-						>
-							<Image
-								className="rounded-full border p-[2px] w-10 h-10"
-								width={40}
-								height={40}
-								src={user.image}
-								alt="Profile"
-							/>
-							<div className="ml-2 flex items-center space-x-2">
-								<p className="font-bold text-xs uppercase">{user.username}</p>
-								<span className="text-gray-400 text-xs">liked your post</span>
-								<div className="text-xs">
-									<Moment fromNow>{user.timestamp?.toDate()}</Moment>
-								</div>
-							</div>
-						</div>
-					))}
+						))}
 				</div>
 			</div>
 		</div>

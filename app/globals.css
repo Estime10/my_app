@@ -240,10 +240,10 @@ html {
 }
 
 .suggestions-list {
-	@apply max-h-[250px] overflow-y-auto scrollbar-hide;
+	@apply max-h-[365px] overflow-y-auto scrollbar-hide;
 }
 .notifications-list {
-	@apply max-h-[550px] overflow-y-auto scrollbar-hide;
+	@apply max-h-[650px] overflow-y-auto scrollbar-hide;
 }
 
 .avatar {
@@ -253,63 +253,6 @@ html {
 		rgba(145, 148, 152, 1) 70%
 	);
 }
-
-/* .content {
-	position: relative;
-	width: 100%;
-	margin: auto;
-	overflow: hidden;
-}
-
-.content .content-overlay {
-	background: rgba(0, 0, 0, 0.7);
-	position: absolute;
-	height: 99%;
-	width: 100%;
-	left: 0;
-	top: 0;
-	bottom: 0;
-	right: 0;
-	opacity: 0;
-	-webkit-transition: all 0.4s ease-in-out 0s;
-	-moz-transition: all 0.4s ease-in-out 0s;
-	transition: all 0.4s ease-in-out 0s;
-}
-
-.content:hover .content-overlay {
-	opacity: 1;
-}
-
-.content-image {
-	width: 100%;
-}
-
-.content-details {
-	position: absolute;
-	text-align: center;
-	padding-left: 1em;
-	padding-right: 1em;
-	width: 100%;
-	top: 50%;
-	left: 50%;
-	opacity: 0;
-	-webkit-transform: translate(-50%, -50%);
-	-moz-transform: translate(-50%, -50%);
-	transform: translate(-50%, -50%);
-	-webkit-transition: all 0.3s ease-in-out 0s;
-	-moz-transition: all 0.3s ease-in-out 0s;
-	transition: all 0.3s ease-in-out 0s;
-}
-
-.content:hover .content-details {
-	top: 50%;
-	left: 50%;
-	opacity: 1;
-}
-
-.fadeIn-bottom {
-	top: 80%;
-} */
 
 .btn-hover-color-11 {
 	background-image: linear-gradient(

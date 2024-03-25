@@ -44,10 +44,10 @@ function Footer() {
 							height={10}
 							className="navBtnClose "
 						/>
-						<div
+						{/* <div
 							class="absolute block w-3 h-3 bg-gray-400 border-2 border-white rounded-full 
 							top-[2px] right-[1.25rem]"
-						></div>
+						></div> */}
 					</div>
 					<Image
 						onClick={() => setOpenSecondModal(true)}
@@ -73,29 +73,20 @@ function Footer() {
 						height={10}
 						className="navBtnClose"
 					/>
-					<div class="absolute block w-3 h-3 bg-gray-400 border-2 border-white rounded-full top-3 right-[145px]"></div>
+					{/* <div class="absolute block w-3 h-3 bg-gray-400 border-2 border-white rounded-full top-3 right-[145px]"></div> */}
 					{isDropdownOpen && (
 						<div
-							className="absolute block w-full max-w-sm bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-800 bottom-16 right-2"
+							className="absolute block w-full max-w-sm bg-white divide-y divide-gray-100 rounded-lg shadow bottom-16 right-2"
 							aria-labelledby="dropdownNotificationButton"
 						>
+							<div className="block py-2 text-sm font-medium text-center rounded-t-lg bg-gray-50 hover:bg-gray-100 ">
+								<h1 className="inline-flex items-center font-bold text-base uppercase">
+									Notifications
+								</h1>
+							</div>
 							<div className="divide-y divide-gray-100 ">
 								<Notifications />
 							</div>
-							<a
-								href="#"
-								className="block py-2 text-sm font-medium text-center text-gray-900 rounded-b-lg bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white"
-							>
-								<div className="inline-flex items-center ">
-									<Image
-										src="/svg/view.svg"
-										alt="view"
-										width={16}
-										height={16}
-									/>
-									View all
-								</div>
-							</a>
 						</div>
 					)}
 					<Link href={`/profiles/${user.id}`}>

@@ -64,19 +64,17 @@ function Header() {
 				</div>
 				{/* middle */}
 				<div className="flex items-center space-x-16 relative top-[5px] right-24">
-					<div className="relative navBtn">
-						<Image
-							src="/svg/send.svg"
-							alt="send"
-							width={10}
-							height={10}
-							className="navBtn"
-						/>
-						<div
-							class="absolute block w-3 h-3 bg-gray-400 border-2 border-white rounded-full 
-							top-1.5 right-[1.35rem]"
-						></div>
-					</div>
+					<Image
+						src="/svg/send.svg"
+						alt="send"
+						width={10}
+						height={10}
+						className="navBtn"
+					/>
+					{/* <div
+						class="absolute block w-3 h-3 bg-gray-400 border-2 border-white rounded-full 
+							top-[12px] left-[-66px]"
+					></div> */}
 					<Image
 						onClick={() => setOpenFirstModal(true)}
 						src="/svg/addCircle.svg"
@@ -102,32 +100,19 @@ function Header() {
 							height={10}
 							className="navBtn"
 						/>
-						<div class="absolute block w-3 h-3 bg-gray-400 border-2 border-white rounded-full top-3 right-28"></div>
+						{/* <div class="absolute block w-3 h-3 bg-gray-400 border-2 border-white rounded-full top-3 right-28"></div> */}
 						{isDropdownOpen && (
 							<div
-								className="absolute block w-full max-w-sm bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-800"
+								className="absolute block w-full max-w-sm bg-white divide-y divide-gray-100 rounded-lg shadow"
 								aria-labelledby="dropdownNotificationButton"
 							>
-								<div className="block px-4 py-2 font-medium text-center text-gray-700 rounded-t-lg bg-gray-50 dark:bg-gray-800 dark:text-white">
+								<div className="block px-4 py-2 font-bold uppercase text-center rounded-t-lg bg-gray-50">
 									Notifications
 								</div>
 								<div className="divide-y divide-gray-100">
+									{/* Intégrez votre composant de notification ici */}
 									<Notifications />
 								</div>
-								<a
-									href="#"
-									className="block py-2 text-sm font-medium text-center text-gray-900 rounded-b-lg bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white"
-								>
-									<div className="inline-flex items-center">
-										<Image
-											src="/svg/view.svg"
-											alt="view"
-											width={16}
-											height={16}
-										/>
-										<span className="ml-2">View all</span>
-									</div>
-								</a>
 							</div>
 						)}
 					</div>
