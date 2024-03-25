@@ -59,10 +59,10 @@ function HeaderOption() {
 							height={10}
 							className="navBtn"
 						/>
-						<div
+						{/* <div
 							class="absolute block w-3 h-3 bg-gray-400 border-2 border-white rounded-full 
 							top-[12px] left-[-66px]"
-						></div>
+						></div> */}
 						<Image
 							onClick={() => setOpenFirstModal(true)}
 							src="/svg/addCircle.svg"

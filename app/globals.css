@@ -98,6 +98,44 @@ html {
 .btn-follow:focus {
 	outline: none;
 }
+.btn-confirm {
+	@apply w-40 text-xs font-semibold text-white cursor-pointer mx-2 my-2 h-6 text-center border-none bg-gradient-to-r  transition-all duration-200 rounded-md shadow-md uppercase;
+	background-size: 300% 100%;
+	background-image: linear-gradient(
+		to right,
+		#cdcdcd,
+		#485563,
+		#2b5876,
+		#4e4376
+	);
+}
+.btn-confirm:hover {
+	background-position: 100% 0;
+	transition: all 0.4s ease-in-out;
+}
+.btn-confirm:focus {
+	outline: none;
+}
+
+.btn-cancel {
+	@apply w-40 text-xs font-semibold text-white cursor-pointer mx-2 my-2 h-6 text-center border-none bg-gradient-to-r  transition-all duration-200 rounded-md shadow-md uppercase;
+	background-size: 300% 100%;
+	background-image: linear-gradient(
+		to right,
+		#4e4376,
+		#2b5876,
+		#485563,
+		#cdcdcd
+	);
+}
+.btn-cancel:hover {
+	background-position: 100% 0;
+	transition: all 0.4s ease-in-out;
+}
+.btn-cancel:focus {
+	outline: none;
+}
+
 .btn-uploads {
 	@apply w-44 text-xs font-semibold text-white cursor-pointer mx-2 my-2 h-6 text-center 
 	border-none bg-gradient-to-r transition-all duration-200 rounded-md shadow-md uppercase;

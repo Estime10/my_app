@@ -68,16 +68,10 @@ const DeleteConfirmationModalPost = ({ isOpen, onClose, onConfirm }) => {
 					<p>You won't be able to revert the process</p>
 				</div>
 				<div className="modal-footer flex justify-center space-x-14 py-4 px-6 rounded-b-lg">
-					<button
-						onClick={onConfirm}
-						className="w-32 h-12 text-xs font-semibold text-white cursor-pointer mx-2 my-2 text-center border-none rounded-md uppercase transition-all duration-200 shadow-md btn-hover-color-11"
-					>
+					<button onClick={onConfirm} className="btn-confirm">
 						Yes, delete it!
 					</button>
-					<button
-						onClick={onClose}
-						className="w-32 h-12 text-xs font-semibold text-white cursor-pointer mx-2 my-2 text-center border-none rounded-md uppercase transition-all duration-200 shadow-md btn-hover-color-8"
-					>
+					<button onClick={onClose} className="btn-cancel">
 						No, cancel!
 					</button>
 				</div>
@@ -225,9 +219,9 @@ const Gallery = () => {
 	}
 
 	return (
-		<div className="lg:w-[630px] h-[1320px] w-[400px] lg:h-[1350px] ">
+		<div className="lg:w-[630px]  w-[400px]">
 			{isLoading ? (
-				<div className="flex items-center mt-10  w-full h-full lg:relative lg:top-12 left-60">
+				<div className="flex justify-center items-center mt-10  w-full h-full">
 					<Loading />
 				</div>
 			) : (
@@ -255,7 +249,7 @@ const Gallery = () => {
 						userPosts.map((post) => (
 							<motion.div
 								className="w-[630px]  max-w-full rounded-lg
-                        border border-gray-200 bg-white mb-10"
+                        		border border-gray-200 bg-white py-5 my-5"
 								key={post.id}
 								initial={{ opacity: 0 }}
 								animate={{ opacity: 1 }}
@@ -323,7 +317,7 @@ const Gallery = () => {
 									</div>
 
 									<p className="font-semibold  py-2">{post.caption}</p>
-									<div className="text-sm pb-1 h-20 overflow-y-scroll scrollbar-hide">
+									<div className="text-sm pb-1 max-h-20  overflow-y-scroll scrollbar-hide">
 										{post.comments.map((comment, index) => (
 											<div key={index} className=" pt-1">
 												<div className="flex items-center">
@@ -351,7 +345,7 @@ const Gallery = () => {
 					{filter === 'stories' &&
 						userStories.map((story) => (
 							<motion.div
-								className="w-[630px]  max-w-full rounded-lg border border-gray-200 bg-white mb-10"
+								className="w-[630px]  max-w-full rounded-lg border border-gray-200 bg-white py-5 my-5"
 								key={story.id}
 								initial={{ opacity: 0 }}
 								animate={{ opacity: 1 }}
